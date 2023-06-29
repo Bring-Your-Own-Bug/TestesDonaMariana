@@ -1,13 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
-using PartyPlanner.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.Compartilhado;
 
-namespace PartyPlanner.Dados.Compartilhado
+namespace TestesDonaMariana.Dados.Compartilhado
 {
     public abstract class RepositorioBaseSql<TEntidade> where TEntidade : Entidade<TEntidade>, new()
     {
-        protected int id = 1001;
-
-        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDB;Initial Catalog=PartyPlannerDb;Integrated Security=True;Pooling=False";
+        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
 
         private static SqlConnection conectarBd = new(ENDERECO_BD);
 
@@ -23,7 +21,7 @@ namespace PartyPlanner.Dados.Compartilhado
 
         protected abstract string SelectAllCommand { get; }
 
-        public int Id { get { return id; } }
+        public int Id { get; private set; }
 
         public void Adicionar(TEntidade registro)
         {
@@ -34,6 +32,8 @@ namespace PartyPlanner.Dados.Compartilhado
             ConfigurarParametros(registro);
 
             object id = comandoBd.ExecuteScalar();
+
+            Id = Convert.ToInt32(id) + 1;
 
             registro.Id = Convert.ToInt32(id);
 

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+using TestesDonaMariana.Dominio.ModuloQuestao;
+using TestesDonaMariana.Dominio.ModuloSerie;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria
 {
-    internal class Materia
+    public class Materia
     {
+        public string Nome { get; set; }
+        public Disciplina Disciplina { get; set; }
+        public List<Questao> ListaQuestoes { get; set; }
+        public Serie Serie { get; set; }
     }
 }

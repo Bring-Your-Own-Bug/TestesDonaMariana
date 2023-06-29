@@ -1,6 +1,8 @@
 ﻿using PartyPlanner.Dados.Compartilhado;
 using PartyPlanner.Dominio.Compartilhado;
 using System.Diagnostics;
+using TestesDonaMariana.Dados.Compartilhado;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.WinApp;
 
 namespace PartyPlanner.WinApp.Compartilhado

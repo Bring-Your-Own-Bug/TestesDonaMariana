@@ -1,4 +1,4 @@
-﻿namespace PartyPlanner.Dominio.Compartilhado
+﻿namespace TestesDonaMariana.Dominio.Compartilhado
 {
     public abstract class Entidade<TEntidade>
     {

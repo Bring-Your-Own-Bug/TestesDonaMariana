@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestesDonaMariana.Dados.ModuloSerie
+namespace TestesDonaMariana.Dados.ModuloGabarito
 {
-    internal class RepositorioSerie
+    internal class RepositorioGabarito
     {
     }
 }
