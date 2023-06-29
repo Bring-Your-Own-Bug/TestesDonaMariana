@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ModuloDisciplina\" />
+    <Folder Include="ModuloMateria\" />
+    <Folder Include="ModuloQuestao\" />
+    <Folder Include="ModuloSerie\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestesDonaMariana.Dados\TestesDonaMariana.Dados.csproj" />
+    <ProjectReference Include="..\TestesDonaMariana.Dominio\TestesDonaMariana.Dominio.csproj" />
+  </ItemGroup>
+
+</Project>
