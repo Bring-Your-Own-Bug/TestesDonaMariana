@@ -1,1 +1,1 @@
-﻿
+﻿global using TestesDonaMariana.WinApp.Compartilhado;

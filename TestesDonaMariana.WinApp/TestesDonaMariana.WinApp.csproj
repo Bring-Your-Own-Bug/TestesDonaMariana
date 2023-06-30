@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ModuloDisciplina\" />
-    <Folder Include="ModuloGabarito\" />
-    <Folder Include="ModuloMateria\" />
-    <Folder Include="ModuloQuestao\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TestesDonaMariana.Dados\TestesDonaMariana.Dados.csproj" />
     <ProjectReference Include="..\TestesDonaMariana.Dominio\TestesDonaMariana.Dominio.csproj" />
   </ItemGroup>

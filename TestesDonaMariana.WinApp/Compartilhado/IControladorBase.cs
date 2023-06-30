@@ -1,4 +1,4 @@
-﻿namespace PartyPlanner.WinApp.Compartilhado
+﻿namespace TestesDonaMariana.WinApp.Compartilhado
 {
     public interface IControladorBase
     {

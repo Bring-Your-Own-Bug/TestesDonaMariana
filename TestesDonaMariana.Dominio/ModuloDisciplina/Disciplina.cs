@@ -2,7 +2,7 @@
 
 namespace TestesDonaMariana.Dominio.ModuloDisciplina
 {
-    public class Disciplina
+    public class Disciplina : Entidade<Disciplina>
     {
         public string Nome { get; set; }
         public List<Materia> ListaMaterias { get; set; }

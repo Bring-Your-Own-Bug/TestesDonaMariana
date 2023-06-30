@@ -1,4 +1,4 @@
-using PartyPlanner.WinApp.Compartilhado;
+using TestesDonaMariana.WinApp.Compartilhado;
 
 namespace TestesDonaMariana.WinApp
 {

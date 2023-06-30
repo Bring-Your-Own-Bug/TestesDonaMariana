@@ -1,6 +1,6 @@
-﻿using PartyPlanner.Dominio.Compartilhado;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
 
-namespace PartyPlanner.WinApp.Compartilhado
+namespace TestesDonaMariana.WinApp.Compartilhado
 {
     public interface ITabelaBase<TEntidade> where TEntidade : Entidade<TEntidade>
     {

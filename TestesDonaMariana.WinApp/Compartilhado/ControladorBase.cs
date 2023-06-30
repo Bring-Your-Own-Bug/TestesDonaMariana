@@ -1,11 +1,8 @@
-﻿using PartyPlanner.Dados.Compartilhado;
-using PartyPlanner.Dominio.Compartilhado;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
-using TestesDonaMariana.WinApp;
 
-namespace PartyPlanner.WinApp.Compartilhado
+namespace TestesDonaMariana.WinApp.Compartilhado
 {
     public abstract class ControladorBase<TEntidade, TRepositorio, TTabela, TTela, TRepositorio2, TRepositorio3> : IControladorBase
         where TEntidade : Entidade<TEntidade>, new()

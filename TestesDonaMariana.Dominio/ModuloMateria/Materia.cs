@@ -4,7 +4,7 @@ using TestesDonaMariana.Dominio.ModuloSerie;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria
 {
-    public class Materia
+    public class Materia : Entidade<Materia>
     {
         public string Nome { get; set; }
         public Disciplina Disciplina { get; set; }

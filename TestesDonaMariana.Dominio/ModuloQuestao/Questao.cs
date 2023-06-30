@@ -2,7 +2,7 @@
 
 namespace TestesDonaMariana.Dominio.ModuloQuestao
 {
-    public class Questao
+    public class Questao : Entidade<Questao>
     {
         public Materia Materia { get; set; }
         public string Enunciado { get; set; }

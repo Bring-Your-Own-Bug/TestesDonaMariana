@@ -4,8 +4,9 @@ using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dominio.ModuloTeste
 {
-    public class Teste
+    public class Teste : Entidade<Teste>
     {
+        public string Titulo { get; set; }
         public int NumeroDeQuestoes { get; set; }
         public Disciplina Disciplina { get; set; }
         public Materia Materia { get; set; }
