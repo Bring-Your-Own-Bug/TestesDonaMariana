@@ -1,9 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Win32;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
 {
-    public abstract class RepositorioBaseSql<TEntidade> where TEntidade : Entidade<TEntidade>, new()
+    public abstract class RepositorioBaseSql<TEntidade, TMapeador> 
+        where TEntidade : Entidade<TEntidade>, new()
+        where TMapeador : MapeadorBase<TEntidade>, new()
     {
         private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
 
@@ -23,13 +26,15 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         public int Id { get; private set; }
 
-        public void Adicionar(TEntidade registro)
+        public virtual void Adicionar(TEntidade registro)
         {
             conectarBd.Open();
 
             comandoBd.CommandText = AddCommand;
 
-            ConfigurarParametros(registro);
+            TMapeador mapeador = new();
+
+            mapeador.ConfigurarParametros(comandoBd, registro);
 
             object id = comandoBd.ExecuteScalar();
 
@@ -40,13 +45,15 @@ namespace TestesDonaMariana.Dados.Compartilhado
             conectarBd.Close();
         }
 
-        public void Editar(TEntidade novoRegistro)
+        public virtual void Editar(TEntidade novoRegistro)
         {
             conectarBd.Open();
 
             comandoBd.CommandText = EditCommand;
 
-            ConfigurarParametros(novoRegistro);
+            TMapeador mapeador = new();
+
+            mapeador.ConfigurarParametros(comandoBd, novoRegistro);
 
             comandoBd.Parameters.AddWithValue("ID", novoRegistro.Id);
 
@@ -55,7 +62,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
             conectarBd.Close();
         }
 
-        public void Excluir(TEntidade registroSelecionado)
+        public virtual void Excluir(TEntidade registroSelecionado)
         {
             conectarBd.Open();
 
@@ -70,35 +77,33 @@ namespace TestesDonaMariana.Dados.Compartilhado
             conectarBd.Close();
         }
 
-        public List<TEntidade> ObterListaRegistros()
+        public virtual List<TEntidade> ObterListaRegistros()
         {
             conectarBd.Open();
-
-            List<TEntidade> lista = new();
 
             comandoBd.CommandText = SelectAllCommand;
 
             SqlDataReader reader = comandoBd.ExecuteReader();
 
+            List<TEntidade> registros = new();
+
+            TMapeador mapeador = new();
+
             while (reader.Read())
             {
-                TEntidade entidade = new();
+                TEntidade registro = mapeador.ConverterRegistro(reader);
 
-                ObterPropriedadesEntidade(entidade, reader);
-
-                lista.Add(entidade);
+                registros.Add(registro);
             }
 
             conectarBd.Close();
 
-            return lista;
+            return registros;
         }
 
-        public TEntidade? SelecionarPorId(int idSelecionado)
+        public virtual TEntidade? SelecionarPorId(int idSelecionado)
         {
             conectarBd.Open();
-
-            TEntidade entidade = new();
 
             comandoBd.CommandText = SelectCommand;
 
@@ -106,18 +111,16 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             SqlDataReader reader = comandoBd.ExecuteReader();
 
+            TEntidade registro = null;
+
+            TMapeador mapeador = new();
+
             if (reader.Read())
-            {
-                ObterPropriedadesEntidade(entidade, reader);
-            }
+                registro = mapeador.ConverterRegistro(reader);
 
             conectarBd.Close();
 
-            return entidade;
+            return registro;
         }
-
-        protected abstract void ObterPropriedadesEntidade(TEntidade entidade, SqlDataReader reader);
-
-        protected abstract void ConfigurarParametros(TEntidade registro);
     }
 }
