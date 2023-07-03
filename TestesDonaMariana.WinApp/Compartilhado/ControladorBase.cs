@@ -15,9 +15,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         protected TRepositorio3 _repositorio3;
         protected TTabela _tabela;
 
-        protected event Action<TTela> onCarregarArquivosEComandos;
-
-        protected event Action<TEntidade> onAtualizarItensReferentes;
+        protected event Action<TTela> onComandosAdicionaisAddAndEdit;
 
         public ControladorBase(TRepositorio _repositorio, TTabela _tabela)
         {
@@ -87,7 +85,6 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             if (opcaoEscolhida == DialogResult.OK)
             {
                 _repositorio.Editar(tela.Entidade);
-
             }
             CarregarRegistros();
         }
@@ -104,9 +101,6 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             if (opcaoEscolhida == DialogResult.Yes)
             {
                 _repositorio.Excluir(entidade);
-
-                if (onAtualizarItensReferentes != null)
-                    onAtualizarItensReferentes(entidade);
             }
             CarregarRegistros();
         }
@@ -119,16 +113,13 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void CarregarRegistros()
         {
-            Stopwatch contador = Stopwatch.StartNew();
             _tabela.AtualizarLista(_repositorio.ObterListaRegistros());
-            contador.Stop();
-            MessageBox.Show((contador.ElapsedMilliseconds/1000).ToString());
         }
 
         public virtual string ObterTipoCadastro()
         {
-            if ((typeof(TEntidade).Name).EndsWith("el"))
-                return $"Cadastro de {typeof(TEntidade).Name.TrimEnd('l').Replace('e', 'é')}is";
+            if ((typeof(TEntidade).Name).EndsWith("ao"))
+                return $"Cadastro de {typeof(TEntidade).Name.TrimEnd('a')}ões";
             else
                 return $"Cadastro de {typeof(TEntidade).Name}s";
         }
