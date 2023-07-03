@@ -4,11 +4,12 @@ using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
-    public abstract class ControladorBase<TEntidade, TRepositorio, TTabela, TTela, TRepositorio2, TRepositorio3> : IControladorBase
+    public abstract class ControladorBase<TEntidade, TRepositorio, TTabela, TTela, TMapeador, TRepositorio2, TRepositorio3> : IControladorBase
         where TEntidade : Entidade<TEntidade>, new()
-        where TRepositorio : RepositorioBaseSql<TEntidade>
+        where TRepositorio : RepositorioBaseSql<TEntidade, TMapeador>
         where TTabela : ITabelaBase<TEntidade>, new()
         where TTela : ITelaBase<TEntidade>, new()
+        where TMapeador : MapeadorBase<TEntidade>, new()
     {
         protected TRepositorio _repositorio;
         protected TRepositorio2 _repositorio2;
@@ -48,7 +49,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void Adicionar()
         {
-            TTela tela = new TTela();
+            TTela tela = new();
 
             if (onCarregarArquivosEComandos != null)
                 onCarregarArquivosEComandos(tela);
