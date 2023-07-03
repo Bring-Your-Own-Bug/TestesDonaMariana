@@ -1,9 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using TestesDonaMariana.Dominio.ModuloMateria;
+﻿using TestesDonaMariana.Dominio.ModuloMateria;
 
 namespace TestesDonaMariana.Dados.ModuloMateria
 {
-    public class RepositorioMateria : RepositorioBaseSql<Materia>
+    public class RepositorioMateria : RepositorioBaseSql<Materia, MapeadorMateria>
     {
         protected override string AddCommand => throw new NotImplementedException();
 
@@ -14,15 +13,5 @@ namespace TestesDonaMariana.Dados.ModuloMateria
         protected override string SelectCommand => throw new NotImplementedException();
 
         protected override string SelectAllCommand => throw new NotImplementedException();
-
-        protected override void ConfigurarParametros(Materia registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void ObterPropriedadesEntidade(Materia entidade, SqlDataReader reader)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
