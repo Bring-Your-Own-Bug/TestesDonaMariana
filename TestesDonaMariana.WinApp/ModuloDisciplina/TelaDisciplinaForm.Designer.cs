@@ -56,7 +56,7 @@
             btnCancelar.Location = new Point(284, 160);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(70, 36);
-            btnCancelar.TabIndex = 53;
+            btnCancelar.TabIndex = 3;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
@@ -67,7 +67,7 @@
             btnAdd.Location = new Point(208, 160);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(70, 36);
-            btnAdd.TabIndex = 52;
+            btnAdd.TabIndex = 2;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
@@ -96,7 +96,7 @@
             txtNome.Location = new Point(94, 74);
             txtNome.Name = "txtNome";
             txtNome.Size = new Size(227, 23);
-            txtNome.TabIndex = 47;
+            txtNome.TabIndex = 1;
             // 
             // txtId
             // 
@@ -105,6 +105,8 @@
             txtId.ReadOnly = true;
             txtId.Size = new Size(71, 23);
             txtId.TabIndex = 46;
+            txtId.TabStop = false;
+            txtId.Text = "0";
             // 
             // TelaDisciplinaForm
             // 

@@ -1,5 +1,4 @@
-﻿using TestesDonaMariana.WinApp.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
 {
@@ -9,12 +8,14 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private bool isValid;
 
+        private List<Disciplina> ListaDisciplinas { get; set; }
+
         public TelaDisciplinaForm()
         {
             InitializeComponent();
-        }
 
-        public TextBox TxtId => txtId;
+            ListaDisciplinas = new ControladorDisciplina().ObterListaDisciplina();
+        }
 
         public Disciplina? Entidade
         {
@@ -38,6 +39,9 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             }
 
             _disciplina = new Disciplina(txtNome.Text);
+
+            if (_disciplina.Id == 0)
+                _disciplina.Id = int.Parse(txtId.Text);
         }
 
         private void ImplementarMetodos()
@@ -49,7 +53,18 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         {
             Disciplina disciplina = new();
 
-            lbErroNome.Visible = disciplina.ValidarCampoVazio(txtNome.Text);
+            lbErroNome.Visible = false;
+
+            if (disciplina.ValidarCampoVazio(txtNome.Text))
+            {
+                lbErroNome.Visible = true;
+                lbErroNome.Text = "*Campo obrigatório";
+            }
+            else if (disciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
+            {
+                lbErroNome.Visible = true;
+                lbErroNome.Text = "*Essa disciplina já existe";
+            }
 
             if (lbErroNome.Visible)
                 isValid = false;
