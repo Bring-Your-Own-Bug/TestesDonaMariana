@@ -16,5 +16,10 @@ namespace TestesDonaMariana.Dominio.ModuloDisciplina
         {
             
         }
+
+        public bool ValidarNomeExistente(string nome, List<Disciplina> listaDisciplinas)
+        {
+            return listaDisciplinas.Any(m => string.Equals(m.Nome, nome, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }
