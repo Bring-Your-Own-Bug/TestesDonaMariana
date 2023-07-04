@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloQuestao;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
 {
@@ -18,6 +19,26 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
             foreach (Questao item in questoes)
             {
+                DataGridViewRow row = new();
+
+                row.CreateCells(gridQuestao, item.Id, item.Enunciado, item.AlternativaCorreta);
+
+                row.Cells[0].Tag = item;
+
+                gridQuestao.Rows.Add(row);
+            }
+
+            TelaPrincipalForm.AtualizarStatus($"Visualizando {questoes.Count} Questões");
+        }
+
+        public void AtualizarLista<TEntidade>(List<TEntidade> questoes) where TEntidade : Entidade<TEntidade>, new()
+        {
+            gridQuestao.Rows.Clear();
+
+            System.Collections.IList list = questoes;
+            for (int i = 0; i < list.Count; i++)
+            {
+                Questao item = (Questao)list[i];
                 DataGridViewRow row = new();
 
                 row.CreateCells(gridQuestao, item.Id, item.Enunciado, item.AlternativaCorreta);

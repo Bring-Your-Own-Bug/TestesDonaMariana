@@ -1,5 +1,4 @@
-﻿using TestesDonaMariana.WinApp.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloGabarito;
+﻿using TestesDonaMariana.Dominio.ModuloGabarito;
 
 namespace TestesDonaMariana.WinApp.ModuloGabarito
 {
@@ -9,5 +8,9 @@ namespace TestesDonaMariana.WinApp.ModuloGabarito
         {
             InitializeComponent();
         }
+
+        public TextBox TxtId => throw new NotImplementedException();
+
+        public Gabarito? Entidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

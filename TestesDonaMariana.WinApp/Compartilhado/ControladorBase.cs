@@ -1,44 +1,63 @@
 ﻿using System.Diagnostics;
-using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
+using TestesDonaMariana.Dominio.ModuloGabarito;
+using TestesDonaMariana.Dominio.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloQuestao;
+using TestesDonaMariana.Dominio.ModuloTeste;
+
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
-    public abstract class ControladorBase<TEntidade, TRepositorio, TTabela, TTela, TMapeador, TRepositorio2, TRepositorio3> : IControladorBase
+    public abstract class ControladorBase<TEntidade, TTabela, TTela> : IControladorBase
         where TEntidade : Entidade<TEntidade>, new()
-        where TRepositorio : RepositorioBaseSql<TEntidade, TMapeador>
         where TTabela : ITabelaBase<TEntidade>, new()
         where TTela : ITelaBase<TEntidade>, new()
-        where TMapeador : MapeadorBase<TEntidade>, new()
     {
-        protected TRepositorio _repositorio;
-        protected TRepositorio2 _repositorio2;
-        protected TRepositorio3 _repositorio3;
+        protected IRepositorio<Disciplina> _repositorioDisciplina;
+        protected IRepositorio<Materia> _repositorioMateria;
+        protected IRepositorio<Questao> _repositorioQuestao;
+        protected IRepositorio<Teste> _repositorioTeste;
+        protected IRepositorio<Gabarito> _repositorioGabarito;
         protected TTabela _tabela;
 
         protected event Action<TTela> onCarregarArquivosEComandos;
 
         protected event Action<TEntidade> onAtualizarItensReferentes;
 
-        public ControladorBase(TRepositorio _repositorio, TTabela _tabela)
+        protected ControladorBase(IRepositorio<Disciplina> repositorioDisciplina, TTabela tabela)
         {
-            this._repositorio = _repositorio;
-            this._tabela = _tabela;
+            this._repositorioDisciplina = repositorioDisciplina;
+            this._tabela = tabela;
         }
 
-        public ControladorBase(TRepositorio _repositorio, TTabela _tabela, TRepositorio2 _repositorio2)
+        protected ControladorBase(IRepositorio<Gabarito> repositorioGabarito, TTabela tabela)
         {
-            this._repositorio = _repositorio;
-            this._tabela = _tabela;
-            this._repositorio2 = _repositorio2;
+            this._repositorioGabarito = repositorioGabarito;
+            this._tabela = tabela;
         }
 
-        public ControladorBase(TRepositorio _repositorio, TTabela _tabela, TRepositorio2 _repositorio2, TRepositorio3 _repositorio3)
+        protected ControladorBase(IRepositorio<Questao> repositorioQuestao, IRepositorio<Materia> repositorioMateria, TTabela tabela)
         {
-            this._repositorio = _repositorio;
-            this._tabela = _tabela;
-            this._repositorio2 = _repositorio2;
-            this._repositorio3 = _repositorio3;
+            this._repositorioQuestao = repositorioQuestao;
+            this._repositorioMateria = repositorioMateria;
+            this._tabela = tabela;
+        }
+
+        protected ControladorBase(IRepositorio<Questao> repositorioQuestao, IRepositorio<Materia> repositorioMateria, IRepositorio<Disciplina> repositorioDisciplina, TTabela tabela)
+        {
+            this._repositorioDisciplina = repositorioDisciplina;
+            this._repositorioMateria = repositorioMateria;
+            this._repositorioQuestao = repositorioQuestao;
+            this._tabela = tabela;
+        }
+
+        protected ControladorBase(IRepositorio<Teste> repositorioTeste, IRepositorio<Disciplina> repositorioDisciplina, IRepositorio<Questao> repositorioQuestao, TTabela tabela)
+        {
+            this._repositorioTeste = repositorioTeste;
+            this._repositorioDisciplina = repositorioDisciplina;
+            this._repositorioQuestao = repositorioQuestao;
+            this._tabela = tabela;
         }
 
         public virtual string ToolTipAdicionar => $"Adicionar {typeof(TEntidade).Name}";
@@ -54,7 +73,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             if (onCarregarArquivosEComandos != null)
                 onCarregarArquivosEComandos(tela);
 
-            tela.TxtId.Text = _repositorio.Id.ToString();
+            tela.TxtId.Text = _repositorioDisciplina.Id.ToString();
 
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
@@ -64,7 +83,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             {
                 TEntidade? entidade = tela.Entidade;
 
-                _repositorio.Adicionar(entidade);
+                _repositorioDisciplina.Adicionar(entidade);
 
             }
             CarregarRegistros();
@@ -74,7 +93,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
 
-            TTela tela = new TTela();
+            TTela tela = new();
 
             if (onCarregarArquivosEComandos != null)
                 onCarregarArquivosEComandos(tela);
@@ -87,7 +106,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             if (opcaoEscolhida == DialogResult.OK)
             {
-                _repositorio.Editar(tela.Entidade);
+                _repositorioDisciplina.Editar(tela.Entidade);
 
             }
             CarregarRegistros();
@@ -104,7 +123,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             if (opcaoEscolhida == DialogResult.Yes)
             {
-                _repositorio.Excluir(entidade);
+                _repositorioDisciplina.Excluir(entidade);
 
                 if (onAtualizarItensReferentes != null)
                     onAtualizarItensReferentes(entidade);
@@ -121,7 +140,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         public virtual void CarregarRegistros()
         {
             Stopwatch contador = Stopwatch.StartNew();
-            _tabela.AtualizarLista(_repositorio.ObterListaRegistros());
+            _tabela.AtualizarLista(_repositorioDisciplina.ObterListaRegistros());
             contador.Stop();
             MessageBox.Show((contador.ElapsedMilliseconds/1000).ToString());
         }

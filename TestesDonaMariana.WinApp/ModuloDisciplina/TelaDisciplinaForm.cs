@@ -9,5 +9,9 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         {
             InitializeComponent();
         }
+
+        public TextBox TxtId => throw new NotImplementedException();
+
+        public Disciplina? Entidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

@@ -1,5 +1,4 @@
-﻿using TestesDonaMariana.WinApp.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloQuestao;
+﻿using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
 {
@@ -9,5 +8,9 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         {
             InitializeComponent();
         }
+
+        public TextBox TxtId => throw new NotImplementedException();
+
+        public Questao? Entidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

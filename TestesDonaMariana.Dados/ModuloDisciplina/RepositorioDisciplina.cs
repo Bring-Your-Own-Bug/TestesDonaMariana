@@ -1,8 +1,9 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
 {
-    public class RepositorioDisciplina : RepositorioBaseSql<Disciplina, MapeadorDisciplina>
+    public class RepositorioDisciplina : RepositorioBaseSql<Disciplina, MapeadorDisciplina>, IRepositorio<Disciplina>
     {
         protected override string AddCommand => throw new NotImplementedException();
 
@@ -13,5 +14,32 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
         protected override string SelectCommand => throw new NotImplementedException();
 
         protected override string SelectAllCommand => throw new NotImplementedException();
+
+        int IRepositorio<Disciplina>.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void Adicionar<TEntidade>(TEntidade? entidade) where TEntidade : Entidade<TEntidade>, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Editar(int id, Disciplina entidade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Editar<TEntidade>(TEntidade entidade) where TEntidade : Entidade<TEntidade>, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Excluir<TEntidade>(TEntidade entidade) where TEntidade : Entidade<TEntidade>, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Disciplina> SelecionarTodos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -4,10 +4,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 {
     public interface ITabelaBase<TEntidade> where TEntidade : Entidade<TEntidade>
     {
-        public DataGridView DataGridView { get; }
-
-        public void AtualizarLista(List<TEntidade> contatos);
-
-        public TEntidade ObterRegistroSelecionado();
+        DataGridView DataGridView { get; }
+        void AtualizarLista(List<TEntidade> entidades);
+        void AtualizarLista<TEntidade>(List<TEntidade> entidades) where TEntidade : Entidade<TEntidade>, new();
+        TEntidade ObterRegistroSelecionado();
     }
 }
