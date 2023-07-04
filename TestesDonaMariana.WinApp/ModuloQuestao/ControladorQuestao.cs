@@ -13,9 +13,9 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         public ControladorQuestao(RepositorioQuestao _repositorio, TabelaQuestaoControl _tabela, RepositorioMateria _repositorio2) : base(_repositorio, _tabela, _repositorio2)
         {
-            _repositorio = _repositorioQuestao;
-            _tabela = _tabelaQuestao;
-            _repositorio2 = _repositorioMateria;
+            _repositorioQuestao = _repositorio;
+            _tabelaQuestao = _tabela;
+            _repositorioMateria = _repositorio2;
         }
 
         public override TabelaQuestaoControl ObterListagem()

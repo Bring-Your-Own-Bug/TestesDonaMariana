@@ -2,6 +2,7 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloMateria;
+using TestesDonaMariana.WinApp.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloMateria
 {
@@ -15,10 +16,31 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         public ControladorMateria(RepositorioMateria _repositorio, TabelaMateriaControl _tabela, RepositorioDisciplina _repositorio2, RepositorioQuestao _repositorio3) : base(_repositorio, _tabela, _repositorio2, _repositorio3)
         {
-            _repositorio = _repositorioMateria;
-            _tabela = _tabelaMateria;
-            _repositorio2 = _repositorioDisciplina;
-            _repositorio3 = _repositorioQuestao;
+            _repositorioMateria = _repositorio;
+            _tabelaMateria = _tabela;
+            _repositorioDisciplina = _repositorio2;
+            _repositorioQuestao = _repositorio3;
+
+            onComandosAdicionaisAddAndEdit += CarregarComboBox;
+        }
+
+        public ControladorMateria()
+        {
+            
+        }
+
+        public List<Materia> ObterListaMateria()
+        {
+            RepositorioMateria _repositorioMateria = new();
+
+            return _repositorioMateria.ObterListaRegistros();
+        }
+
+        public void CarregarComboBox(TelaMateriaForm telaMateria)
+        {
+            telaMateria.txtDisciplina.DisplayMember = "Nome";
+            telaMateria.txtDisciplina.ValueMember = "Nome";
+            telaMateria.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
         }
 
         public override TabelaMateriaControl ObterListagem()

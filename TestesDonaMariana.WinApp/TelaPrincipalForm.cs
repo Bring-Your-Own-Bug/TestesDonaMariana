@@ -43,10 +43,10 @@ namespace TestesDonaMariana.WinApp
 
         private void AdicionarBotoesDicionario()
         {
-            coresBotoes.Add(_tabelaMateria, btnDisciplina);
-            coresBotoes.Add(_tabelaQuestao, btnMateria);
-            coresBotoes.Add(_tabelaTeste, btnQuestao);
-            coresBotoes.Add(_tabelaDisciplina, btnTeste);
+            coresBotoes.Add(_tabelaDisciplina, btnDisciplina);
+            coresBotoes.Add(_tabelaMateria, btnMateria);
+            coresBotoes.Add(_tabelaQuestao, btnQuestao);
+            coresBotoes.Add(_tabelaTeste, btnTeste);
         }
 
         public static void AtualizarStatus(string status)
