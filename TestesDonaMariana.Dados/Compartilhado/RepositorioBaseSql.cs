@@ -3,9 +3,8 @@ using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
 {
-    public abstract class RepositorioBaseSql<TEntidade, TMapeador> 
+    public abstract class RepositorioBaseSql<TEntidade> 
         where TEntidade : Entidade<TEntidade>, new()
-        where TMapeador : MapeadorBase<TEntidade>, new()
     {
         private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
 
@@ -22,6 +21,8 @@ namespace TestesDonaMariana.Dados.Compartilhado
         protected abstract string SelectCommand { get; }
 
         protected abstract string SelectAllCommand { get; }
+
+        protected abstract MapeadorBase<TEntidade> Mapear { get; }
 
         public int Id { get; private set; }
 

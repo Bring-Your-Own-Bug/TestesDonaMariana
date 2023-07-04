@@ -3,7 +3,7 @@ using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
 {
-    public class RepositorioDisciplina : RepositorioBaseSql<Disciplina, MapeadorDisciplina>, IRepositorio<Disciplina>
+    public class RepositorioDisciplina : RepositorioBaseSql<Disciplina>, IRepositorio<Disciplina>
     {
         protected override string AddCommand => throw new NotImplementedException();
 
@@ -14,6 +14,8 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
         protected override string SelectCommand => throw new NotImplementedException();
 
         protected override string SelectAllCommand => throw new NotImplementedException();
+
+        protected override MapeadorBase<Disciplina> Mapear => new MapeadorDisciplina();
 
         int IRepositorio<Disciplina>.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

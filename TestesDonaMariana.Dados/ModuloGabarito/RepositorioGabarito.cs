@@ -3,7 +3,7 @@ using TestesDonaMariana.Dominio.ModuloGabarito;
 
 namespace TestesDonaMariana.Dados.ModuloGabarito
 {
-    public class RepositorioGabarito : RepositorioBaseSql<Gabarito, MapeadorGabarito>
+    public class RepositorioGabarito : RepositorioBaseSql<Gabarito>
     {
         protected override string AddCommand => throw new NotImplementedException();
 
@@ -14,5 +14,7 @@ namespace TestesDonaMariana.Dados.ModuloGabarito
         protected override string SelectCommand => throw new NotImplementedException();
 
         protected override string SelectAllCommand => throw new NotImplementedException();
+
+        protected override MapeadorBase<Gabarito> Mapear => new MapeadorGabarito();
     }
 }

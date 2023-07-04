@@ -2,7 +2,7 @@
 
 namespace TestesDonaMariana.Dados.ModuloTeste
 {
-    public class RepositorioTeste : RepositorioBaseSql<Teste, MapeadorTeste>
+    public class RepositorioTeste : RepositorioBaseSql<Teste>
     {
         protected override string AddCommand => throw new NotImplementedException();
 
@@ -13,5 +13,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
         protected override string SelectCommand => throw new NotImplementedException();
 
         protected override string SelectAllCommand => throw new NotImplementedException();
+
+        protected override MapeadorBase<Teste> Mapear => new MapeadorTeste();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TestesDonaMariana.Dados.ModuloMateria
 {
-    public class RepositorioMateria : RepositorioBaseSql<Materia, MapeadorMateria>
+    public class RepositorioMateria : RepositorioBaseSql<Materia>
     {
         protected override string AddCommand => throw new NotImplementedException();
 
@@ -13,5 +13,7 @@ namespace TestesDonaMariana.Dados.ModuloMateria
         protected override string SelectCommand => throw new NotImplementedException();
 
         protected override string SelectAllCommand => throw new NotImplementedException();
+
+        protected override MapeadorBase<Materia> Mapear => new MapeadorMateria();
     }
 }
