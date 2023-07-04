@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [dbo].[TBDISCIPLINA] (
-    [ID]               INT           IDENTITY (1, 1) NOT NULL,
-    [NOME]             VARCHAR (200) NOT NULL,
-    [LISTA_MATERIA_ID] INT           NULL,
+    [ID]   INT           IDENTITY (1, 1) NOT NULL,
+    [NOME] VARCHAR (200) NOT NULL,
     CONSTRAINT [PK_TBDISCIPLINA] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 

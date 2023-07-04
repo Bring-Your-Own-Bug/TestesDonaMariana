@@ -3,7 +3,6 @@ using System.Data;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloSerie;
-using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dados.ModuloMateria
 {
@@ -47,12 +46,12 @@ namespace TestesDonaMariana.Dados.ModuloMateria
 
                                                           WHERE [ID] =                   @ID";
 
-        protected override string SelectAllCommand => @"SELECT    M.[ID]                   MATERIA_ID
-                                                              ,M.[NOME]                 MATERIA_NOME
-                                                              ,M.[DISCIPLINA_ID]        MATERIA_DISCIPLINA_ID
-                                                              ,M.[SERIE]                MATERIA_SERIE
+        protected override string SelectAllCommand => @"SELECT     M.[ID]                   MATERIA_ID
+                                                                  ,M.[NOME]                 MATERIA_NOME
+                                                                  ,M.[DISCIPLINA_ID]        MATERIA_DISCIPLINA_ID
+                                                                  ,M.[SERIE]                MATERIA_SERIE
 
-                                                              ,D.[NOME]                 DISCIPLINA_NOME
+                                                                  ,D.[NOME]                 DISCIPLINA_NOME
 
                                                           FROM [dbo].[TBMATERIA] AS M
 

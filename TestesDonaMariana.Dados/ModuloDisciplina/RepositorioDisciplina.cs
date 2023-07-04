@@ -1,7 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using System.Data;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
-using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
 {
