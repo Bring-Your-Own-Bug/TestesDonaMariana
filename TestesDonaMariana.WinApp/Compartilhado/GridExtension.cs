@@ -1,4 +1,6 @@
-﻿namespace TestesDonaMariana.WinApp.Compartilhado
+﻿using System.Windows.Forms;
+
+namespace TestesDonaMariana.WinApp.Compartilhado
 {
     public static class GridExtension
     {
@@ -41,6 +43,7 @@
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.BackgroundColor = SystemColors.Control;
             grid.MultiSelect = false;
+            grid.RowHeadersVisible = false;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
