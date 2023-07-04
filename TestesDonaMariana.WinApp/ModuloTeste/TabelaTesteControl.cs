@@ -1,5 +1,4 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloTeste;
+﻿using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -19,26 +18,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             foreach (Teste item in testes)
             {
-                DataGridViewRow row = new();
-
-                row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, item.ListaQuestoes.Count, item.ListaQuestoes[0].Materia.Serie);
-
-                row.Cells[0].Tag = item;
-
-                gridTeste.Rows.Add(row);
-            }
-
-            TelaPrincipalForm.AtualizarStatus($"Visualizando {testes.Count} Testes");
-        }
-
-        public void AtualizarLista<TEntidade>(List<TEntidade> testes) where TEntidade : Entidade<TEntidade>, new()
-        {
-            gridTeste.Rows.Clear();
-
-            System.Collections.IList list = testes;
-            for (int i = 0; i < list.Count; i++)
-            {
-                Teste item = (Teste)list[i];
                 DataGridViewRow row = new();
 
                 row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, item.ListaQuestoes.Count, item.ListaQuestoes[0].Materia.Serie);

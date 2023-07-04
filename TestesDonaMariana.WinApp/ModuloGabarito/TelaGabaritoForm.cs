@@ -9,8 +9,6 @@ namespace TestesDonaMariana.WinApp.ModuloGabarito
             InitializeComponent();
         }
 
-        public TextBox TxtId => throw new NotImplementedException();
-
         public Gabarito? Entidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

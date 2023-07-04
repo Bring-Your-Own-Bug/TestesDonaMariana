@@ -9,8 +9,6 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             InitializeComponent();
         }
 
-        public TextBox TxtId => throw new NotImplementedException();
-
         public Materia? Entidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

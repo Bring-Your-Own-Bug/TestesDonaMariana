@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
@@ -7,12 +8,21 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
     {
         public override void ConfigurarParametros(SqlCommand comando, Disciplina registro)
         {
-            throw new NotImplementedException();
+            comando.Parameters.Clear();
+            comando.Parameters.AddWithValue("NOME", registro.Nome);
         }
 
         public override Disciplina ConverterRegistro(SqlDataReader leitorRegistros)
         {
-            throw new NotImplementedException();
+            Disciplina disciplina = new Disciplina();
+
+            int idDisciplina = (int)leitorRegistros["ID"];
+            string nomeDisciplina = Convert.ToString(leitorRegistros["NOME"])!;
+
+            disciplina.Id = idDisciplina;
+            disciplina.Nome = nomeDisciplina;
+
+            return disciplina;
         }
     }
 }

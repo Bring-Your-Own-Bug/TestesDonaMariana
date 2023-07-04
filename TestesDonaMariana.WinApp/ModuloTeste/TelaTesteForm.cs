@@ -9,8 +9,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             InitializeComponent();
         }
 
-        public TextBox TxtId => throw new NotImplementedException();
-
         public Teste? Entidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

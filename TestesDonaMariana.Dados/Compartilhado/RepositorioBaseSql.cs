@@ -24,21 +24,15 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected abstract MapeadorBase<TEntidade> Mapear { get; }
 
-        public int Id { get; private set; }
-
         public virtual void Adicionar(TEntidade registro)
         {
             conectarBd.Open();
 
             comandoBd.CommandText = AddCommand;
 
-            TMapeador mapeador = new();
-
-            mapeador.ConfigurarParametros(comandoBd, registro);
+            Mapear.ConfigurarParametros(comandoBd, registro);
 
             object id = comandoBd.ExecuteScalar();
-
-            Id = Convert.ToInt32(id) + 1;
 
             registro.Id = Convert.ToInt32(id);
 
@@ -51,9 +45,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             comandoBd.CommandText = EditCommand;
 
-            TMapeador mapeador = new();
-
-            mapeador.ConfigurarParametros(comandoBd, novoRegistro);
+            Mapear.ConfigurarParametros(comandoBd, novoRegistro);
 
             comandoBd.Parameters.AddWithValue("ID", novoRegistro.Id);
 
@@ -87,11 +79,9 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             List<TEntidade> registros = new();
 
-            TMapeador mapeador = new();
-
             while (reader.Read())
             {
-                TEntidade registro = mapeador.ConverterRegistro(reader);
+                TEntidade registro = Mapear.ConverterRegistro(reader);
 
                 registros.Add(registro);
             }
@@ -113,10 +103,8 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             TEntidade registro = null;
 
-            TMapeador mapeador = new();
-
             if (reader.Read())
-                registro = mapeador.ConverterRegistro(reader);
+                registro = Mapear.ConverterRegistro(reader);
 
             conectarBd.Close();
 

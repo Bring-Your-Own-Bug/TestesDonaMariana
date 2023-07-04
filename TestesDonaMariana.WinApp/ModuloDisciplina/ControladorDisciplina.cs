@@ -1,20 +1,25 @@
-﻿using TestesDonaMariana.Dados.Compartilhado;
-using TestesDonaMariana.Dominio.Compartilhado;
+﻿using TestesDonaMariana.Dados.ModuloDisciplina;
+using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
 {
-    public class ControladorDisciplina : ControladorBase<Disciplina, TabelaDisciplinaControl, TelaDisciplinaForm>
+    public class ControladorDisciplina : ControladorBase<Disciplina, RepositorioDisciplina, TabelaDisciplinaControl, TelaDisciplinaForm, RepositorioMateria, NenhumRepositorio>
     {
+        private RepositorioDisciplina _repositorioDisciplina;
         private TabelaDisciplinaControl _tabelaDisciplina;
 
-        public ControladorDisciplina(IRepositorio<Disciplina> _repositorio, TabelaDisciplinaControl _tabela) : base(_repositorio, _tabela)
+        private RepositorioMateria _repositorioMateria;
+
+        public ControladorDisciplina(RepositorioDisciplina _repositorio, TabelaDisciplinaControl _tabela, RepositorioMateria _repositorio2) : base(_repositorio, _tabela, _repositorio2)
         {
+            _repositorioDisciplina = _repositorio;
+            _tabelaDisciplina = _tabela;
+            _repositorioMateria = _repositorio2;
         }
 
         public override TabelaDisciplinaControl ObterListagem()
         {
-            _tabelaDisciplina ??= new TabelaDisciplinaControl();
             return _tabelaDisciplina;
         }
     }

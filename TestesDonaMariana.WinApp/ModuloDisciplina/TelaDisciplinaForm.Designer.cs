@@ -70,6 +70,7 @@
             btnAdd.TabIndex = 52;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // lbNome
             // 

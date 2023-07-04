@@ -1,47 +1,41 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
+﻿using Microsoft.Data.SqlClient;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
 {
-    public class RepositorioDisciplina : RepositorioBaseSql<Disciplina>, IRepositorio<Disciplina>
+    public class RepositorioDisciplina : RepositorioBaseSql<Disciplina>
     {
-        protected override string AddCommand => throw new NotImplementedException();
+        protected override string AddCommand => @"INSERT INTO [dbo].[TBDISCIPLINA]
+                                                        (
+                                                             [NOME]
+                                                        )
+                                                   VALUES
+                                                        (
+                                                             @NOME
+                                                        )
+                                                        SELECT SCOPE_IDENTITY();";
 
-        protected override string EditCommand => throw new NotImplementedException();
+        protected override string EditCommand => @"UPDATE [dbo].[TBDISCIPLINA]
+                                                       SET [NOME] =                     @NOME
+                                                     WHERE
+                                                            [ID] =                      @ID";
 
-        protected override string DeleteCommand => throw new NotImplementedException();
+        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBDISCIPLINA]
+													WHERE [ID] =                        @ID";
 
-        protected override string SelectCommand => throw new NotImplementedException();
+        protected override string SelectCommand => @"SELECT    D.[ID]                   ID
+                                                              ,D.[NOME]                 NOME
 
-        protected override string SelectAllCommand => throw new NotImplementedException();
+                                                          FROM [dbo].[TBDISCIPLINA] AS D
+
+													      WHERE [ID] =                  @ID";
+
+        protected override string SelectAllCommand => @"SELECT D.[ID]                   ID
+                                                              ,D.[NOME]                 NOME
+
+                                                          FROM [dbo].[TBDISCIPLINA] AS D";
 
         protected override MapeadorBase<Disciplina> Mapear => new MapeadorDisciplina();
-
-        int IRepositorio<Disciplina>.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void Adicionar<TEntidade>(TEntidade? entidade) where TEntidade : Entidade<TEntidade>, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Editar(int id, Disciplina entidade)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Editar<TEntidade>(TEntidade entidade) where TEntidade : Entidade<TEntidade>, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Excluir<TEntidade>(TEntidade entidade) where TEntidade : Entidade<TEntidade>, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Disciplina> SelecionarTodos()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

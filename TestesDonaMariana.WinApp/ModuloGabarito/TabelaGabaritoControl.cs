@@ -1,5 +1,4 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloGabarito;
+﻿using TestesDonaMariana.Dominio.ModuloGabarito;
 
 namespace TestesDonaMariana.WinApp.ModuloGabarito
 {
@@ -19,26 +18,6 @@ namespace TestesDonaMariana.WinApp.ModuloGabarito
 
             foreach (Gabarito item in gabaritos)
             {
-                DataGridViewRow row = new();
-
-                row.CreateCells(gridGabarito, item.Id);
-
-                row.Cells[0].Tag = item;
-
-                gridGabarito.Rows.Add(row);
-            }
-
-            TelaPrincipalForm.AtualizarStatus($"Visualizando {gabaritos.Count} gabaritos");
-        }
-
-        public void AtualizarLista<TEntidade>(List<TEntidade> gabaritos) where TEntidade : Entidade<TEntidade>, new()
-        {
-            gridGabarito.Rows.Clear();
-
-            System.Collections.IList list = gabaritos;
-            for (int i = 0; i < list.Count; i++)
-            {
-                Gabarito item = (Gabarito)list[i];
                 DataGridViewRow row = new();
 
                 row.CreateCells(gridGabarito, item.Id);
