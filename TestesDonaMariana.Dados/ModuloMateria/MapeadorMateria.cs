@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloSerie;
@@ -21,17 +20,17 @@ namespace TestesDonaMariana.Dados.ModuloMateria
         {
             Disciplina disciplina = new();
 
-            int idDisciplina = (int)leitorRegistros["DISCIPLINA_ID"];
-            string nomeDisciplina = Convert.ToString(leitorRegistros["NOME"])!;
+            int idDisciplina = (int)leitorRegistros["MATERIA_DISCIPLINA_ID"];
+            string nomeDisciplina = Convert.ToString(leitorRegistros["DISCIPLINA_NOME"])!;
 
             disciplina.Id = idDisciplina;
             disciplina.Nome = nomeDisciplina;
 
             Materia materia = new Materia();
 
-            int id = (int)leitorRegistros["ID"];
-            string nome = Convert.ToString(leitorRegistros["NOME"])!;
-            Serie serie = (Serie)(int)leitorRegistros["SERIE"];
+            int id = (int)leitorRegistros["MATERIA_ID"];
+            string nome = Convert.ToString(leitorRegistros["MATERIA_NOME"])!;
+            Serie serie = (Serie)(int)leitorRegistros["MATERIA_SERIE"];
 
             materia.Id = id;
             materia.Nome = nome;

@@ -53,8 +53,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         {
             TTela tela = new TTela();
 
-            if (onComandosAdicionaisAddAndEdit != null)
-                onComandosAdicionaisAddAndEdit(tela);
+            onComandosAdicionaisAddAndEdit?.Invoke(tela);
 
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
@@ -76,8 +75,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             TTela tela = new TTela();
 
-            if (onComandosAdicionaisAddAndEdit != null)
-                onComandosAdicionaisAddAndEdit(tela);
+            onComandosAdicionaisAddAndEdit?.Invoke(tela);
 
             tela.Entidade = entidade;
 

@@ -15,10 +15,10 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         public ControladorTeste(RepositorioTeste _repositorio, TabelaTesteControl _tabela, RepositorioDisciplina _repositorio2, RepositorioQuestao _repositorio3) : base(_repositorio, _tabela, _repositorio2, _repositorio3)
         {
-            _repositorio = _repositorioTeste;
-            _tabela = _tabelaTeste;
-            _repositorio2 = _repositorioDisciplina;
-            _repositorio3 = _repositorioQuestao;
+            _repositorioTeste = _repositorio;
+            _tabelaTeste = _tabela;
+            _repositorioDisciplina = _repositorio2;
+            _repositorioQuestao = _repositorio3;
         }
 
         public override TabelaTesteControl ObterListagem()
