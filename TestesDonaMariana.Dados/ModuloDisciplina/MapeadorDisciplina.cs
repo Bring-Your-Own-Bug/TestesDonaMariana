@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
@@ -16,8 +15,8 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
         {
             Disciplina disciplina = new Disciplina();
 
-            int idDisciplina = (int)leitorRegistros["ID"];
-            string nomeDisciplina = Convert.ToString(leitorRegistros["NOME"])!;
+            int idDisciplina = (int)leitorRegistros["DISCIPLINA_ID"];
+            string nomeDisciplina = Convert.ToString(leitorRegistros["DISCIPLINA_NOME"])!;
 
             disciplina.Id = idDisciplina;
             disciplina.Nome = nomeDisciplina;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloSerie;
@@ -18,18 +19,11 @@ namespace TestesDonaMariana.Dados.ModuloMateria
 
         public override Materia ConverterRegistro(SqlDataReader leitorRegistros)
         {
-            Disciplina disciplina = new();
-
-            int idDisciplina = (int)leitorRegistros["MATERIA_DISCIPLINA_ID"];
-            string nomeDisciplina = Convert.ToString(leitorRegistros["DISCIPLINA_NOME"])!;
-
-            disciplina.Id = idDisciplina;
-            disciplina.Nome = nomeDisciplina;
-
             Materia materia = new Materia();
 
             int id = (int)leitorRegistros["MATERIA_ID"];
             string nome = Convert.ToString(leitorRegistros["MATERIA_NOME"])!;
+            Disciplina disciplina = new MapeadorDisciplina().ConverterRegistro(leitorRegistros);
             Serie serie = (Serie)(int)leitorRegistros["MATERIA_SERIE"];
 
             materia.Id = id;
