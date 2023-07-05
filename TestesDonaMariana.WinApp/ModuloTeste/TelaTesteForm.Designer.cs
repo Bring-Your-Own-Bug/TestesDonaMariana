@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            comboBox2 = new ComboBox();
-            comboBox1 = new ComboBox();
+            cmbDisciplina = new ComboBox();
+            cmbMateria = new ComboBox();
             lbErroTelefone = new Label();
             lbErroNome = new Label();
             btnCancelar = new Button();
@@ -38,34 +38,34 @@
             lbDisciplina = new Label();
             label1 = new Label();
             label2 = new Label();
-            txtNome = new TextBox();
+            txtTitulo = new TextBox();
             label3 = new Label();
-            numericUpDown1 = new NumericUpDown();
-            checkBox1 = new CheckBox();
-            listBox1 = new ListBox();
-            button1 = new Button();
+            numQuestao = new NumericUpDown();
+            ckbRecuperacao = new CheckBox();
+            listQuestoes = new ListBox();
+            btnGerarQuestao = new Button();
             groupBox1 = new GroupBox();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numQuestao).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
-            // comboBox2
+            // cmbDisciplina
             // 
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(92, 102);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(157, 23);
-            comboBox2.TabIndex = 88;
+            cmbDisciplina.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbDisciplina.FormattingEnabled = true;
+            cmbDisciplina.Location = new Point(92, 102);
+            cmbDisciplina.Name = "cmbDisciplina";
+            cmbDisciplina.Size = new Size(157, 23);
+            cmbDisciplina.TabIndex = 88;
             // 
-            // comboBox1
+            // cmbMateria
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(92, 144);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(157, 23);
-            comboBox1.TabIndex = 86;
+            cmbMateria.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbMateria.FormattingEnabled = true;
+            cmbMateria.Location = new Point(92, 144);
+            cmbMateria.Name = "cmbMateria";
+            cmbMateria.Size = new Size(157, 23);
+            cmbMateria.TabIndex = 86;
             // 
             // lbErroTelefone
             // 
@@ -152,13 +152,13 @@
             label2.TabIndex = 90;
             label2.Text = "Título:";
             // 
-            // txtNome
+            // txtTitulo
             // 
-            txtNome.BackColor = SystemColors.Window;
-            txtNome.Location = new Point(92, 60);
-            txtNome.Name = "txtNome";
-            txtNome.Size = new Size(323, 23);
-            txtNome.TabIndex = 89;
+            txtTitulo.BackColor = SystemColors.Window;
+            txtTitulo.Location = new Point(92, 60);
+            txtTitulo.Name = "txtTitulo";
+            txtTitulo.Size = new Size(323, 23);
+            txtTitulo.TabIndex = 89;
             // 
             // label3
             // 
@@ -169,45 +169,45 @@
             label3.TabIndex = 92;
             label3.Text = "Qtd. Questões:";
             // 
-            // numericUpDown1
+            // numQuestao
             // 
-            numericUpDown1.Location = new Point(369, 102);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(46, 23);
-            numericUpDown1.TabIndex = 93;
+            numQuestao.Location = new Point(369, 102);
+            numQuestao.Name = "numQuestao";
+            numQuestao.Size = new Size(46, 23);
+            numQuestao.TabIndex = 93;
             // 
-            // checkBox1
+            // ckbRecuperacao
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(278, 146);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(143, 19);
-            checkBox1.TabIndex = 94;
-            checkBox1.Text = "Prova de Recuperação";
-            checkBox1.UseVisualStyleBackColor = true;
+            ckbRecuperacao.AutoSize = true;
+            ckbRecuperacao.Location = new Point(278, 146);
+            ckbRecuperacao.Name = "ckbRecuperacao";
+            ckbRecuperacao.Size = new Size(143, 19);
+            ckbRecuperacao.TabIndex = 94;
+            ckbRecuperacao.Text = "Prova de Recuperação";
+            ckbRecuperacao.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // listQuestoes
             // 
-            listBox1.Dock = DockStyle.Fill;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(3, 19);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(397, 185);
-            listBox1.TabIndex = 95;
+            listQuestoes.Dock = DockStyle.Fill;
+            listQuestoes.FormattingEnabled = true;
+            listQuestoes.ItemHeight = 15;
+            listQuestoes.Location = new Point(3, 19);
+            listQuestoes.Name = "listQuestoes";
+            listQuestoes.Size = new Size(397, 185);
+            listQuestoes.TabIndex = 95;
             // 
-            // button1
+            // btnGerarQuestao
             // 
-            button1.Location = new Point(301, 201);
-            button1.Name = "button1";
-            button1.Size = new Size(123, 30);
-            button1.TabIndex = 96;
-            button1.Text = "Gerar Questões";
-            button1.UseVisualStyleBackColor = true;
+            btnGerarQuestao.Location = new Point(301, 201);
+            btnGerarQuestao.Name = "btnGerarQuestao";
+            btnGerarQuestao.Size = new Size(123, 30);
+            btnGerarQuestao.TabIndex = 96;
+            btnGerarQuestao.Text = "Gerar Questões";
+            btnGerarQuestao.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(listBox1);
+            groupBox1.Controls.Add(listQuestoes);
             groupBox1.Location = new Point(24, 228);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(403, 207);
@@ -221,16 +221,16 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(451, 525);
-            Controls.Add(button1);
+            Controls.Add(btnGerarQuestao);
             Controls.Add(groupBox1);
-            Controls.Add(checkBox1);
-            Controls.Add(numericUpDown1);
+            Controls.Add(ckbRecuperacao);
+            Controls.Add(numQuestao);
             Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(label2);
-            Controls.Add(txtNome);
-            Controls.Add(comboBox2);
-            Controls.Add(comboBox1);
+            Controls.Add(txtTitulo);
+            Controls.Add(cmbDisciplina);
+            Controls.Add(cmbMateria);
             Controls.Add(lbErroTelefone);
             Controls.Add(lbErroNome);
             Controls.Add(btnCancelar);
@@ -244,7 +244,7 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Gerador de Testes";
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numQuestao).EndInit();
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -252,8 +252,8 @@
 
         #endregion
 
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
+        private ComboBox cmbDisciplina;
+        private ComboBox cmbMateria;
         private Label lbErroTelefone;
         private Label lbErroNome;
         private Button btnCancelar;
@@ -262,12 +262,12 @@
         private Label lbDisciplina;
         private Label label1;
         private Label label2;
-        private TextBox txtNome;
+        private TextBox txtTitulo;
         private Label label3;
-        private NumericUpDown numericUpDown1;
-        private CheckBox checkBox1;
-        private ListBox listBox1;
-        private Button button1;
+        private NumericUpDown numQuestao;
+        private CheckBox ckbRecuperacao;
+        private ListBox listQuestoes;
+        private Button btnGerarQuestao;
         private GroupBox groupBox1;
     }
 }
