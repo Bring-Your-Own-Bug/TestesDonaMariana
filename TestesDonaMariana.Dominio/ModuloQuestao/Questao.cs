@@ -25,6 +25,11 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
             
         }
 
+        public override string ToString()
+        {
+            return Enunciado;
+        }
+
         public bool ValidarQtdAlternativas(int qtdAlternativas)
         {
             return qtdAlternativas < 3 || qtdAlternativas > 4;
