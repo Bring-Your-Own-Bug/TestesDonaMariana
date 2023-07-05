@@ -11,12 +11,16 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool isValid;
 
+        private int _contador;
+
         private List<Teste> ListaTeste { get; set; }
         public TelaTesteForm()
         {
             InitializeComponent();
 
             ListaTeste = new ControladorTeste().ObterListaTeste();
+
+            _contador = 0;
         }
 
         public Teste? Entidade
@@ -25,7 +29,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             set
             {
-                
+                txtId.Text = value.Id.ToString();
+                txtTitulo.Text = value.Titulo;
+                cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
+                cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
+                numQuestao.Value = value.NumeroDeQuestoes;
+                listQuestoes.Items.AddRange(value.ListaQuestoes.ToArray());
+                _teste = value;
             }
         }
 
@@ -48,17 +58,12 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
 
-            List<Questao> questoes = new();
+            List<Questao> questoes = listQuestoes.Items.Cast<Questao>().ToList();
 
-            foreach (Questao questao in listQuestoes.Items)
-            {
-                questoes.Add(questao);
-            }
+            _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, questoes, DateTime.Now, recuperacao);
 
-            _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, questoes, DateTime.Now, recuperacao)
-            {
-                Id = 0
-            };
+            if (_teste.Id == 0)
+                _teste.Id = Convert.ToInt32(txtId.Text);
         }
 
         private void ImplementarMetodos()
@@ -67,14 +72,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             cmbDisciplina.TextChanged += ValidarCampos;
             cmbMateria.TextChanged += ValidarCampos;
             numQuestao.ValueChanged += ValidarCampos;
-            ckbRecuperacao.CheckedChanged += ValidarCampos;
         }
 
         private void ValidarCampos(object sender, EventArgs e)
         {
             Teste teste = new();
-
-            Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
 
             lbErroNome.Visible = false;
 
@@ -98,9 +100,23 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void btnGerarQuestao_Click(object sender, EventArgs e)
         {
-            listQuestoes.Items.Add(new Questao { Enunciado = "Qual é a capital do Brasil?"});
-            listQuestoes.Items.Add(new Questao { Enunciado = "Quem descobriu o Brasil?"});
-            listQuestoes.Items.Add(new Questao { Enunciado = "Quanto é 2 + 2?"});
+            
+        }
+
+        private void ckbRecuperacao_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckbRecuperacao.Checked)
+            {
+                cmbMateria.SelectedItem = null;
+            }
+        }
+
+        private void cmbDisciplina_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_contador >= 1)
+            cmbMateria.SelectedItem = null;
+
+            _contador = 1;
         }
     }
 }

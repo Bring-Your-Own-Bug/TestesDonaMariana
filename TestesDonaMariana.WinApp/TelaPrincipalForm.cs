@@ -76,7 +76,7 @@ namespace TestesDonaMariana.WinApp
 
         private void btnTeste_Click(object sender, EventArgs e)
         {
-            _controladorBase = new ControladorTeste(_repositorioTeste, _tabelaTeste, _repositorioDisciplina, _repositorioQuestao);
+            _controladorBase = new ControladorTeste(_repositorioTeste, _tabelaTeste, _repositorioDisciplina, _repositorioQuestao, _repositorioMateria);
 
             ConfigurarTelaPrincipal();
         }

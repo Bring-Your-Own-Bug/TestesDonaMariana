@@ -45,6 +45,7 @@
             listQuestoes = new ListBox();
             btnGerarQuestao = new Button();
             groupBox1 = new GroupBox();
+            txtId = new TextBox();
             ((System.ComponentModel.ISupportInitialize)numQuestao).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -57,6 +58,7 @@
             cmbDisciplina.Name = "cmbDisciplina";
             cmbDisciplina.Size = new Size(157, 23);
             cmbDisciplina.TabIndex = 88;
+            cmbDisciplina.SelectedIndexChanged += cmbDisciplina_SelectedIndexChanged;
             // 
             // cmbMateria
             // 
@@ -186,6 +188,7 @@
             ckbRecuperacao.TabIndex = 94;
             ckbRecuperacao.Text = "Prova de Recuperação";
             ckbRecuperacao.UseVisualStyleBackColor = true;
+            ckbRecuperacao.CheckedChanged += ckbRecuperacao_CheckedChanged;
             // 
             // listQuestoes
             // 
@@ -217,12 +220,22 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Questões";
             // 
+            // txtId
+            // 
+            txtId.Enabled = false;
+            txtId.Location = new Point(105, 15);
+            txtId.Name = "txtId";
+            txtId.ReadOnly = true;
+            txtId.Size = new Size(100, 23);
+            txtId.TabIndex = 99;
+            // 
             // TelaTesteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(451, 525);
+            Controls.Add(txtId);
             Controls.Add(btnGerarQuestao);
             Controls.Add(groupBox1);
             Controls.Add(ckbRecuperacao);
@@ -253,9 +266,6 @@
         }
 
         #endregion
-
-        private ComboBox cmbDisciplina;
-        private ComboBox cmbMateria;
         private Label lbErroTelefone;
         private Label lbErroNome;
         private Button btnCancelar;
@@ -267,9 +277,12 @@
         private TextBox txtTitulo;
         private Label label3;
         private NumericUpDown numQuestao;
-        private CheckBox ckbRecuperacao;
         private ListBox listQuestoes;
         private Button btnGerarQuestao;
         private GroupBox groupBox1;
+        private TextBox txtId;
+        public ComboBox cmbDisciplina;
+        public ComboBox cmbMateria;
+        public CheckBox ckbRecuperacao;
     }
 }
