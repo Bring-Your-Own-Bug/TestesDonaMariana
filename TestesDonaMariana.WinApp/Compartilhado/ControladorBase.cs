@@ -51,21 +51,15 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void Adicionar()
         {
-            TTela tela = new TTela();
+            TTela tela = new();
 
             onComandosAdicionaisAddAndEdit?.Invoke(tela);
 
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
-            DialogResult opcaoEscolhida = tela.ShowDialog();
+            if (tela.ShowDialog() == DialogResult.OK)
+                _repositorio.Adicionar(tela.Entidade);
 
-            if (opcaoEscolhida == DialogResult.OK)
-            {
-                TEntidade? entidade = tela.Entidade;
-
-                _repositorio.Adicionar(entidade);
-
-            }
             CarregarRegistros();
         }
 
@@ -73,7 +67,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
 
-            TTela tela = new TTela();
+            TTela tela = new();
 
             onComandosAdicionaisAddAndEdit?.Invoke(tela);
 
@@ -81,28 +75,23 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             TelaPrincipalForm.AtualizarStatus($"Editando {typeof(TEntidade).Name}");
 
-            DialogResult opcaoEscolhida = tela.ShowDialog();
-
-            if (opcaoEscolhida == DialogResult.OK)
+            if (tela.ShowDialog() == DialogResult.OK)
             {
                 _repositorio.Editar(tela.Entidade);
             }
+
             CarregarRegistros();
         }
 
         public virtual void Excluir()
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
-
             TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
 
-            DialogResult opcaoEscolhida = MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (opcaoEscolhida == DialogResult.Yes)
-            {
+            if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 _repositorio.Excluir(entidade);
-            }
+
             CarregarRegistros();
         }
 
@@ -119,10 +108,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual string ObterTipoCadastro()
         {
-            if ((typeof(TEntidade).Name).EndsWith("ao"))
-                return $"Cadastro de {typeof(TEntidade).Name.TrimEnd('a')}ões";
-            else
-                return $"Cadastro de {typeof(TEntidade).Name}s";
+            return ((typeof(TEntidade).Name).EndsWith("ao"))
+                ? $"Cadastro de {typeof(TEntidade).Name.TrimEnd('a')}ões"
+                : $"Cadastro de {typeof(TEntidade).Name}s";
         }
 
         public abstract UserControl ObterListagem();
