@@ -69,7 +69,7 @@ namespace TestesDonaMariana.WinApp
 
         private void btnQuestao_Click(object sender, EventArgs e)
         {
-            _controladorBase = new ControladorQuestao(_repositorioQuestao, _tabelaQuestao, _repositorioMateria);
+            _controladorBase = new ControladorQuestao(_repositorioQuestao, _tabelaQuestao, _repositorioMateria, _repositorioDisciplina);
 
             ConfigurarTelaPrincipal();
         }

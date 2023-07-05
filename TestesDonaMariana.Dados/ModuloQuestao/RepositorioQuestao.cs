@@ -12,9 +12,9 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                            )
                                                      VALUES
                                                            (
-                                                                 MATERIA_ID
-                                                                ,ENUNCIADO
-                                                                ,ALTERNATIVACORRETA
+                                                                 @MATERIA_ID
+                                                                ,@ENUNCIADO
+                                                                ,@ALTERNATIVACORRETA
                                                            )
                                                            SELECT SCOPE_IDENTITY();";
 
@@ -48,7 +48,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                             ON Q.MATERIA_ID = M.ID
 
                                                             INNER JOIN [dbo].[TBDISCIPLINA] AS D
-                                                            ON Q.DISCIPLINA_ID = D.ID
+                                                            ON M.DISCIPLINA_ID = D.ID
 
                                                             WHERE [ID] =                @ID";
 
@@ -71,7 +71,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                             ON Q.MATERIA_ID = M.ID
 
                                                             INNER JOIN [dbo].[TBDISCIPLINA] AS D
-                                                            ON Q.DISCIPLINA_ID = D.ID";
+                                                            ON M.DISCIPLINA_ID = D.ID";
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();
     }
