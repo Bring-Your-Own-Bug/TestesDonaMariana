@@ -112,6 +112,7 @@
             btnAdd.TabIndex = 82;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // lbNome
             // 
@@ -204,6 +205,7 @@
             btnGerarQuestao.TabIndex = 96;
             btnGerarQuestao.Text = "Gerar Questões";
             btnGerarQuestao.UseVisualStyleBackColor = true;
+            btnGerarQuestao.Click += btnGerarQuestao_Click;
             // 
             // groupBox1
             // 

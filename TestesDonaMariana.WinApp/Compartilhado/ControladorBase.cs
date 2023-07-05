@@ -76,9 +76,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             TelaPrincipalForm.AtualizarStatus($"Editando {typeof(TEntidade).Name}");
 
             if (tela.ShowDialog() == DialogResult.OK)
-            {
                 _repositorio.Editar(tela.Entidade);
-            }
 
             CarregarRegistros();
         }
