@@ -228,6 +228,7 @@
             txtId.ReadOnly = true;
             txtId.Size = new Size(100, 23);
             txtId.TabIndex = 99;
+            txtId.Text = "0";
             // 
             // TelaTesteForm
             // 

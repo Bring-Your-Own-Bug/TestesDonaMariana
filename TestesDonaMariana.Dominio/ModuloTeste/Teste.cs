@@ -35,5 +35,12 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
         {
             return (listaTeste.Any(t => string.Equals(t.Titulo, titulo, StringComparison.OrdinalIgnoreCase)));
         }
+
+        public bool ValidarDisciplinaExistente(int index)
+        {
+            if (index == -1)
+                return true;
+            else return false;
+        }
     }
 }

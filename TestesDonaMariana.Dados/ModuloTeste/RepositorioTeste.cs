@@ -61,6 +61,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
         protected override string SelectAllCommand => @"SELECT        T.[ID]                   TESTE_ID
                                                                      ,T.[TITULO]               TESTE_TITULO
+                                                                     ,T.[NUMERODEQUESTOES]     TESTE_NUMEROQUESTOES 
                                                                      ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
                                                                      ,T.[MATERIA_ID]           TESTE_MATERIA_ID
                                                                      ,T.[DATAGERACAO]          TESTE_DATAGERACAO
@@ -79,7 +80,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                      ON T.DISCIPLINA_ID =          D.ID
             
                                                                      INNER JOIN [dbo].[TBMATERIA] AS M
-                                                                     ON T.DISCIPLINA_ID =          M.ID";
+                                                                     ON T.MATERIA_ID =          M.ID";
 
         protected override MapeadorBase<Teste> Mapear => new MapeadorTeste();
     }

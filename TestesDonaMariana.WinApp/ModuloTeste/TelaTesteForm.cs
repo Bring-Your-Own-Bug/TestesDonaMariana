@@ -91,6 +91,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Esse teste já existe";
             }
+            else if (teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex))
+            {
+                lbErroNome.Visible = true;
+                lbErroNome.Text = "*Esse teste já existe";
+            }
 
             if (lbErroNome.Visible)
                 isValid = false;
@@ -100,7 +105,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void btnGerarQuestao_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void ckbRecuperacao_CheckedChanged(object sender, EventArgs e)
@@ -114,7 +119,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         private void cmbDisciplina_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_contador >= 1)
-            cmbMateria.SelectedItem = null;
+                cmbMateria.SelectedItem = null;
 
             _contador = 1;
         }

@@ -28,7 +28,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
             int id = (int)leitorRegistros["TESTE_ID"];
             string titulo = Convert.ToString(leitorRegistros["TESTE_TITULO"]);
-            int numeroDeQuestoes = (int)leitorRegistros["TESTE_NUMERODEQUESTOES"];
+            int numeroDeQuestoes = Convert.ToInt32(leitorRegistros["TESTE_NUMEROQUESTOES"]);
             Disciplina disciplina = new MapeadorDisciplina().ConverterRegistro(leitorRegistros);
             Materia materia = new MapeadorMateria().ConverterRegistro(leitorRegistros);
            // Questao questao = new MapeadorQuestao().ConverterRegistro(leitorRegistros);
