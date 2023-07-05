@@ -10,8 +10,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                ,[NUMERODEQUESTOES]
                                                                ,[DISCIPLINA_ID]
                                                                ,[MATERIA_ID]
-                                                               ,[LISTA_QUESTAO_ID]
-                                                               ,[DATAGERACAO_ID]
+                                                               ,[DATAGERACAO]
                                                            )
                                                      VALUES
                                                            (
@@ -19,8 +18,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                 ,@NUMERODEQUESTOES
                                                                 ,@DISCIPLINA_ID
                                                                 ,@MATERIA_ID
-                                                                --,@LISTA_QUESTAO_ID
-                                                                ,@DATAGERACAO_ID
+                                                                ,@DATAGERACAO
                                                            )
                                                            SELECT SCOPE_IDENTITY();";
 
@@ -30,7 +28,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                      ,[NUMERODEQUESTOES] =   @NUMERODEQUESTOES                                                  
                                                      ,[DISCIPLINA_ID] =      @DISCIPLINA_ID
                                                      ,[MATERIA_ID] =         @MATERIA_ID
-                                                     --,[LISTA_QUESTAO_ID] =   @LISTA_QUESTAO_ID
                                                      ,[DATAGERACAO] =        @DATAGERACAO
 
                                                 WHERE[ID] = @ID";
@@ -42,7 +39,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                               ,T.[TITULO]               TESTE_TITULO
                                                               ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
                                                               ,T.[MATERIA_ID]           TESTE_MATERIA_ID
-                                                              --,T.[LISTA_QUESTAO_ID]     TESTE_LISTA_QUESTAO_ID
                                                               ,T.[DATAGERACAO]          TESTE_DATAGERACAO
 
                                                               ,D.[ID]                   DISCIPLINA_ID
@@ -67,7 +63,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                      ,T.[TITULO]               TESTE_TITULO
                                                                      ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
                                                                      ,T.[MATERIA_ID]           TESTE_MATERIA_ID
-                                                                     --,T.[LISTA_QUESTAO_ID]     TESTE_LISTA_QUESTAO_ID
                                                                      ,T.[DATAGERACAO]          TESTE_DATAGERACAO
 
                                                                      ,D.[ID]                   DISCIPLINA_ID
