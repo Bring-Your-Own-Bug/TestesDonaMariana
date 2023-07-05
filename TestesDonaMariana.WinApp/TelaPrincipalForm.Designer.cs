@@ -142,12 +142,13 @@
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
             barraFuncoes.TabIndex = 1;
+            barraFuncoes.Visible = false;
             // 
             // btnAdicionar
             // 
             btnAdicionar.BackColor = Color.FromArgb(80, 230, 80);
             btnAdicionar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAdicionar.Image = TestesDonaMariana.WinApp.Properties.Resources.add;
+            btnAdicionar.Image = Properties.Resources.add;
             btnAdicionar.ImageScaling = ToolStripItemImageScaling.None;
             btnAdicionar.ImageTransparentColor = Color.Magenta;
             btnAdicionar.Margin = new Padding(10);
@@ -161,7 +162,7 @@
             // 
             btnEditar.BackColor = Color.FromArgb(80, 130, 230);
             btnEditar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnEditar.Image = TestesDonaMariana.WinApp.Properties.Resources.edit;
+            btnEditar.Image = Properties.Resources.edit;
             btnEditar.ImageScaling = ToolStripItemImageScaling.None;
             btnEditar.ImageTransparentColor = Color.Magenta;
             btnEditar.Margin = new Padding(10);
@@ -175,7 +176,7 @@
             // 
             btnExcluir.BackColor = Color.FromArgb(230, 80, 80);
             btnExcluir.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnExcluir.Image = TestesDonaMariana.WinApp.Properties.Resources.remove;
+            btnExcluir.Image = Properties.Resources.remove;
             btnExcluir.ImageScaling = ToolStripItemImageScaling.None;
             btnExcluir.ImageTransparentColor = Color.Magenta;
             btnExcluir.Margin = new Padding(10);
@@ -195,7 +196,7 @@
             btnAddItem.BackColor = Color.Yellow;
             btnAddItem.Enabled = false;
             btnAddItem.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddItem.Image = TestesDonaMariana.WinApp.Properties.Resources.addItem;
+            btnAddItem.Image = Properties.Resources.addItem;
             btnAddItem.ImageScaling = ToolStripItemImageScaling.None;
             btnAddItem.ImageTransparentColor = Color.Magenta;
             btnAddItem.Margin = new Padding(10);
@@ -210,7 +211,7 @@
             btnAttStatus.BackColor = Color.Orange;
             btnAttStatus.Enabled = false;
             btnAttStatus.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAttStatus.Image = TestesDonaMariana.WinApp.Properties.Resources.statusCheck;
+            btnAttStatus.Image = Properties.Resources.statusCheck;
             btnAttStatus.ImageScaling = ToolStripItemImageScaling.None;
             btnAttStatus.ImageTransparentColor = Color.Magenta;
             btnAttStatus.Margin = new Padding(10);
