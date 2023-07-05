@@ -18,7 +18,10 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             set
             {
-                txtTitulo
+                txtTitulo.Text = value.Titulo;
+                cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
+                cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
             }
         }
     }
+}
