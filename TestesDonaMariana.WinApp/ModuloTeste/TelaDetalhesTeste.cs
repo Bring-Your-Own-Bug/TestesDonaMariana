@@ -15,6 +15,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         public TelaDetalhesTeste()
         {
             InitializeComponent();
+
+            this.ConfigurarDialog();
         }
     }
 }
