@@ -1,4 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
+using TestesDonaMariana.Dados.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dados.ModuloQuestao
@@ -7,12 +9,27 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
     {
         public override void ConfigurarParametros(SqlCommand comando, Questao registro)
         {
-            throw new NotImplementedException();
+            comando.Parameters.Clear();
+            comando.Parameters.AddWithValue("MATERIA_ID", registro.Materia.Id);
+            comando.Parameters.AddWithValue("ENUNCIADO", registro.Enunciado);
+            comando.Parameters.AddWithValue("ALTERNATIVACORRETA", registro.AlternativaCorreta);
         }
 
         public override Questao ConverterRegistro(SqlDataReader leitorRegistros)
         {
-            throw new NotImplementedException();
+            Questao questao = new Questao();
+
+            int id = (int)leitorRegistros["QUESTAO_ID"];
+            Materia materia = new MapeadorMateria().ConverterRegistro(leitorRegistros);
+            string enunciado = Convert.ToString(leitorRegistros["QUESTAO_ENUNCIADO"])!;
+            string alternativaCorreta = Convert.ToString(leitorRegistros["QUESTAO_ALTERNATIVACORRETA"])!;
+
+            questao.Id = id;
+            questao.Materia = materia;
+            questao.Enunciado = enunciado;
+            questao.AlternativaCorreta = alternativaCorreta;
+
+            return questao;
         }
     }
 }

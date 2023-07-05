@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloSerie;
+﻿using TestesDonaMariana.Dominio.ModuloMateria;
 
 namespace TestesDonaMariana.Dados.ModuloMateria
 {
@@ -35,6 +33,7 @@ namespace TestesDonaMariana.Dados.ModuloMateria
                                                               ,M.[DISCIPLINA_ID]        MATERIA_DISCIPLINA_ID
                                                               ,M.[SERIE]                MATERIA_SERIE
 
+                                                              ,D.[ID]                   DISCIPLINA_ID
                                                               ,D.[NOME]                 DISCIPLINA_NOME
 
                                                           FROM [dbo].[TBMATERIA] AS M
@@ -49,6 +48,7 @@ namespace TestesDonaMariana.Dados.ModuloMateria
                                                                   ,M.[DISCIPLINA_ID]        MATERIA_DISCIPLINA_ID
                                                                   ,M.[SERIE]                MATERIA_SERIE
 
+                                                                  ,D.[ID]                   DISCIPLINA_ID
                                                                   ,D.[NOME]                 DISCIPLINA_NOME
 
                                                           FROM [dbo].[TBMATERIA] AS M

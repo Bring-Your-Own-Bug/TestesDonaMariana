@@ -24,6 +24,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             set
             {
                 txtNome.Text = value.Nome;
+                _disciplina = value;
             }
         }
 
@@ -60,6 +61,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
             }
+            else if (_disciplina != null && string.Equals(_disciplina.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
             else if (disciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
             {
                 lbErroNome.Visible = true;

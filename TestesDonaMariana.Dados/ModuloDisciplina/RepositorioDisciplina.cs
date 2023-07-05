@@ -22,15 +22,15 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
         protected override string DeleteCommand => @"DELETE FROM [dbo].[TBDISCIPLINA]
 													WHERE [ID] =                        @ID";
 
-        protected override string SelectCommand => @"SELECT    D.[ID]                   ID
-                                                              ,D.[NOME]                 NOME
+        protected override string SelectCommand => @"SELECT    D.[ID]                   DISCIPLINA_ID
+                                                              ,D.[NOME]                 DISCIPLINA_NOME
 
                                                           FROM [dbo].[TBDISCIPLINA] AS D
 
 													      WHERE [ID] =                  @ID";
 
-        protected override string SelectAllCommand => @"SELECT D.[ID]                   ID
-                                                              ,D.[NOME]                 NOME
+        protected override string SelectAllCommand => @"SELECT D.[ID]                   DISCIPLINA_ID
+                                                              ,D.[NOME]                 DISCIPLINA_NOME
 
                                                           FROM [dbo].[TBDISCIPLINA] AS D";
 

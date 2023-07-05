@@ -25,6 +25,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 txtId.Text = value.Id.ToString();
                 txtNome.Text = value.Nome;
                 txtDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
+                _materia = value;
             }
             get
             {
@@ -73,6 +74,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
             }
+            else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
             else if (materia.ValidarNomeExistente(txtNome.Text, serie, ListaMateria))
             {
                 lbErroNome.Visible = true;
