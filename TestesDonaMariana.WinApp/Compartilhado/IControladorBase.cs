@@ -24,6 +24,8 @@
 
         public abstract string ObterTipoCadastro();
 
+        public abstract void CarregarDetalhesTeste();
+
         public UserControl ObterListagem();
     }
 }

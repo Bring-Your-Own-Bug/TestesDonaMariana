@@ -37,7 +37,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         public void CarregarComboBox(TelaDisciplinaForm telaDisciplina, Disciplina disciplina)
         {
-            disciplina.ListaMaterias = _repositorioDisciplina.ObterMaterias(disciplina);
+            //disciplina.ListaMaterias = _repositorioDisciplina.ObterMaterias(disciplina);
         }
     }
 }

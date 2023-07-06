@@ -1,4 +1,6 @@
-﻿namespace TestesDonaMariana.WinApp.ModuloTeste
+﻿using TestesDonaMariana.Dados.ModuloTeste;
+
+namespace TestesDonaMariana.WinApp.ModuloTeste
 {
     public partial class TelaDetalhesTeste : Form
     {
@@ -8,5 +10,9 @@
 
             this.ConfigurarDialog();
         }
+
+        public object Entidade { get; internal set; }
+
+        public void PreencherLabel(){}
     }
 }

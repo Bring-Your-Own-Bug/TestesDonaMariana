@@ -2,6 +2,7 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
@@ -45,6 +46,21 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         public override TabelaTesteControl ObterListagem()
         {
             return _tabelaTeste;
+        }
+
+        public override void CarregarDetalheTeste()
+        {
+            Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
+
+            TelaDetalhesTeste tela = new();
+
+            tela.Entidade = teste;
+
+            TelaPrincipalForm.AtualizarStatus($"Editando {typeof(Teste).Name}");
+
+            tela.ShowDialog();
+            
+            CarregarRegistros();
         }
 
         public List<Teste>? ObterListaTeste()

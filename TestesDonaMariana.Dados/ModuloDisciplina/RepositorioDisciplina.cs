@@ -53,28 +53,28 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
 
                                                           WHERE [DISCIPLINA_ID] =                   @ID";
 
-        public List<Materia> ObterMaterias(Disciplina disciplina)
-        {
-            conectarBd.Open();
+        //public List<Materia> ObterMaterias(Disciplina disciplina)
+        //{
+        //    conectarBd.Open();
 
-            comandoBd.CommandText = SelectMaterias;
+        //    comandoBd.CommandText = SelectMaterias;
 
-            comandoBd.Parameters.AddWithValue("ID", disciplina.Id);
+        //    comandoBd.Parameters.AddWithValue("ID", disciplina.Id);
 
-            SqlDataReader reader = comandoBd.ExecuteReader();
+        //    SqlDataReader reader = comandoBd.ExecuteReader();
 
-            List<Materia> materias = new();
+        //    List<Materia> materias = new();
 
-            while (reader.Read())
-            {
-                Materia materia = new MapeadorMateria().ConverterRegistro(reader);
-                materias.Add(materia);
-            }
+        //    while (reader.Read())
+        //    {
+        //        Materia materia = new MapeadorMateria().ConverterRegistro(reader);
+        //        materias.Add(materia);
+        //    }
 
-            conectarBd.Close();
+        //    conectarBd.Close();
 
-            return materias;
-        }
+        //    return materias;
+        //}
 
         protected override MapeadorBase<Disciplina> Mapear => new MapeadorDisciplina();
     }

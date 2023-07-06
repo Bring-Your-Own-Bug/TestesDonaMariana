@@ -73,9 +73,9 @@
             txtTesteEscolhido.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             txtTesteEscolhido.Location = new Point(90, 28);
             txtTesteEscolhido.Name = "txtTesteEscolhido";
-            txtTesteEscolhido.Size = new Size(94, 15);
+            txtTesteEscolhido.Size = new Size(91, 15);
             txtTesteEscolhido.TabIndex = 3;
-            txtTesteEscolhido.Text = "Teste Escolhido:";
+            txtTesteEscolhido.Text = "Teste Escolhido";
             // 
             // txtDisciplinaEscolhida
             // 
