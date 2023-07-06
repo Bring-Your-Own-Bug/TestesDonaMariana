@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
+using TestesDonaMariana.Dados.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
@@ -31,9 +32,9 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             Disciplina? disciplina = _tabela.ObterRegistroSelecionado();
             TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(Disciplina).Name}");
 
-            if (disciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros()))
+            if (disciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
             {
-                MessageBox.Show($"Existem Matérias cadastradas na Disciplina \"{disciplina.Nome}\", Exclua-as para excluir essa Disciplina",
+                MessageBox.Show($"Existem Matérias ou Testes cadastrados na Disciplina \"{disciplina.Nome}\", Exclua-os para excluir essa Disciplina",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }

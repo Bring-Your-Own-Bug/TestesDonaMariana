@@ -1,6 +1,9 @@
 ﻿using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
+using TestesDonaMariana.Dados.ModuloTeste;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
+using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
@@ -21,6 +24,24 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             _repositorioDisciplina = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
+        }
+
+        public override void Excluir()
+        {
+            Questao? questao = _tabela.ObterRegistroSelecionado();
+            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(Disciplina).Name}");
+
+            if (questao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
+            {
+                MessageBox.Show($"Existem Testes cadastrados com a questão selecionada, Exclua-os para excluir essa Questão",
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(Questao).Name}",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                _repositorio.Excluir(questao);
+
+            CarregarRegistros();
         }
 
         public void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)

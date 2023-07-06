@@ -23,6 +23,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
             set
             {
+                txtId.Text = value.Id.ToString();
                 txtNome.Text = value.Nome;
                 _disciplina = value;
             }

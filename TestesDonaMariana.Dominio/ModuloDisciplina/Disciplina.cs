@@ -1,5 +1,6 @@
 ﻿using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloDisciplina
 {
@@ -23,9 +24,9 @@ namespace TestesDonaMariana.Dominio.ModuloDisciplina
             return listaDisciplinas.Any(m => string.Equals(m.Nome, nome, StringComparison.OrdinalIgnoreCase));
         }
 
-        public bool ValidarDependencia(Disciplina disciplina, List<Materia> materias)
+        public bool ValidarDependencia(Disciplina disciplina, List<Materia> materias, List<Teste> testes)
         {
-            return materias.Exists(m => m.Disciplina.Id == disciplina.Id);
+            return materias.Exists(m => m.Disciplina.Id == disciplina.Id) || testes.Exists(t => t.Disciplina.Id == disciplina.Id);
         }
     }
 }

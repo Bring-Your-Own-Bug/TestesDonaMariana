@@ -1,6 +1,7 @@
 ﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloSerie;
+using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria
 {
@@ -26,6 +27,11 @@ namespace TestesDonaMariana.Dominio.ModuloMateria
         public bool ValidarNomeExistente(string nome, Serie serie, List<Materia> listaMateria)
         {
             return (listaMateria.Any(m => string.Equals(m.Nome, nome, StringComparison.OrdinalIgnoreCase) && m.Serie == serie));
+        }
+
+        public bool ValidarDependencia(Materia materia, List<Questao> questoes, List<Teste> testes)
+        {
+            return questoes.Exists(q => q.Materia.Id == materia.Id) || testes.Exists(t => t.Materia.Id == materia.Id);
         }
     }
 }

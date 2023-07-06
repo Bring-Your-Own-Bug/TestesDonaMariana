@@ -1,6 +1,7 @@
 ﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloSerie;
+using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloQuestao
 {
@@ -48,6 +49,16 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
         public bool ValidarQtdMaximaAlternativas(int qtdAlternativas)
         {
             return qtdAlternativas >= 4;
+        }
+
+        public bool ValidarDependencia(Questao questao, List<Teste> testes)
+        {
+            foreach (Teste teste in testes)
+            {
+                if (teste.ListaQuestoes.Exists(q => q.Id == questao.Id))
+                    return true;
+            }
+            return false;
         }
     }
 }
