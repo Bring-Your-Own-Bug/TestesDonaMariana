@@ -178,7 +178,6 @@
             numQuestao.Name = "numQuestao";
             numQuestao.Size = new Size(46, 23);
             numQuestao.TabIndex = 93;
-            numQuestao.ValueChanged += numQuestao_ValueChanged;
             // 
             // ckbRecuperacao
             // 

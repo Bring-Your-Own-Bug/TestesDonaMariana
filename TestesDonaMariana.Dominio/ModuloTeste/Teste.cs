@@ -42,5 +42,12 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
                 return true;
             else return false;
         }
+
+        public bool ValidarMateriaExistente(int selectedIndex, bool @checked)
+        {
+            if (@checked == false && selectedIndex == -1)
+                return true;
+            else return false;
+        }
     }
 }
