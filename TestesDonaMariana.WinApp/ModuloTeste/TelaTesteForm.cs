@@ -112,16 +112,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             if (ckbRecuperacao.Checked)
             {
+                cmbMateria.Enabled = false;
                 cmbMateria.SelectedItem = null;
             }
+            else cmbMateria.Enabled = true;
         }
 
         private void cmbDisciplina_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_contador >= 1)
-                cmbMateria.SelectedItem = null;
-
-            _contador = 1;
+            cmbMateria.SelectedItem = null;
         }
     }
 }
