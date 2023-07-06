@@ -2,7 +2,6 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloQuestao;
-using TestesDonaMariana.WinApp.ModuloMateria;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
 {
@@ -33,6 +32,9 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             telaQuestao.txtDisciplina.DisplayMember = "Nome";
             telaQuestao.txtDisciplina.ValueMember = "Nome";
             telaQuestao.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
+
+            if (questao != null)
+                questao.Alternativas = _repositorioQuestao.ObterAlternativas(questao);
         }
 
         public override TabelaQuestaoControl ObterListagem()
