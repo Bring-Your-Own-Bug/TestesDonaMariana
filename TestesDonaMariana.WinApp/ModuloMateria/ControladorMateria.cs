@@ -29,7 +29,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             return new RepositorioMateria().ObterListaRegistros();
         }
 
-        public void CarregarComboBox(TelaMateriaForm telaMateria)
+        public void CarregarComboBox(TelaMateriaForm telaMateria, Materia materia)
         {
             telaMateria.txtDisciplina.DisplayMember = "Nome";
             telaMateria.txtDisciplina.ValueMember = "Nome";

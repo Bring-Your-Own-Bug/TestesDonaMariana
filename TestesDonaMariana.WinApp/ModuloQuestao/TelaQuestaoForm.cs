@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
@@ -11,7 +10,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private bool isValid;
 
-        private List<Materia> ListaMateria { get; set; }
+        private List<Materia> ListaMateria { get; set; } = new();
 
         public TelaQuestaoForm()
         {
@@ -26,7 +25,11 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 txtDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
                 txtMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
                 txtEnunciado.Text = value.Enunciado;
+
                 listAlternativas.Items.AddRange(value.Alternativas.ToArray());
+                int index = listAlternativas.Items.IndexOf(value.AlternativaCorreta);
+                listAlternativas.SetItemChecked(index, true);
+
                 _questao = value;
             }
             get
@@ -71,9 +74,9 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
             lbErroAlternativas.Visible = false;
 
-            if (questao.ValidarQtdAlternativas(listAlternativas.Items.Count))
+            if (questao.ValidarQtdMinimaAlternativas(listAlternativas.Items.Count))
             {
-                lbErroAlternativas.Text = "*Apenas 3 a 4 alternativas";
+                lbErroAlternativas.Text = "*Deve ter no mínimo 3 alternativas";
                 lbErroAlternativas.Visible = true;
             }
             else if (questao.ValidarAlternativaCorreta(listAlternativas.CheckedItems.Count))
@@ -84,8 +87,9 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
             lbErroEnunciado.Visible = questao.ValidarCampoVazio(txtEnunciado.Text);
 
-            //lbErroMateria.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
-            //lbErroDisciplina.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
+            lbErroMateria.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
+
+            lbErroDisciplina.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
 
             if (lbErroDisciplina.Visible || lbErroMateria.Visible || lbErroEnunciado.Visible || lbErroAlternativas.Visible)
                 isValid = false;
@@ -106,12 +110,20 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                     lbErroAlternativas.Text = "*Alternativa já existente";
                     lbErroAlternativas.Visible = true;
                 }
+                else if (questao.ValidarQtdMaximaAlternativas(listAlternativas.Items.Count))
+                {
+                    lbErroAlternativas.Text = "*Máximo de 4 alternativas";
+                    lbErroAlternativas.Visible = true;
+                }
                 else
                 {
                     listAlternativas.Items.Add(txtResposta.Text);
                     lbErroAlternativas.Visible = false;
                 }
             }
+
+            txtResposta.ResetText();
+            txtResposta.Focus();
         }
 
         private void btnExcluirAlternativa_Click(object sender, EventArgs e)
@@ -128,6 +140,19 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             {
                 if (index != e.Index)
                     listAlternativas.SetItemChecked(index, false);
+            }
+        }
+
+        private void txtDisciplina_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (ListaMateria.Count == 0)
+                ListaMateria = (List<Materia>)txtMateria.DataSource;
+
+            if (txtDisciplina.SelectedIndex != -1)
+            {
+                Disciplina disciplina = txtDisciplina.SelectedItem as Disciplina;
+
+                txtMateria.DataSource = ListaMateria.FindAll(m => m.Disciplina.Id == disciplina.Id);
             }
         }
     }

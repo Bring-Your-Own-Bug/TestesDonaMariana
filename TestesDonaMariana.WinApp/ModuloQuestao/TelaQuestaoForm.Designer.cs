@@ -66,7 +66,7 @@
             txtMateria.Location = new Point(90, 98);
             txtMateria.Name = "txtMateria";
             txtMateria.Size = new Size(157, 23);
-            txtMateria.TabIndex = 69;
+            txtMateria.TabIndex = 2;
             // 
             // lbErroMateria
             // 
@@ -99,7 +99,7 @@
             btnCancelar.Location = new Point(360, 590);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(70, 36);
-            btnCancelar.TabIndex = 66;
+            btnCancelar.TabIndex = 9;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
@@ -110,7 +110,7 @@
             btnAdd.Location = new Point(284, 590);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(70, 36);
-            btnAdd.TabIndex = 65;
+            btnAdd.TabIndex = 8;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
@@ -140,7 +140,8 @@
             txtDisciplina.Location = new Point(90, 56);
             txtDisciplina.Name = "txtDisciplina";
             txtDisciplina.Size = new Size(157, 23);
-            txtDisciplina.TabIndex = 73;
+            txtDisciplina.TabIndex = 1;
+            txtDisciplina.SelectedValueChanged += txtDisciplina_SelectedValueChanged;
             // 
             // label2
             // 
@@ -157,7 +158,7 @@
             txtEnunciado.Multiline = true;
             txtEnunciado.Name = "txtEnunciado";
             txtEnunciado.Size = new Size(321, 99);
-            txtEnunciado.TabIndex = 75;
+            txtEnunciado.TabIndex = 3;
             // 
             // lbErroEnunciado
             // 
@@ -177,7 +178,7 @@
             txtResposta.Multiline = true;
             txtResposta.Name = "txtResposta";
             txtResposta.Size = new Size(321, 64);
-            txtResposta.TabIndex = 77;
+            txtResposta.TabIndex = 4;
             // 
             // listAlternativas
             // 
@@ -188,7 +189,7 @@
             listAlternativas.Location = new Point(3, 19);
             listAlternativas.Name = "listAlternativas";
             listAlternativas.Size = new Size(372, 153);
-            listAlternativas.TabIndex = 78;
+            listAlternativas.TabIndex = 5;
             listAlternativas.ItemCheck += listAlternativas_ItemCheck;
             // 
             // groupBox1
@@ -228,7 +229,7 @@
             btnAddAlternativa.Location = new Point(33, 563);
             btnAddAlternativa.Name = "btnAddAlternativa";
             btnAddAlternativa.Size = new Size(75, 23);
-            btnAddAlternativa.TabIndex = 83;
+            btnAddAlternativa.TabIndex = 6;
             btnAddAlternativa.Text = "Adicionar";
             btnAddAlternativa.UseVisualStyleBackColor = true;
             btnAddAlternativa.Click += btnAddAlternativa_Click;
@@ -238,7 +239,7 @@
             btnExcluirAlternativa.Location = new Point(114, 563);
             btnExcluirAlternativa.Name = "btnExcluirAlternativa";
             btnExcluirAlternativa.Size = new Size(75, 23);
-            btnExcluirAlternativa.TabIndex = 84;
+            btnExcluirAlternativa.TabIndex = 7;
             btnExcluirAlternativa.Text = "Excluir";
             btnExcluirAlternativa.UseVisualStyleBackColor = true;
             btnExcluirAlternativa.Click += btnExcluirAlternativa_Click;
@@ -291,7 +292,6 @@
         private TextBox txtEnunciado;
         private Label lbErroEnunciado;
         private TextBox txtResposta;
-        private CheckedListBox listAlternativas;
         private GroupBox groupBox1;
         internal ComboBox txtMateria;
         internal ComboBox txtDisciplina;
@@ -299,5 +299,6 @@
         private Label lbErroAlternativas;
         private Button btnAddAlternativa;
         private Button btnExcluirAlternativa;
+        internal CheckedListBox listAlternativas;
     }
 }

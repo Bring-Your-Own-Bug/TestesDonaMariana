@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Win32;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
@@ -12,7 +13,11 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected SqlCommand comandoBd = conectarBd.CreateCommand();
 
-        protected event Action<TEntidade> onComandoDeRelacao;
+        protected event Action<TEntidade> onComandoDeRelacaoAdd;
+
+        protected event Action<TEntidade> onComandoDeRelacaoEdit;
+
+        protected event Action<TEntidade> onComandoDeRelacaoDelete;
 
         public RepositorioBaseSql()
         {
@@ -43,7 +48,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             registro.Id = Convert.ToInt32(id);
 
-            onComandoDeRelacao?.Invoke(registro);
+            onComandoDeRelacaoAdd?.Invoke(registro);
 
             conectarBd.Close();
         }
@@ -60,6 +65,8 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             comandoBd.ExecuteNonQuery();
 
+            onComandoDeRelacaoEdit?.Invoke(novoRegistro);
+
             conectarBd.Close();
         }
 
@@ -67,11 +74,13 @@ namespace TestesDonaMariana.Dados.Compartilhado
         {
             conectarBd.Open();
 
-            comandoBd.CommandText = DeleteCommand;
-
             comandoBd.Parameters.Clear();
 
             comandoBd.Parameters.AddWithValue("ID", registroSelecionado.Id);
+
+            onComandoDeRelacaoDelete?.Invoke(registroSelecionado);
+
+            comandoBd.CommandText = DeleteCommand;
 
             comandoBd.ExecuteNonQuery();
 

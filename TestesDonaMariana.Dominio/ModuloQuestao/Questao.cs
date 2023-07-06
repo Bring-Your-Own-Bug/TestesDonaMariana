@@ -30,11 +30,6 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
             return Enunciado;
         }
 
-        public bool ValidarQtdAlternativas(int qtdAlternativas)
-        {
-            return qtdAlternativas < 3 || qtdAlternativas > 4;
-        }
-
         public bool ValidarAlternativaExistente(string alternativaAdd, List<string> lista)
         {
             return (lista.Any(alternativa => string.Equals(alternativa, alternativaAdd, StringComparison.OrdinalIgnoreCase)));
@@ -43,6 +38,16 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
         public bool ValidarAlternativaCorreta(int checkCount)
         {
             return checkCount == 0;
+        }
+
+        public bool ValidarQtdMinimaAlternativas(int qtdAlternativas)
+        {
+            return qtdAlternativas < 3;
+        }
+
+        public bool ValidarQtdMaximaAlternativas(int qtdAlternativas)
+        {
+            return qtdAlternativas >= 4;
         }
     }
 }
