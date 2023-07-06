@@ -58,7 +58,7 @@
             cmbDisciplina.Name = "cmbDisciplina";
             cmbDisciplina.Size = new Size(157, 23);
             cmbDisciplina.TabIndex = 88;
-            cmbDisciplina.SelectedIndexChanged += cmbDisciplina_SelectedIndexChanged;
+            cmbDisciplina.SelectedValueChanged += cmbDisciplina_SelectedValueChanged;
             // 
             // cmbMateria
             // 

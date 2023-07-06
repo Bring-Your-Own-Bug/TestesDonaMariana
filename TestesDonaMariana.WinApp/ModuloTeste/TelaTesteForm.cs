@@ -12,11 +12,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         private bool isValid;
 
         private List<Teste> ListaTeste { get; set; }
+        private List<Materia> ListaMateria { get; set; }
+        private ControladorTeste _controladorTeste;
         public TelaTesteForm()
         {
             InitializeComponent();
 
-            ListaTeste = new ControladorTeste().ObterListaTeste();
+            _controladorTeste = new ControladorTeste();
+            ListaTeste = _controladorTeste.ObterListaTeste();
+            ListaMateria = _controladorTeste.ObterListaMateria();
         }
 
         public Teste? Entidade
@@ -114,11 +118,17 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             else cmbMateria.Enabled = true;
         }
 
-        private void cmbDisciplina_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbDisciplina_SelectedValueChanged(object sender, EventArgs e)
         {
-            Disciplina disciplina = cmbDisciplina.SelectedItem as Disciplina;
+            if (ListaMateria.Count == 0)
+                ListaMateria = (List<Materia>)cmbMateria.DataSource;
 
-            cmbMateria.Items.AddRange(disciplina.ListaMaterias.ToArray());
+            if (cmbDisciplina.SelectedIndex != -1)
+            {
+                Disciplina disciplina = cmbDisciplina.SelectedItem as Disciplina;
+
+                cmbMateria.DataSource = ListaMateria.FindAll(m => m.Disciplina.Id == disciplina.Id);
+            }
         }
 
         private void numQuestao_ValueChanged(object sender, EventArgs e)

@@ -16,8 +16,6 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         {
             _tabelaDisciplina = _tabela;
             _repositorioDisciplina = _repositorio;
-
-            onComandosAdicionaisAddAndEdit += CarregarComboBox;
         }
 
         public ControladorDisciplina()
@@ -33,11 +31,6 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         public override TabelaDisciplinaControl ObterListagem()
         {
             return _tabelaDisciplina;
-        }
-
-        public void CarregarComboBox(TelaDisciplinaForm telaDisciplina, Disciplina disciplina)
-        {
-            disciplina.ListaMaterias = _repositorioDisciplina.ObterMaterias(disciplina);
         }
     }
 }
