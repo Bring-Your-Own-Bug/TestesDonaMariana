@@ -49,7 +49,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             return _tabelaTeste;
         }
 
-        public override void CarregarDetalheTeste()
+        public override void CarregarDetalhesTeste()
         {
             Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 

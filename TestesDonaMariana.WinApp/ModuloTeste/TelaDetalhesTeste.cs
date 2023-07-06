@@ -1,4 +1,4 @@
-﻿using TestesDonaMariana.Dados.ModuloTeste;
+﻿using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -11,8 +11,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             this.ConfigurarDialog();
         }
 
-        public object Entidade { get; internal set; }
-
-        public void PreencherLabel(){}
+        public Teste? Entidade { get; set; }
     }
 }

@@ -104,8 +104,6 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             _tabela.AtualizarLista(_repositorio.ObterListaRegistros());
         }
 
-        public virtual void CarregarDetalheTeste(){  }
-
         public virtual string ObterTipoCadastro()
         {
             return ((typeof(TEntidade).Name).EndsWith("ao"))
@@ -114,5 +112,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         }
 
         public abstract UserControl ObterListagem();
+
+        public virtual void CarregarDetalhesTeste() { }
     }
 }
