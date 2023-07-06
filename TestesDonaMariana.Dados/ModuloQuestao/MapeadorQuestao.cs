@@ -15,6 +15,13 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             comando.Parameters.AddWithValue("ALTERNATIVACORRETA", registro.AlternativaCorreta);
         }
 
+        public void ConfigurarParametrosAlternativas(SqlCommand comando, Questao registro)
+        {
+            comando.Parameters.Clear();
+            comando.Parameters.AddWithValue("QUESTAO_ID", registro.Id);
+            comando.Parameters.AddWithValue("ALTERNATIVA", registro.Alternativas);
+        }
+
         public override Questao ConverterRegistro(SqlDataReader leitorRegistros)
         {
             Questao questao = new Questao();

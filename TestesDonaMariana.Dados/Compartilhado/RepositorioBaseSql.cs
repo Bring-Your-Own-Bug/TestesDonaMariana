@@ -3,14 +3,21 @@ using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
 {
-    public abstract class RepositorioBaseSql<TEntidade> 
+    public abstract class RepositorioBaseSql<TEntidade>
         where TEntidade : Entidade<TEntidade>, new()
     {
         private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
 
-        private static SqlConnection conectarBd = new(ENDERECO_BD);
+        protected static SqlConnection conectarBd = new(ENDERECO_BD);
 
         protected SqlCommand comandoBd = conectarBd.CreateCommand();
+
+        protected event Action<TEntidade> onComandoDeRelacao;
+
+        public RepositorioBaseSql()
+        {
+
+        }
 
         protected abstract string AddCommand { get; }
 
@@ -35,6 +42,8 @@ namespace TestesDonaMariana.Dados.Compartilhado
             object id = comandoBd.ExecuteScalar();
 
             registro.Id = Convert.ToInt32(id);
+
+            onComandoDeRelacao?.Invoke(registro);
 
             conectarBd.Close();
         }

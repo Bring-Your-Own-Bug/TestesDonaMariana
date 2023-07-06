@@ -1,9 +1,15 @@
-﻿using TestesDonaMariana.Dominio.ModuloQuestao;
+﻿using Microsoft.Win32;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dados.ModuloQuestao
 {
     public class RepositorioQuestao : RepositorioBaseSql<Questao>
     {
+        public RepositorioQuestao()
+        {
+            onComandoDeRelacao += AdicionarAlternativas;
+        }
+
         protected override string AddCommand => @"INSERT INTO [dbo].[TBQUESTAO]
                                                            (
                                                                 [MATERIA_ID]
@@ -72,6 +78,31 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
                                                             INNER JOIN [dbo].[TBDISCIPLINA] AS D
                                                             ON M.DISCIPLINA_ID = D.ID";
+
+        protected string AddAlternativas => @"INSERT INTO [dbo].[TBALTERNATIVAS]
+                                                        (
+                                                             [QUESTAO_ID]
+                                                            ,[ALTERNATIVA]
+                                                        )
+                                                    VALUES
+                                                        (
+                                                              @QUESTAO_ID
+                                                             ,@ALTERNATIVA
+                                                        )";
+
+        public void AdicionarAlternativas(Questao questao)
+        {
+            comandoBd.CommandText = AddAlternativas;
+
+            for (int i = 0; i < questao.Alternativas.Count; i++)
+            {
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("QUESTAO_ID", questao.Id);
+                comandoBd.Parameters.AddWithValue("ALTERNATIVA", questao.Alternativas[i]);
+
+                comandoBd.ExecuteNonQuery();
+            }
+        }
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();
     }
