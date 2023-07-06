@@ -2,7 +2,6 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
 {
