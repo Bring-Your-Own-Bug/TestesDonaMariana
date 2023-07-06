@@ -73,6 +73,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             cmbDisciplina.TextChanged += ValidarCampos;
             cmbMateria.TextChanged += ValidarCampos;
             numQuestao.ValueChanged += ValidarCampos;
+            ckbRecuperacao.Click += ValidarCampos;
         }
 
         private void ValidarCampos(object sender, EventArgs e)
@@ -80,30 +81,36 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             Teste teste = new();
 
             lbErroDisciplina.Visible = false;
+            lbErroMateria.Visible = false;
+            lbErroTitulo.Visible = false;
 
             if (teste.ValidarCampoVazio(txtTitulo.Text))
             {
-                lbErroDisciplina.Visible = true;
-                lbErroDisciplina.Text = "*Campo obrigatório";
+                lbErroTitulo.Visible = true;
+                lbErroTitulo.Text = "*Campo obrigatório";
             }
             else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase)) { }
             else if (teste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
             {
-                lbErroDisciplina.Visible = true;
-                lbErroDisciplina.Text = "*Esse teste já existe";
+                lbErroTitulo.Visible = true;
+                lbErroTitulo.Text = "*Esse teste já existe";
             }
-            else if (teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex))
-            {
-                lbErroDisciplina.Visible = true;
-                lbErroDisciplina.Text = "*teste";
-            }
-            else if (teste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked))
-            {
-                lbErroDisciplina.Visible = true;
-                lbErroDisciplina.Text = "*teste";
-            }
+            //else if (teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex))
+            //{
+            //    lbErroDisciplina.Visible = true;
+            //    lbErroDisciplina.Text = "*Campo obrigatório";
+            //}
+            //else if (teste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked))
+            //{
+            //    lbErroMateria.Visible = true;
+            //    lbErroMateria.Text = "*Campo obrigatório";
+            //}
 
-            if (lbErroDisciplina.Visible)
+            lbErroDisciplina.Visible = teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex);
+
+            lbErroMateria.Visible = teste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked);
+
+            if (lbErroDisciplina.Visible || lbErroTitulo.Visible || lbErroMateria.Visible)
                 isValid = false;
             else
                 isValid = true;

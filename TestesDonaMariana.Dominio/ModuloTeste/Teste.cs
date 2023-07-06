@@ -17,7 +17,7 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
 
         public Teste()
         {
-            
+
         }
 
         public Teste(string titulo, int numeroDeQuestoes, Disciplina disciplina, Materia materia, List<Questao> listaQuestoes, DateTime dataGeracao, Recuperacao recuperacao)
@@ -45,9 +45,9 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
 
         public bool ValidarMateriaExistente(int selectedIndex, bool @checked)
         {
-            if (@checked == false && selectedIndex == -1)
-                return true;
-            else return false;
+            if (@checked == true && selectedIndex == -1)
+                return false;
+            else return true;
         }
     }
 }

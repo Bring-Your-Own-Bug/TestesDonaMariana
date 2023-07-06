@@ -17,7 +17,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             comando.Parameters.AddWithValue("TITULO", registro.Titulo);
             comando.Parameters.AddWithValue("NUMERODEQUESTOES", registro.NumeroDeQuestoes);
             comando.Parameters.AddWithValue("DISCIPLINA_ID", registro.Disciplina.Id);
-            comando.Parameters.AddWithValue("MATERIA_ID", registro.Materia.Id);
+            comando.Parameters.AddWithValue("MATERIA_ID", registro.Materia == null ? DBNull.Value : registro.Materia.Id);
             //comando.Parameters.AddWithValue("LISTA_QUESTAO_ID", registro.ListaQuestoes);
             comando.Parameters.AddWithValue("DATAGERACAO", registro.DataGeracao);
         }
