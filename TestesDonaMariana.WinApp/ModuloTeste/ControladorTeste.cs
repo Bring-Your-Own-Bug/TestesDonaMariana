@@ -2,6 +2,7 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
+using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
@@ -49,6 +50,10 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         public List<Teste>? ObterListaTeste()
         {
             return new RepositorioTeste().ObterListaRegistros();
+        }
+        public List<Materia>? ObterListaMateria()
+        {
+            return new RepositorioMateria().ObterListaRegistros();
         }
     }
 }

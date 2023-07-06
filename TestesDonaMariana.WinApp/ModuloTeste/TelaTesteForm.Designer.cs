@@ -30,13 +30,13 @@
         {
             cmbDisciplina = new ComboBox();
             cmbMateria = new ComboBox();
-            lbErroTelefone = new Label();
-            lbErroNome = new Label();
+            lbErroMateria = new Label();
+            lbErroDisciplina = new Label();
             btnCancelar = new Button();
             btnAdd = new Button();
             lbNome = new Label();
             lbDisciplina = new Label();
-            label1 = new Label();
+            lbErroTitulo = new Label();
             label2 = new Label();
             txtTitulo = new TextBox();
             label3 = new Label();
@@ -69,29 +69,29 @@
             cmbMateria.Size = new Size(157, 23);
             cmbMateria.TabIndex = 86;
             // 
-            // lbErroTelefone
+            // lbErroMateria
             // 
-            lbErroTelefone.AutoSize = true;
-            lbErroTelefone.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroTelefone.ForeColor = Color.Red;
-            lbErroTelefone.Location = new Point(92, 128);
-            lbErroTelefone.Name = "lbErroTelefone";
-            lbErroTelefone.Size = new Size(112, 13);
-            lbErroTelefone.TabIndex = 85;
-            lbErroTelefone.Text = "*Campo Obrigatório";
-            lbErroTelefone.Visible = false;
+            lbErroMateria.AutoSize = true;
+            lbErroMateria.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroMateria.ForeColor = Color.Red;
+            lbErroMateria.Location = new Point(92, 128);
+            lbErroMateria.Name = "lbErroMateria";
+            lbErroMateria.Size = new Size(112, 13);
+            lbErroMateria.TabIndex = 85;
+            lbErroMateria.Text = "*Campo Obrigatório";
+            lbErroMateria.Visible = false;
             // 
-            // lbErroNome
+            // lbErroDisciplina
             // 
-            lbErroNome.AutoSize = true;
-            lbErroNome.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroNome.ForeColor = Color.Red;
-            lbErroNome.Location = new Point(92, 86);
-            lbErroNome.Name = "lbErroNome";
-            lbErroNome.Size = new Size(112, 13);
-            lbErroNome.TabIndex = 84;
-            lbErroNome.Text = "*Campo Obrigatório";
-            lbErroNome.Visible = false;
+            lbErroDisciplina.AutoSize = true;
+            lbErroDisciplina.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroDisciplina.ForeColor = Color.Red;
+            lbErroDisciplina.Location = new Point(92, 86);
+            lbErroDisciplina.Name = "lbErroDisciplina";
+            lbErroDisciplina.Size = new Size(112, 13);
+            lbErroDisciplina.TabIndex = 84;
+            lbErroDisciplina.Text = "*Campo Obrigatório";
+            lbErroDisciplina.Visible = false;
             // 
             // btnCancelar
             // 
@@ -134,17 +134,17 @@
             lbDisciplina.TabIndex = 80;
             lbDisciplina.Text = "Disciplina:";
             // 
-            // label1
+            // lbErroTitulo
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.ForeColor = Color.Red;
-            label1.Location = new Point(92, 44);
-            label1.Name = "label1";
-            label1.Size = new Size(112, 13);
-            label1.TabIndex = 91;
-            label1.Text = "*Campo Obrigatório";
-            label1.Visible = false;
+            lbErroTitulo.AutoSize = true;
+            lbErroTitulo.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroTitulo.ForeColor = Color.Red;
+            lbErroTitulo.Location = new Point(92, 44);
+            lbErroTitulo.Name = "lbErroTitulo";
+            lbErroTitulo.Size = new Size(112, 13);
+            lbErroTitulo.TabIndex = 91;
+            lbErroTitulo.Text = "*Campo Obrigatório";
+            lbErroTitulo.Visible = false;
             // 
             // label2
             // 
@@ -178,6 +178,7 @@
             numQuestao.Name = "numQuestao";
             numQuestao.Size = new Size(46, 23);
             numQuestao.TabIndex = 93;
+            numQuestao.ValueChanged += numQuestao_ValueChanged;
             // 
             // ckbRecuperacao
             // 
@@ -243,13 +244,13 @@
             Controls.Add(ckbRecuperacao);
             Controls.Add(numQuestao);
             Controls.Add(label3);
-            Controls.Add(label1);
+            Controls.Add(lbErroTitulo);
             Controls.Add(label2);
             Controls.Add(txtTitulo);
             Controls.Add(cmbDisciplina);
             Controls.Add(cmbMateria);
-            Controls.Add(lbErroTelefone);
-            Controls.Add(lbErroNome);
+            Controls.Add(lbErroMateria);
+            Controls.Add(lbErroDisciplina);
             Controls.Add(btnCancelar);
             Controls.Add(btnAdd);
             Controls.Add(lbNome);
@@ -268,13 +269,13 @@
         }
 
         #endregion
-        private Label lbErroTelefone;
-        private Label lbErroNome;
+        private Label lbErroMateria;
+        private Label lbErroDisciplina;
         private Button btnCancelar;
         private Button btnAdd;
         private Label lbNome;
         private Label lbDisciplina;
-        private Label label1;
+        private Label lbErroTitulo;
         private Label label2;
         private TextBox txtTitulo;
         private Label label3;

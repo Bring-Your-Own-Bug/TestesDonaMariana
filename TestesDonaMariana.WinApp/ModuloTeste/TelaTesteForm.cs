@@ -11,16 +11,12 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool isValid;
 
-        private int _contador;
-
         private List<Teste> ListaTeste { get; set; }
         public TelaTesteForm()
         {
             InitializeComponent();
 
             ListaTeste = new ControladorTeste().ObterListaTeste();
-
-            _contador = 0;
         }
 
         public Teste? Entidade
@@ -78,26 +74,26 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             Teste teste = new();
 
-            lbErroNome.Visible = false;
+            lbErroDisciplina.Visible = false;
 
             if (teste.ValidarCampoVazio(txtTitulo.Text))
             {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Campo obrigatório";
+                lbErroDisciplina.Visible = true;
+                lbErroDisciplina.Text = "*Campo obrigatório";
             }
             else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase)) { }
             else if (teste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
             {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Esse teste já existe";
+                lbErroDisciplina.Visible = true;
+                lbErroDisciplina.Text = "*Esse teste já existe";
             }
             else if (teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex))
             {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Esse teste já existe";
+                lbErroDisciplina.Visible = true;
+                lbErroDisciplina.Text = "*Esse teste já existe";
             }
 
-            if (lbErroNome.Visible)
+            if (lbErroDisciplina.Visible)
                 isValid = false;
             else
                 isValid = true;
@@ -120,7 +116,14 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void cmbDisciplina_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbMateria.SelectedItem = null;
+            Disciplina disciplina = cmbDisciplina.SelectedItem as Disciplina;
+
+            cmbMateria.Items.AddRange(disciplina.ListaMaterias.ToArray());
+        }
+
+        private void numQuestao_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
