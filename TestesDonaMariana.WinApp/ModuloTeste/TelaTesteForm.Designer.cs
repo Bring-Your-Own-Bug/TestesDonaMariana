@@ -223,12 +223,13 @@
             // txtId
             // 
             txtId.Enabled = false;
-            txtId.Location = new Point(105, 15);
+            txtId.Location = new Point(92, 12);
             txtId.Name = "txtId";
             txtId.ReadOnly = true;
             txtId.Size = new Size(100, 23);
             txtId.TabIndex = 99;
             txtId.Text = "0";
+            txtId.Visible = false;
             // 
             // TelaTesteForm
             // 
