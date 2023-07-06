@@ -15,7 +15,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         protected TRepositorio3 _repositorio3;
         protected TTabela _tabela;
 
-        protected event Action<TTela> onComandosAdicionaisAddAndEdit;
+        protected event Action<TTela, TEntidade> onComandosAdicionaisAddAndEdit;
 
         public ControladorBase()
         {
@@ -53,7 +53,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         {
             TTela tela = new();
 
-            onComandosAdicionaisAddAndEdit?.Invoke(tela);
+            onComandosAdicionaisAddAndEdit?.Invoke(tela, tela.Entidade);
 
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
@@ -69,7 +69,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             TTela tela = new();
 
-            onComandosAdicionaisAddAndEdit?.Invoke(tela);
+            onComandosAdicionaisAddAndEdit?.Invoke(tela, entidade);
 
             tela.Entidade = entidade;
 

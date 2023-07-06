@@ -24,7 +24,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
         }
 
-        public void CarregarComboBox(TelaQuestaoForm telaQuestao)
+        public void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
         {
             telaQuestao.txtMateria.DisplayMember = "Nome";
             telaQuestao.txtMateria.ValueMember = "Nome";

@@ -31,7 +31,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
         }
 
-        public void CarregarComboBox(TelaTesteForm telaTeste)
+        public void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
         {
             telaTeste.cmbMateria.DisplayMember = "Nome";
             telaTeste.cmbMateria.ValueMember = "Nome";
