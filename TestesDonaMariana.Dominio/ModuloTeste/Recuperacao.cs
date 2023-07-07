@@ -1,8 +1,12 @@
-﻿namespace TestesDonaMariana.Dominio.ModuloTeste
+﻿using System.ComponentModel;
+
+namespace TestesDonaMariana.Dominio.ModuloTeste
 {
     public enum Recuperacao
     {
-        Sim, 
+        [Description("Sim")]
+        Sim,
+        [Description("Não")]
         Nao
     }
 }
