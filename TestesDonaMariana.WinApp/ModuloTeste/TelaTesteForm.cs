@@ -125,24 +125,52 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             Materia? materiaSelecionada = cmbMateria.SelectedItem as Materia;
 
-            List<Questao> listaPorMateria = ListaQuestao.FindAll(a => a.Materia.Id == materiaSelecionada.Id);
+            Disciplina? disciplinaSelecionada = cmbDisciplina.SelectedItem as Disciplina;
 
-            if (ValidarQtdQuestoes(ListaQuestao.Count))
+            if (materiaSelecionada != null)
             {
-                lbErroQtdQuestoes.Visible = true;
-                return;
-            }
+                List<Questao> listaPorMateria = ListaQuestao.FindAll(a => a.Materia.Id == materiaSelecionada.Id);
 
-            Random random = new Random();
-
-            for (int i = 0; i < numQuestao.Value; i++)
-            {
-                int indexRandom = random.Next((int)numQuestao.Value);
-
-                if (!listQuestoes.Items.Contains(listaPorMateria[indexRandom].Enunciado))
+                if (ValidarQtdQuestoes(ListaQuestao.Count))
                 {
-                    listaQuestoesSorteadas.Add(listaPorMateria[indexRandom]);
-                    listQuestoes.Items.Add(listaPorMateria[indexRandom].Enunciado);
+                    lbErroQtdQuestoes.Visible = true;
+                    return;
+                }
+
+                Random random = new();
+
+                for (int i = 0; i < numQuestao.Value; i++)
+                {
+                    int indexRandom = random.Next((int)numQuestao.Value);
+
+                    if (!listQuestoes.Items.Contains(listaPorMateria[indexRandom].Enunciado))
+                    {
+                        listaQuestoesSorteadas.Add(listaPorMateria[indexRandom]);
+                        listQuestoes.Items.Add(listaPorMateria[indexRandom].Enunciado);
+                    }
+                }
+            }
+            else
+            {
+                List<Questao> listaQuestoes = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id);
+
+                if (ValidarQtdQuestoes(ListaQuestao.Count))
+                {
+                    lbErroQtdQuestoes.Visible = true;
+                    return;
+                }
+
+                Random random = new();
+
+                for (int i = 0; i < numQuestao.Value; i++)
+                {
+                    int indexRandom = random.Next((int)numQuestao.Value);
+
+                    if (!listQuestoes.Items.Contains(listaQuestoes[indexRandom].Enunciado))
+                    {
+                        listaQuestoesSorteadas.Add(listaQuestoes[indexRandom]);
+                        listQuestoes.Items.Add(listaQuestoes[indexRandom].Enunciado);
+                    }
                 }
             }
         }
