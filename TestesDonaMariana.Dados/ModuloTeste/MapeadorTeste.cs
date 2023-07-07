@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.Data;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
@@ -19,6 +20,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             comando.Parameters.AddWithValue("DISCIPLINA_ID", registro.Disciplina.Id);
             comando.Parameters.AddWithValue("MATERIA_ID", registro.Materia == null ? DBNull.Value : registro.Materia.Id);
             comando.Parameters.AddWithValue("DATAGERACAO", registro.DataGeracao);
+            comando.Parameters.AddWithValue("RECUPERACAO", SqlDbType.Bit).Value = registro.Recuperacao;
         }
 
         public override Teste ConverterRegistro(SqlDataReader leitorRegistros)
@@ -37,12 +39,15 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
             DateTime dataGeracao = Convert.ToDateTime(leitorRegistros["TESTE_DATAGERACAO"]);
 
+            Recuperacao recuperacao = (Recuperacao)leitorRegistros["TESTE_RECUPERACAO"];
+
             teste.Id = id;
             teste.Titulo = titulo;
             teste.NumeroDeQuestoes = numeroDeQuestoes;
             teste.Disciplina = disciplina;
             teste.Materia = materia;
             teste.DataGeracao = dataGeracao;
+            teste.Recuperacao = recuperacao;
 
             return teste;
         }

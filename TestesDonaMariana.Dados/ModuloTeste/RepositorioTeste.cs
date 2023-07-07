@@ -20,6 +20,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                ,[DISCIPLINA_ID]
                                                                ,[MATERIA_ID]
                                                                ,[DATAGERACAO]
+                                                               ,[RECUPERACAO]
                                                            )
                                                      VALUES
                                                            (
@@ -28,6 +29,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                 ,@DISCIPLINA_ID
                                                                 ,@MATERIA_ID
                                                                 ,@DATAGERACAO
+                                                                ,@RECUPERACAO
                                                            )
                                                            SELECT SCOPE_IDENTITY();";
 
@@ -38,6 +40,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                      ,[DISCIPLINA_ID] =      @DISCIPLINA_ID
                                                      ,[MATERIA_ID] =         @MATERIA_ID
                                                      ,[DATAGERACAO] =        @DATAGERACAO
+                                                     ,[RECUPERACAO] =        @RECUPERACAO
 
                                                 WHERE[ID] = @ID";
 
@@ -51,6 +54,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                               ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
                                                               ,T.[MATERIA_ID]           TESTE_MATERIA_ID
                                                               ,T.[DATAGERACAO]          TESTE_DATAGERACAO
+                                                              ,T.[RECUPERACAO]          TESTE_RECUPERACAO
 
                                                               ,D.[ID]                   DISCIPLINA_ID
                                                               ,D.[NOME]                 DISCIPLINA_NOME
@@ -76,6 +80,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                      ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
                                                                      ,T.[MATERIA_ID]           TESTE_MATERIA_ID
                                                                      ,T.[DATAGERACAO]          TESTE_DATAGERACAO
+                                                                     ,T.[RECUPERACAO]          TESTE_RECUPERACAO
 
                                                                      ,D.[ID]                   DISCIPLINA_ID
                                                                      ,D.[NOME]                 DISCIPLINA_NOME
@@ -203,31 +208,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                 reader.Close();
             }
         }
-
-        //public List<Questao> ObterQuestoes(Teste teste)
-        //{
-        //    conectarBd.Open();
-
-        //    comandoBd.Parameters.Clear();
-
-        //    comandoBd.CommandText = SelectQuestoes;
-
-        //    comandoBd.Parameters.AddWithValue("ID", teste.Id);
-
-        //    SqlDataReader reader = comandoBd.ExecuteReader();
-
-        //    List<Questao> questoes = new();
-
-        //    while (reader.Read())
-        //    {
-        //        Questao questao = new MapeadorQuestao().ConverterRegistro(reader);
-        //        questoes.Add(questao);
-        //    }
-
-        //    conectarBd.Close();
-
-        //    return questoes;
-        //}
 
         protected override MapeadorBase<Teste> Mapear => new MapeadorTeste();
     }
