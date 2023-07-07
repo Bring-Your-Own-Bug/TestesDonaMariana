@@ -31,7 +31,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         public List<Materia> ObterListaMateria()
         {
-            return _repositorioMateria.ObterListaRegistros();
+            return new RepositorioMateria().ObterListaRegistros();
         }
 
         public override TabelaMateriaControl ObterListagem()

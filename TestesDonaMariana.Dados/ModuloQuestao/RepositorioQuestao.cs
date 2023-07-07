@@ -169,7 +169,6 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
                 reader.Close();
             }
-
         }
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();

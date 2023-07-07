@@ -69,6 +69,7 @@
             cmbMateria.Name = "cmbMateria";
             cmbMateria.Size = new Size(157, 23);
             cmbMateria.TabIndex = 86;
+            cmbMateria.SelectedValueChanged += cmbMateria_SelectedValueChanged;
             // 
             // lbErroMateria
             // 
