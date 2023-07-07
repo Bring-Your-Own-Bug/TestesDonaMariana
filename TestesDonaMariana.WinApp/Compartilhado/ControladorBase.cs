@@ -100,7 +100,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void Filtrar() { }
 
-        public virtual void AdicionarItens() { }
+        public virtual void MostrarDetalhes() {}
 
         public virtual void AtualizarStatus() { }
 

@@ -31,9 +31,9 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            txtTesteEscolhido = new Label();
-            txtDisciplinaEscolhida = new Label();
-            txtMateriaEscolhida = new Label();
+            txtTitulo = new Label();
+            txtDisciplina = new Label();
+            txtMateria = new Label();
             btnCancelar = new Button();
             groupBox1 = new GroupBox();
             listQuestoesSeleciondas = new ListBox();
@@ -67,35 +67,35 @@
             label3.TabIndex = 2;
             label3.Text = "Matéria:";
             // 
-            // txtTesteEscolhido
+            // txtTitulo
             // 
-            txtTesteEscolhido.AutoSize = true;
-            txtTesteEscolhido.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            txtTesteEscolhido.Location = new Point(90, 28);
-            txtTesteEscolhido.Name = "txtTesteEscolhido";
-            txtTesteEscolhido.Size = new Size(91, 15);
-            txtTesteEscolhido.TabIndex = 3;
-            txtTesteEscolhido.Text = "Teste Escolhido";
+            txtTitulo.AutoSize = true;
+            txtTitulo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtTitulo.Location = new Point(90, 28);
+            txtTitulo.Name = "txtTitulo";
+            txtTitulo.Size = new Size(91, 15);
+            txtTitulo.TabIndex = 3;
+            txtTitulo.Text = "Teste Escolhido";
             // 
-            // txtDisciplinaEscolhida
+            // txtDisciplina
             // 
-            txtDisciplinaEscolhida.AutoSize = true;
-            txtDisciplinaEscolhida.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            txtDisciplinaEscolhida.Location = new Point(90, 66);
-            txtDisciplinaEscolhida.Name = "txtDisciplinaEscolhida";
-            txtDisciplinaEscolhida.Size = new Size(112, 15);
-            txtDisciplinaEscolhida.TabIndex = 4;
-            txtDisciplinaEscolhida.Text = "Disciplina Escolhida";
+            txtDisciplina.AutoSize = true;
+            txtDisciplina.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtDisciplina.Location = new Point(90, 66);
+            txtDisciplina.Name = "txtDisciplina";
+            txtDisciplina.Size = new Size(112, 15);
+            txtDisciplina.TabIndex = 4;
+            txtDisciplina.Text = "Disciplina Escolhida";
             // 
-            // txtMateriaEscolhida
+            // txtMateria
             // 
-            txtMateriaEscolhida.AutoSize = true;
-            txtMateriaEscolhida.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            txtMateriaEscolhida.Location = new Point(90, 109);
-            txtMateriaEscolhida.Name = "txtMateriaEscolhida";
-            txtMateriaEscolhida.Size = new Size(103, 15);
-            txtMateriaEscolhida.TabIndex = 5;
-            txtMateriaEscolhida.Text = "Matéria Escolhida";
+            txtMateria.AutoSize = true;
+            txtMateria.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtMateria.Location = new Point(90, 109);
+            txtMateria.Name = "txtMateria";
+            txtMateria.Size = new Size(103, 15);
+            txtMateria.TabIndex = 5;
+            txtMateria.Text = "Matéria Escolhida";
             // 
             // btnCancelar
             // 
@@ -129,6 +129,7 @@
             listQuestoesSeleciondas.Name = "listQuestoesSeleciondas";
             listQuestoesSeleciondas.Size = new Size(421, 247);
             listQuestoesSeleciondas.TabIndex = 95;
+            listQuestoesSeleciondas.SelectedIndexChanged += listQuestoesSeleciondas_SelectedIndexChanged;
             // 
             // TelaDetalhesTeste
             // 
@@ -137,15 +138,16 @@
             ClientSize = new Size(522, 522);
             Controls.Add(groupBox1);
             Controls.Add(btnCancelar);
-            Controls.Add(txtMateriaEscolhida);
-            Controls.Add(txtDisciplinaEscolhida);
-            Controls.Add(txtTesteEscolhido);
+            Controls.Add(txtMateria);
+            Controls.Add(txtDisciplina);
+            Controls.Add(txtTitulo);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "TelaDetalhesTeste";
             ShowIcon = false;
             Text = "Vizualização de Testes";
+            Load += TelaDetalhesTeste_Load;
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -156,9 +158,9 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label txtTesteEscolhido;
-        private Label txtDisciplinaEscolhida;
-        private Label txtMateriaEscolhida;
+        private Label txtTitulo;
+        private Label txtDisciplina;
+        private Label txtMateria;
         private Button btnCancelar;
         private GroupBox groupBox1;
         private ListBox listQuestoesSeleciondas;
