@@ -142,6 +142,7 @@
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
             barraFuncoes.TabIndex = 1;
+            barraFuncoes.Visible = false;
             // 
             // btnAdicionar
             // 
@@ -218,7 +219,7 @@
             btnDuplicacao.Padding = new Padding(5);
             btnDuplicacao.Size = new Size(113, 34);
             btnDuplicacao.Text = "Duplicação";
-            btnDuplicacao.Click += btnAttStatus_Click;
+            btnDuplicacao.Click += btnDuplicacao_Click;
             // 
             // lbTipoCadastro
             // 
@@ -243,11 +244,10 @@
             // plPrincipal
             // 
             plPrincipal.Dock = DockStyle.Fill;
-            plPrincipal.Location = new Point(0, 112);
+            plPrincipal.Location = new Point(0, 58);
             plPrincipal.Name = "plPrincipal";
-            plPrincipal.Size = new Size(1013, 492);
+            plPrincipal.Size = new Size(1013, 546);
             plPrincipal.TabIndex = 3;
-            plPrincipal.Visible = true;
             plPrincipal.ControlAdded += plPrincipal_ControlAdded;
             plPrincipal.ControlRemoved += plPrincipal_ControlRemoved;
             // 

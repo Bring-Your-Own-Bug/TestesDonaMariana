@@ -59,7 +59,20 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             TelaDetalhesTeste tela = new();
 
-            TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TelaDetalhesTeste).Name}");
+            tela.ShowDialog();
+
+            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
+
+            CarregarRegistros();
+        }
+
+        public override void MostrarDuplicacao()
+        {
+            TelaDuplicarTeste tela = new();
+
+            tela.ShowDialog();
+
+            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
 
             CarregarRegistros();
         }

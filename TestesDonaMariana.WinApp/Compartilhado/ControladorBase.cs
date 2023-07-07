@@ -102,7 +102,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void MostrarDetalhes() {}
 
-        public virtual void AtualizarStatus() { }
+        public virtual void MostrarDuplicacao() { }
 
         public virtual void CarregarRegistros()
         {
