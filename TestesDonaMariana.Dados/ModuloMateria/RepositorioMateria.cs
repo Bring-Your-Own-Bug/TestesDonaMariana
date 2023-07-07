@@ -1,7 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using TestesDonaMariana.Dados.ModuloQuestao;
-using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloQuestao;
+﻿using TestesDonaMariana.Dominio.ModuloMateria;
 
 namespace TestesDonaMariana.Dados.ModuloMateria
 {
@@ -59,53 +56,6 @@ namespace TestesDonaMariana.Dados.ModuloMateria
                                                           INNER JOIN [dbo].[TBDISCIPLINA] AS D
                                                           ON M.DISCIPLINA_ID =          D.ID";
 
-        //protected string SelectQuestoes => @"SELECT        
-        //                                             M.[ID]                     MATERIA_ID
-        //                                            ,M.[NOME]                   MATERIA_NOME
-        //                                            ,M.[DISCIPLINA_ID]          MATERIA_DISCIPLINA_ID
-        //                                            ,M.[SERIE]                  MATERIA_SERIE
-
-        //                                            ,Q.[ID]                     QUESTAO_ID
-        //                                            ,Q.[MATERIA_ID]             QUESTAO_MATERIA_ID
-        //                                            ,Q.[ENUNCIADO]              QUESTAO_ENUNCIADO
-        //                                            ,Q.[ALTERNATIVACORRETA]     QUESTAO_ALTERNATIVACORRETA
-
-        //                                            ,D.[ID]                     DISCIPLINA_ID
-        //                                            ,D.[NOME]                   DISCIPLINA_NOME
-
-        //                                    FROM [dbo].[TBMATERIA] AS M
-
-        //                                    INNER JOIN [dbo].[TBQUESTAO] AS Q
-        //                                    ON Q.[MATERIA_ID] =                M.[ID]
-
-        //                                    INNER JOIN [dbo].[TBDISCIPLINA] AS D
-        //                                    ON M.[DISCIPLINA_ID] =              D.[ID]";
-
         protected override MapeadorBase<Materia> Mapear => new MapeadorMateria();
-
-        //public List<Questao> ObterQuestoes(Materia materia)
-        //{
-        //    conectarBd.Open();
-
-        //    comandoBd.Parameters.Clear();
-
-        //    comandoBd.CommandText = SelectQuestoes;
-
-        //    comandoBd.Parameters.AddWithValue("ID", materia.Id);
-
-        //    SqlDataReader reader = comandoBd.ExecuteReader();
-
-        //    List<Questao> questoes = new();
-
-        //    while (reader.Read())
-        //    {
-        //        Questao questao = new MapeadorQuestao().ConverterRegistro(reader);
-        //        questoes.Add(questao);
-        //    }
-
-        //    conectarBd.Close();
-
-        //    return questoes;
-        //}
     }
 }

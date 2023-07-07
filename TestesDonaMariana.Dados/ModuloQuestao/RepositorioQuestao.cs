@@ -1,7 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Win32;
-using System.Data;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dados.ModuloQuestao
@@ -12,7 +9,6 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
         {
             onComandoDeRelacaoAdd += AdicionarAlternativas;
             onComandoDeRelacaoEdit += EditarAlternativas;
-            //onComandoDeRelacaoDelete += ExcluirAlternativas;
             onComandoDeRelacaoSelect += ObterAlternativas;
         }
 
@@ -116,7 +112,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
                                                       WHERE [QUESTAO_ID] =      @ID";
 
-        public void AdicionarAlternativas(Questao questao)
+        private void AdicionarAlternativas(Questao questao)
         {
             comandoBd.CommandText = AddAlternativas;
 
@@ -130,7 +126,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void EditarAlternativas(Questao questao)
+        private void EditarAlternativas(Questao questao)
         {
             comandoBd.CommandText = DeleteAlternativas;
 
@@ -150,7 +146,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void ObterAlternativas(List<Questao> questoes, SqlDataReader reader)
+        private void ObterAlternativas(List<Questao> questoes, SqlDataReader reader)
         {
             comandoBd.CommandText = SelectAlternativas;
 

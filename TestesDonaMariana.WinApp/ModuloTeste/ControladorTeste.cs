@@ -2,12 +2,10 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
-using TestesDonaMariana.WinApp.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -34,23 +32,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
             onComandosAdicionaisAddAndEdit += CarregarQuestoes;
-        }
-
-        public void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
-        {
-            telaTeste.cmbMateria.DisplayMember = "Nome";
-            telaTeste.cmbMateria.ValueMember = "Nome";
-            telaTeste.cmbMateria.DataSource = _repositorioMateria.ObterListaRegistros();
-
-            telaTeste.cmbDisciplina.DisplayMember = "Nome";
-            telaTeste.cmbDisciplina.ValueMember = "Nome";
-            telaTeste.cmbDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
-        }
-
-        public void CarregarQuestoes(TelaTesteForm telaTeste, Teste teste)
-        {
-            if (teste != null)
-                teste.ListaQuestoes = _repositorioTeste.ObterQuestoes(teste);
         }
 
         public override TabelaTesteControl ObterListagem()
@@ -88,6 +69,23 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         public List<Questao>? ObterListaQuestao()
         {
             return new RepositorioQuestao().ObterListaRegistros();
+        }
+
+        private void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
+        {
+            telaTeste.cmbMateria.DisplayMember = "Nome";
+            telaTeste.cmbMateria.ValueMember = "Nome";
+            telaTeste.cmbMateria.DataSource = _repositorioMateria.ObterListaRegistros();
+
+            telaTeste.cmbDisciplina.DisplayMember = "Nome";
+            telaTeste.cmbDisciplina.ValueMember = "Nome";
+            telaTeste.cmbDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
+        }
+
+        private void CarregarQuestoes(TelaTesteForm telaTeste, Teste teste)
+        {
+            if (teste != null)
+                teste.ListaQuestoes = _repositorioTeste.ObterQuestoes(teste);
         }
     }
 }
