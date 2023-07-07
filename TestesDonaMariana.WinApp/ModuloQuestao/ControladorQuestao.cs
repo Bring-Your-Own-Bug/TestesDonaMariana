@@ -24,24 +24,19 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             _repositorioDisciplina = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
+            onComandosAdicionaisAddAndEdit += CarregarAlternativas;
+            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
-        public override void Excluir()
+        public bool VerificarRelacoesExistentes(Questao questao)
         {
-            Questao? questao = _tabela.ObterRegistroSelecionado();
-            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(Disciplina).Name}");
-
             if (questao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Testes cadastrados com a questão selecionada, Exclua-os para excluir essa Questão",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return true;
             }
-            if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(Questao).Name}",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                _repositorio.Excluir(questao);
-
-            CarregarRegistros();
+            return false;
         }
 
         public void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
@@ -53,7 +48,10 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             telaQuestao.txtDisciplina.DisplayMember = "Nome";
             telaQuestao.txtDisciplina.ValueMember = "Nome";
             telaQuestao.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
+        }
 
+        public void CarregarAlternativas(TelaQuestaoForm telaQuestao, Questao questao)
+        {
             if (questao != null)
                 questao.Alternativas = _repositorioQuestao.ObterAlternativas(questao);
         }

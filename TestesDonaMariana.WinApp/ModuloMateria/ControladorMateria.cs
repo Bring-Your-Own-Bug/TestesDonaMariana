@@ -1,9 +1,11 @@
-﻿using TestesDonaMariana.Dados.ModuloDisciplina;
+﻿using System.Drawing.Drawing2D;
+using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloMateria
 {
@@ -25,6 +27,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             _repositorioQuestao = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
+            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
         public ControladorMateria()
@@ -32,22 +35,15 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             
         }
 
-        public override void Excluir()
+        public bool VerificarRelacoesExistentes(Materia materia)
         {
-            Materia? materia = _tabela.ObterRegistroSelecionado();
-            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(Disciplina).Name}");
-
             if (materia.ValidarDependencia(materia, _repositorioQuestao.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Questões ou Testes cadastrados na Matéria \"{materia.Nome}\", Exclua-os para excluir essa Matéria",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return true;
             }
-            if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(Materia).Name}",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                _repositorio.Excluir(materia);
-
-            CarregarRegistros();
+            return false;
         }
 
         public List<Materia> ObterListaMateria()

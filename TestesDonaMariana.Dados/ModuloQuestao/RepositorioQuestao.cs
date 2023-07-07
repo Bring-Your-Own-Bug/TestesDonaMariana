@@ -147,7 +147,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void ExcluirAlternativas(Questao questao)
+        public void ExcluirAlternativas()
         {
             comandoBd.CommandText = DeleteAlternativas;
 

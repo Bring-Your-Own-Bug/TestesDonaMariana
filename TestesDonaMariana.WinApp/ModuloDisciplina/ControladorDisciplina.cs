@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
+using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
@@ -20,6 +21,8 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             _tabelaDisciplina = _tabela;
             _repositorioDisciplina = _repositorio;
             _repositorioMateria = _repositorio2;
+
+            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
         public ControladorDisciplina()
@@ -27,22 +30,15 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             
         }
 
-        public override void Excluir()
+        public bool VerificarRelacoesExistentes(Disciplina disciplina)
         {
-            Disciplina? disciplina = _tabela.ObterRegistroSelecionado();
-            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(Disciplina).Name}");
-
             if (disciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Matérias ou Testes cadastrados na Disciplina \"{disciplina.Nome}\", Exclua-os para excluir essa Disciplina",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return true;
             }
-                if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(Disciplina).Name}",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    _repositorio.Excluir(disciplina);
-
-            CarregarRegistros();
+            return false;
         }
 
         public List<Disciplina> ObterListaDisciplina()

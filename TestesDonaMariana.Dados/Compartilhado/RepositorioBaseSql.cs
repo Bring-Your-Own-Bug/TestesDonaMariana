@@ -17,8 +17,8 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected event Action<TEntidade> onComandoDeRelacaoEdit;
 
-        protected event Action<TEntidade> onComandoDeRelacaoDelete;
-
+        protected event Action onComandoDeRelacaoDelete;
+        
         public RepositorioBaseSql()
         {
 
@@ -78,7 +78,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             comandoBd.Parameters.AddWithValue("ID", registroSelecionado.Id);
 
-            onComandoDeRelacaoDelete?.Invoke(registroSelecionado);
+            onComandoDeRelacaoDelete?.Invoke();
 
             comandoBd.CommandText = DeleteCommand;
 

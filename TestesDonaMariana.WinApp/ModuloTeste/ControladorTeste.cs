@@ -5,7 +5,9 @@ using TestesDonaMariana.Dados.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
+using TestesDonaMariana.WinApp.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -31,6 +33,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             _repositorioMateria = repositorio4;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
+            onComandosAdicionaisAddAndEdit += CarregarQuestoes;
         }
 
         public void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
@@ -42,6 +45,12 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             telaTeste.cmbDisciplina.DisplayMember = "Nome";
             telaTeste.cmbDisciplina.ValueMember = "Nome";
             telaTeste.cmbDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
+        }
+
+        public void CarregarQuestoes(TelaTesteForm telaTeste, Teste teste)
+        {
+            if (teste != null)
+                teste.ListaQuestoes = _repositorioTeste.ObterQuestoes(teste);
         }
 
         public override TabelaTesteControl ObterListagem()

@@ -17,6 +17,8 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         protected event Action<TTela, TEntidade> onComandosAdicionaisAddAndEdit;
 
+        protected event Predicate<TEntidade> onValidarRelacaoExistente;
+
         public ControladorBase()
         {
 
@@ -85,6 +87,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
             TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
+
+            if ((bool)(onValidarRelacaoExistente?.Invoke(entidade)))
+                return;
 
             if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
