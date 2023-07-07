@@ -2,6 +2,7 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
@@ -50,6 +51,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             tela.ShowDialog();
             
+            CarregarRegistros();
+        }
+
+        public override void MostrarDetalhes()
+        {
+            TelaDetalhesTeste tela = new();
+
+            TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TelaDetalhesTeste).Name}");
+
             CarregarRegistros();
         }
 
