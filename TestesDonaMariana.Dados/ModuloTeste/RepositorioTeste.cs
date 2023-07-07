@@ -90,7 +90,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                      ON T.DISCIPLINA_ID =          D.ID
             
                                                                      LEFT JOIN [dbo].[TBMATERIA] AS M
-                                                                 ON T.MATERIA_ID =          M.ID";
+                                                                     ON T.MATERIA_ID =          M.ID";
 
         protected string AddQuestoes => @"INSERT INTO [dbo].[TBTESTE_TBQUESTAO]
                                                    (
