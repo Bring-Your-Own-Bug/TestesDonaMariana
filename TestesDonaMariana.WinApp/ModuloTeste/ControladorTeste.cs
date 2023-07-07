@@ -82,8 +82,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
         {
-            telaTeste.cmbMateria.DisplayMember = "Nome";
-            telaTeste.cmbMateria.ValueMember = "Nome";
+            telaTeste.cmbMateria.DisplayMember = "NomeSerie";
+            telaTeste.cmbMateria.ValueMember = "NomeSerie";
             telaTeste.cmbMateria.DataSource = _repositorioMateria.ObterListaRegistros();
 
             telaTeste.cmbDisciplina.DisplayMember = "Nome";
