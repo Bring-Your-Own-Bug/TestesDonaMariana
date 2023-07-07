@@ -20,7 +20,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected event Action onComandoDeRelacaoDelete;
 
-        protected event Action<TEntidade, SqlDataReader> onComandoDeRelacaoSelect;
+        protected event Action<List<TEntidade>, SqlDataReader> onComandoDeRelacaoSelect;
 
         public RepositorioBaseSql()
         {
@@ -104,10 +104,12 @@ namespace TestesDonaMariana.Dados.Compartilhado
             {
                 TEntidade registro = Mapear.ConverterRegistro(reader);
 
-                onComandoDeRelacaoSelect?.Invoke(registro, reader);
-
                 registros.Add(registro);
             }
+
+            reader.Close();
+
+            onComandoDeRelacaoSelect?.Invoke(registros, reader);
 
             conectarBd.Close();
 

@@ -71,8 +71,6 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                                 ,Q.[ENUNCIADO]          QUESTAO_ENUNCIADO
                                                                 ,Q.[ALTERNATIVACORRETA] QUESTAO_ALTERNATIVACORRETA
 
-                                                                ,A.[ALTERNATIVA]        ALTERNATIVA_ALTERNATIVA
-
                                                                 ,M.[ID]                 MATERIA_ID
                                                                 ,M.[NOME]               MATERIA_NOME
                                                                 ,M.[DISCIPLINA_ID]      MATERIA_DISCIPLINA_ID
@@ -82,9 +80,6 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                                 ,D.[NOME]               DISCIPLINA_NOME
 
                                                             FROM [dbo].[TBQUESTAO] AS Q
-
-                                                            INNER JOIN [dbo].[TBALTERNATIVAS] AS A
-                                                            ON Q.ID = A.QUESTAO_ID
 
                                                             INNER JOIN [dbo].[TBMATERIA] AS M
                                                             ON Q.MATERIA_ID = M.ID
@@ -113,6 +108,13 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
         protected string DeleteAlternativas => @"DELETE FROM [dbo].[TBALTERNATIVAS]
                                                     WHERE QUESTAO_ID =       @ID";
+
+        protected string SelectAlternativas => @"SELECT    [QUESTAO_ID]
+                                                          ,[ALTERNATIVA]        ALTERNATIVA
+
+                                                      FROM [dbo].[TBALTERNATIVAS]
+
+                                                      WHERE [QUESTAO_ID] =      @ID";
 
         public void AdicionarAlternativas(Questao questao)
         {
@@ -148,20 +150,30 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void ObterAlternativas(Questao questao, SqlDataReader reader)
+        public void ObterAlternativas(List<Questao> questoes, SqlDataReader reader)
         {
-            List<string> alternativas = new();
+            comandoBd.CommandText = SelectAlternativas;
 
-            string alternativa = Convert.ToString(reader["ALTERNATIVA_ALTERNATIVA"])!;
-            alternativas.Add(alternativa);
-
-            while (reader.Read())
+            foreach (Questao questao in questoes)
             {
-                alternativa = Convert.ToString(reader["ALTERNATIVA_ALTERNATIVA"])!;
-                alternativas.Add(alternativa);
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("ID", questao.Id);
+
+                reader = comandoBd.ExecuteReader();
+
+                List<string> alternativas = new();
+
+                while (reader.Read())
+                {
+                    string alternativa = Convert.ToString(reader["ALTERNATIVA"])!;
+                    alternativas.Add(alternativa);
+                }
+
+                questao.Alternativas = alternativas;
+
+                reader.Close();
             }
 
-            questao.Alternativas = alternativas;
         }
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();
