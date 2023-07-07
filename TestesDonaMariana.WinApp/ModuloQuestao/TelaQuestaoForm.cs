@@ -87,7 +87,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
             lbErroEnunciado.Visible = questao.ValidarCampoVazio(txtEnunciado.Text);
 
-            lbErroMateria.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
+            lbErroMateria.Visible = questao.ValidarCampoVazio(txtMateria.Text);
 
             lbErroDisciplina.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
 

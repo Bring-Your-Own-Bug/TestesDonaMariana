@@ -2,8 +2,6 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
-using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
@@ -24,27 +22,26 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             _repositorioDisciplina = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
+            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
-        public override void Excluir()
+        public override TabelaQuestaoControl ObterListagem()
         {
-            Questao? questao = _tabela.ObterRegistroSelecionado();
-            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(Disciplina).Name}");
+            return _tabelaQuestao;
+        }
 
+        private bool VerificarRelacoesExistentes(Questao questao)
+        {
             if (questao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Testes cadastrados com a questão selecionada, Exclua-os para excluir essa Questão",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return true;
             }
-            if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(Questao).Name}",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                _repositorio.Excluir(questao);
-
-            CarregarRegistros();
+            return false;
         }
 
-        public void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
+        private void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
         {
             telaQuestao.txtMateria.DisplayMember = "Nome";
             telaQuestao.txtMateria.ValueMember = "Nome";
@@ -53,14 +50,6 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             telaQuestao.txtDisciplina.DisplayMember = "Nome";
             telaQuestao.txtDisciplina.ValueMember = "Nome";
             telaQuestao.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
-
-            if (questao != null)
-                questao.Alternativas = _repositorioQuestao.ObterAlternativas(questao);
-        }
-
-        public override TabelaQuestaoControl ObterListagem()
-        {
-            return _tabelaQuestao;
         }
     }
 }

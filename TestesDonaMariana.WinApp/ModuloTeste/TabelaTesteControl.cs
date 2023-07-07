@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloSerie;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloSerie;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
@@ -21,7 +22,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             {
                 DataGridViewRow row = new();
 
-                row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, 0, Serie.Segunda);
+                row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, item.ListaQuestoes.Count, item.Materia == null ? Serie.Primeira.ObterDescricao() + " e " + Serie.Segunda.ObterDescricao() : item.Materia.Serie.ObterDescricao());
 
                 row.Cells[0].Tag = item;
 

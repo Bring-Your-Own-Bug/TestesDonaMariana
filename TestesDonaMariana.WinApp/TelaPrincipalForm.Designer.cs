@@ -38,8 +38,8 @@
             btnEditar = new ToolStripButton();
             btnExcluir = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            btnAddItem = new ToolStripButton();
-            btnAttStatus = new ToolStripButton();
+            btnDetalhes = new ToolStripButton();
+            btnDuplicacao = new ToolStripButton();
             lbTipoCadastro = new ToolStripLabel();
             statusStrip1 = new StatusStrip();
             lbStatus = new ToolStripStatusLabel();
@@ -137,7 +137,7 @@
             // 
             barraFuncoes.BackColor = Color.White;
             barraFuncoes.GripStyle = ToolStripGripStyle.Hidden;
-            barraFuncoes.Items.AddRange(new ToolStripItem[] { btnAdicionar, btnEditar, btnExcluir, toolStripSeparator1, btnAddItem, btnAttStatus, lbTipoCadastro });
+            barraFuncoes.Items.AddRange(new ToolStripItem[] { btnAdicionar, btnEditar, btnExcluir, toolStripSeparator1, btnDetalhes, btnDuplicacao, lbTipoCadastro });
             barraFuncoes.Location = new Point(0, 58);
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
@@ -191,35 +191,35 @@
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new Size(6, 54);
             // 
-            // btnAddItem
+            // btnDetalhes
             // 
-            btnAddItem.BackColor = Color.Yellow;
-            btnAddItem.Enabled = false;
-            btnAddItem.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddItem.Image = Properties.Resources.addItem;
-            btnAddItem.ImageScaling = ToolStripItemImageScaling.None;
-            btnAddItem.ImageTransparentColor = Color.Magenta;
-            btnAddItem.Margin = new Padding(10);
-            btnAddItem.Name = "btnAddItem";
-            btnAddItem.Padding = new Padding(5);
-            btnAddItem.Size = new Size(135, 34);
-            btnAddItem.Text = "Adicionar Item";
-            btnAddItem.Click += btnAddItem_Click;
+            btnDetalhes.BackColor = Color.Yellow;
+            btnDetalhes.Enabled = false;
+            btnDetalhes.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDetalhes.Image = Properties.Resources.addItem;
+            btnDetalhes.ImageScaling = ToolStripItemImageScaling.None;
+            btnDetalhes.ImageTransparentColor = Color.Magenta;
+            btnDetalhes.Margin = new Padding(10);
+            btnDetalhes.Name = "btnDetalhes";
+            btnDetalhes.Padding = new Padding(5);
+            btnDetalhes.Size = new Size(97, 34);
+            btnDetalhes.Text = "Detalhes";
+            btnDetalhes.Click += btnDetalhes_Click;
             // 
-            // btnAttStatus
+            // btnDuplicacao
             // 
-            btnAttStatus.BackColor = Color.Orange;
-            btnAttStatus.Enabled = false;
-            btnAttStatus.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAttStatus.Image = Properties.Resources.statusCheck;
-            btnAttStatus.ImageScaling = ToolStripItemImageScaling.None;
-            btnAttStatus.ImageTransparentColor = Color.Magenta;
-            btnAttStatus.Margin = new Padding(10);
-            btnAttStatus.Name = "btnAttStatus";
-            btnAttStatus.Padding = new Padding(5);
-            btnAttStatus.Size = new Size(142, 34);
-            btnAttStatus.Text = "Atualizar Status";
-            btnAttStatus.Click += btnAttStatus_Click;
+            btnDuplicacao.BackColor = Color.Orange;
+            btnDuplicacao.Enabled = false;
+            btnDuplicacao.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDuplicacao.Image = Properties.Resources.statusCheck;
+            btnDuplicacao.ImageScaling = ToolStripItemImageScaling.None;
+            btnDuplicacao.ImageTransparentColor = Color.Magenta;
+            btnDuplicacao.Margin = new Padding(10);
+            btnDuplicacao.Name = "btnDuplicacao";
+            btnDuplicacao.Padding = new Padding(5);
+            btnDuplicacao.Size = new Size(113, 34);
+            btnDuplicacao.Text = "Duplicação";
+            btnDuplicacao.Click += btnDuplicacao_Click;
             // 
             // lbTipoCadastro
             // 
@@ -244,9 +244,9 @@
             // plPrincipal
             // 
             plPrincipal.Dock = DockStyle.Fill;
-            plPrincipal.Location = new Point(0, 112);
+            plPrincipal.Location = new Point(0, 58);
             plPrincipal.Name = "plPrincipal";
-            plPrincipal.Size = new Size(1013, 492);
+            plPrincipal.Size = new Size(1013, 546);
             plPrincipal.TabIndex = 3;
             plPrincipal.ControlAdded += plPrincipal_ControlAdded;
             plPrincipal.ControlRemoved += plPrincipal_ControlRemoved;
@@ -290,7 +290,7 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripLabel lbTipoCadastro;
         private Panel plPrincipal;
-        private ToolStripButton btnAddItem;
-        private ToolStripButton btnAttStatus;
+        private ToolStripButton btnDetalhes;
+        private ToolStripButton btnDuplicacao;
     }
 }

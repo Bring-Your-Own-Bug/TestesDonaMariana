@@ -16,9 +16,9 @@
 
         public abstract void Filtrar();
 
-        public abstract void AdicionarItens();
+        public abstract void MostrarDetalhes();
 
-        public abstract void AtualizarStatus();
+        public abstract void MostrarDuplicacao();
 
         public abstract void CarregarRegistros();
 

@@ -5,6 +5,7 @@ using TestesDonaMariana.Dados.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
@@ -33,17 +34,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
         }
 
-        public void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
-        {
-            telaTeste.cmbMateria.DisplayMember = "Nome";
-            telaTeste.cmbMateria.ValueMember = "Nome";
-            telaTeste.cmbMateria.DataSource = _repositorioMateria.ObterListaRegistros();
-
-            telaTeste.cmbDisciplina.DisplayMember = "Nome";
-            telaTeste.cmbDisciplina.ValueMember = "Nome";
-            telaTeste.cmbDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
-        }
-
         public override TabelaTesteControl ObterListagem()
         {
             return _tabelaTeste;
@@ -64,6 +54,28 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             CarregarRegistros();
         }
 
+        public override void MostrarDetalhes()
+        {
+            TelaDetalhesTeste tela = new();
+
+            tela.ShowDialog();
+
+            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
+
+            CarregarRegistros();
+        }
+
+        public override void MostrarDuplicacao()
+        {
+            TelaDuplicarTeste tela = new();
+
+            tela.ShowDialog();
+
+            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
+
+            CarregarRegistros();
+        }
+
         public List<Teste>? ObterListaTeste()
         {
             return new RepositorioTeste().ObterListaRegistros();
@@ -75,6 +87,21 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         public List<Disciplina>? ObterListaDisciplina()
         {
             return new RepositorioDisciplina().ObterListaRegistros();
+        }
+        public List<Questao>? ObterListaQuestao()
+        {
+            return new RepositorioQuestao().ObterListaRegistros();
+        }
+
+        private void CarregarComboBox(TelaTesteForm telaTeste, Teste teste)
+        {
+            telaTeste.cmbMateria.DisplayMember = "NomeSerie";
+            telaTeste.cmbMateria.ValueMember = "NomeSerie";
+            telaTeste.cmbMateria.DataSource = _repositorioMateria.ObterListaRegistros();
+
+            telaTeste.cmbDisciplina.DisplayMember = "Nome";
+            telaTeste.cmbDisciplina.ValueMember = "Nome";
+            telaTeste.cmbDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
         }
     }
 }

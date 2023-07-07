@@ -1,6 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Win32;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dados.ModuloQuestao
@@ -11,7 +9,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
         {
             onComandoDeRelacaoAdd += AdicionarAlternativas;
             onComandoDeRelacaoEdit += EditarAlternativas;
-            onComandoDeRelacaoDelete += ExcluirAlternativas;
+            onComandoDeRelacaoSelect += ObterAlternativas;
         }
 
         protected override string AddCommand => @"INSERT INTO [dbo].[TBQUESTAO]
@@ -36,7 +34,9 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                          WHERE 
                                                                [ID] =                   @ID";
 
-        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBQUESTAO]
+        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBALTERNATIVAS]
+                                                    WHERE QUESTAO_ID =                  @ID
+                                                    DELETE FROM [dbo].[TBQUESTAO]
 													WHERE [ID] =		                @ID";
 
         protected override string SelectCommand => @"SELECT   Q.[ID]                    QUESTAO_ID
@@ -96,22 +96,23 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
         protected string EditAlternativas => @"UPDATE [dbo].[TBALTERNATIVAS]
 
-                                                   SET [QUESTAO_ID] =       @QUESTAO_ID
-                                                      ,[ALTERNATIVA] =      @ALTERNATIVA
+                                                   SET
+                                                        [ALTERNATIVA] =      @ALTERNATIVA
 
                                                  WHERE
-                                                        QUESTAO_ID =         @ID";
+                                                        QUESTAO_ID =         @QUESTAO_ID";
 
         protected string DeleteAlternativas => @"DELETE FROM [dbo].[TBALTERNATIVAS]
                                                     WHERE QUESTAO_ID =       @ID";
 
         protected string SelectAlternativas => @"SELECT    [QUESTAO_ID]
-                                                          ,[ALTERNATIVA]
+                                                          ,[ALTERNATIVA]        ALTERNATIVA
+
                                                       FROM [dbo].[TBALTERNATIVAS]
 
-                                                      WHERE [QUESTAO_ID] =   @ID";
+                                                      WHERE [QUESTAO_ID] =      @ID";
 
-        public void AdicionarAlternativas(Questao questao)
+        private void AdicionarAlternativas(Questao questao)
         {
             comandoBd.CommandText = AddAlternativas;
 
@@ -125,14 +126,12 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void EditarAlternativas(Questao questao)
+        private void EditarAlternativas(Questao questao)
         {
             comandoBd.CommandText = DeleteAlternativas;
 
             comandoBd.Parameters.Clear();
-
             comandoBd.Parameters.AddWithValue("ID", questao.Id);
-
             comandoBd.ExecuteNonQuery();
 
             comandoBd.CommandText = AddAlternativas;
@@ -147,36 +146,29 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void ExcluirAlternativas(Questao questao)
+        private void ObterAlternativas(List<Questao> questoes, SqlDataReader reader)
         {
-            comandoBd.CommandText = DeleteAlternativas;
-
-            comandoBd.ExecuteNonQuery();
-        }
-
-        public List<string> ObterAlternativas(Questao questao)
-        {
-            conectarBd.Open();
-
-            comandoBd.Parameters.Clear();
-
             comandoBd.CommandText = SelectAlternativas;
 
-            comandoBd.Parameters.AddWithValue("ID", questao.Id);
-
-            SqlDataReader reader = comandoBd.ExecuteReader();
-
-            List<string> alternativas = new();
-
-            while (reader.Read())
+            foreach (Questao questao in questoes)
             {
-                string alternativa = Convert.ToString(reader["ALTERNATIVA"])!;
-                alternativas.Add(alternativa);
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("ID", questao.Id);
+
+                reader = comandoBd.ExecuteReader();
+
+                List<string> alternativas = new();
+
+                while (reader.Read())
+                {
+                    string alternativa = Convert.ToString(reader["ALTERNATIVA"])!;
+                    alternativas.Add(alternativa);
+                }
+
+                questao.Alternativas = alternativas;
+
+                reader.Close();
             }
-
-            conectarBd.Close();
-
-            return alternativas;
         }
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();

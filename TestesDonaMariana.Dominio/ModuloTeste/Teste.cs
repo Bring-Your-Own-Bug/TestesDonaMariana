@@ -38,16 +38,12 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
 
         public bool ValidarDisciplinaExistente(int index)
         {
-            if (index == -1)
-                return true;
-            else return false;
+            return index == -1;
         }
 
         public bool ValidarMateriaExistente(int selectedIndex, bool @checked)
         {
-            if (@checked == true && selectedIndex == -1)
-                return false;
-            else return true;
+            return (@checked && selectedIndex != -1) || (!@checked && selectedIndex == -1);
         }
     }
 }

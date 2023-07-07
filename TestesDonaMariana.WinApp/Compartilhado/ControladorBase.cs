@@ -17,6 +17,8 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         protected event Action<TTela, TEntidade> onComandosAdicionaisAddAndEdit;
 
+        protected event Predicate<TEntidade> onValidarRelacaoExistente;
+
         public ControladorBase()
         {
 
@@ -86,6 +88,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
             TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
 
+            if (onValidarRelacaoExistente?.Invoke(entidade) ?? false)
+                return;
+
             if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 _repositorio.Excluir(entidade);
@@ -95,9 +100,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void Filtrar() { }
 
-        public virtual void AdicionarItens() { }
+        public virtual void MostrarDetalhes() {}
 
-        public virtual void AtualizarStatus() { }
+        public virtual void MostrarDuplicacao() { }
 
         public virtual void CarregarRegistros()
         {

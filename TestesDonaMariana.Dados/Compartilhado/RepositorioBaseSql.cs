@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
+using System.Data;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
@@ -7,7 +8,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
     public abstract class RepositorioBaseSql<TEntidade>
         where TEntidade : Entidade<TEntidade>, new()
     {
-        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
+        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True;";
 
         protected static SqlConnection conectarBd = new(ENDERECO_BD);
 
@@ -17,7 +18,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected event Action<TEntidade> onComandoDeRelacaoEdit;
 
-        protected event Action<TEntidade> onComandoDeRelacaoDelete;
+        protected event Action<List<TEntidade>, SqlDataReader> onComandoDeRelacaoSelect;
 
         public RepositorioBaseSql()
         {
@@ -78,8 +79,6 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             comandoBd.Parameters.AddWithValue("ID", registroSelecionado.Id);
 
-            onComandoDeRelacaoDelete?.Invoke(registroSelecionado);
-
             comandoBd.CommandText = DeleteCommand;
 
             comandoBd.ExecuteNonQuery();
@@ -103,6 +102,10 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
                 registros.Add(registro);
             }
+
+            reader.Close();
+
+            onComandoDeRelacaoSelect?.Invoke(registros, reader);
 
             conectarBd.Close();
 

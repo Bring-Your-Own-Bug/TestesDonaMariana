@@ -7,6 +7,7 @@ namespace TestesDonaMariana.Dominio.ModuloMateria
 {
     public class Materia : Entidade<Materia>
     {
+        public string NomeSerie => $"{Nome}, {Serie.ObterDescricao()}";
         public string Nome { get; set; }
         public Disciplina Disciplina { get; set; }
         public List<Questao> ListaQuestoes { get; set; } = new();
