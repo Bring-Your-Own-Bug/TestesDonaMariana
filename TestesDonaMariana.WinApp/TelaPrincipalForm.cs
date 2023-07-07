@@ -113,13 +113,12 @@ namespace TestesDonaMariana.WinApp
         private void btnDetalhes_Click(object sender, EventArgs e)
         {
             _controladorBase.MostrarDetalhes();
-
             ResetarBotoes();
         }
 
-        private void btnAttStatus_Click(object sender, EventArgs e)
+        private void btnDuplicacao_Click(object sender, EventArgs e)
         {
-            _controladorBase.AtualizarStatus();
+            _controladorBase.MostrarDuplicacao();
             ResetarBotoes();
         }
 
@@ -170,6 +169,11 @@ namespace TestesDonaMariana.WinApp
                 btnDetalhes.Enabled = true;
             else
                 btnDetalhes.Enabled = false;
+
+            if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorTeste)
+                btnDuplicacao.Enabled = true;
+            else
+                btnDuplicacao.Enabled = false;
         }
 
         //private void ConfigurarBotaoAtualizarStatus()
