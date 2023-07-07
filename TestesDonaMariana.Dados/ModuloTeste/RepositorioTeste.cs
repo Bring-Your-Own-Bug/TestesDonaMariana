@@ -11,7 +11,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
         {
             onComandoDeRelacaoAdd += AdicionarQuestoes;
             onComandoDeRelacaoEdit += EditarQuestoes;
-            onComandoDeRelacaoDelete += ExcluirQuestoes;
         }
         protected override string AddCommand => @"INSERT INTO [dbo].[TBTESTE]
                                                            (
@@ -41,8 +40,10 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
                                                 WHERE[ID] = @ID";
 
-        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBTESTE]
-													WHERE [ID] =                    @ID";
+        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBTESTE_TBQUESTAO]
+                                                    WHERE [TESTE_ID] =                         @ID
+                                                    DELETE FROM [dbo].[TBTESTE]
+													WHERE [ID] =                               @ID";
 
         protected override string SelectCommand => @"SELECT    T.[ID]                   TESTE_ID
                                                               ,T.[TITULO]               TESTE_TITULO
@@ -177,13 +178,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
                 comandoBd.ExecuteNonQuery();
             }
-        }
-
-        public void ExcluirQuestoes()
-        {
-            comandoBd.CommandText = DeleteQuestoes;
-
-            comandoBd.ExecuteNonQuery();
         }
 
         public List<Questao> ObterQuestoes(Teste teste)

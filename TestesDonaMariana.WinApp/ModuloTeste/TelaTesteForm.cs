@@ -11,6 +11,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool isValid;
 
+        private List<Questao> listaQuestoesSorteadas = new();
+        private List<Questao> ListaQuestao { get; set; }
         private List<Teste> ListaTeste { get; set; }
         private List<Materia> ListaMateria { get; set; }
 
@@ -20,6 +22,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             InitializeComponent();
 
             _controladorTeste = new ControladorTeste();
+            ListaQuestao = _controladorTeste.ObterListaQuestao();
             ListaTeste = _controladorTeste.ObterListaTeste();
             ListaMateria = _controladorTeste.ObterListaMateria();
         }
@@ -59,7 +62,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
 
-            List<Questao> questoes = listQuestoes.Items.Cast<Questao>().ToList();
+            List<Questao> questoes = listaQuestoesSorteadas;
 
             _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, questoes, DateTime.Now, recuperacao);
 
@@ -118,7 +121,35 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void btnGerarQuestao_Click(object sender, EventArgs e)
         {
+            lbErroQtdQuestoes.Visible = false;
 
+            Materia? materiaSelecionada = cmbMateria.SelectedItem as Materia;
+
+            List<Questao> listaPorMateria = ListaQuestao.FindAll(a => a.Materia.Id == materiaSelecionada.Id);
+
+            if (ValidarQtdQuestoes(ListaQuestao.Count))
+            {
+                lbErroQtdQuestoes.Visible = true;
+                return;
+            }
+
+            Random random = new Random();
+
+            for (int i = 0; i < numQuestao.Value; i++)
+            {
+                int indexRandom = random.Next((int)numQuestao.Value);
+
+                if (!listQuestoes.Items.Contains(listaPorMateria[indexRandom].Enunciado))
+                {
+                    listaQuestoesSorteadas.Add(listaPorMateria[indexRandom]);
+                    listQuestoes.Items.Add(listaPorMateria[indexRandom].Enunciado);
+                }
+            }
+        }
+
+        private bool ValidarQtdQuestoes(int count)
+        {
+            return numQuestao.Value > count;
         }
 
         private void ckbRecuperacao_CheckedChanged(object sender, EventArgs e)

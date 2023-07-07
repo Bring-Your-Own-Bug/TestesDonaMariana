@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
+using System.Data;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
@@ -7,7 +8,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
     public abstract class RepositorioBaseSql<TEntidade>
         where TEntidade : Entidade<TEntidade>, new()
     {
-        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
+        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True;";
 
         protected static SqlConnection conectarBd = new(ENDERECO_BD);
 
@@ -18,7 +19,9 @@ namespace TestesDonaMariana.Dados.Compartilhado
         protected event Action<TEntidade> onComandoDeRelacaoEdit;
 
         protected event Action onComandoDeRelacaoDelete;
-        
+
+        protected event Action<TEntidade, SqlDataReader> onComandoDeRelacaoSelect;
+
         public RepositorioBaseSql()
         {
 
@@ -100,6 +103,8 @@ namespace TestesDonaMariana.Dados.Compartilhado
             while (reader.Read())
             {
                 TEntidade registro = Mapear.ConverterRegistro(reader);
+
+                onComandoDeRelacaoSelect?.Invoke(registro, reader);
 
                 registros.Add(registro);
             }

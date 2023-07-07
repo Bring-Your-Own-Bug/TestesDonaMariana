@@ -46,6 +46,7 @@
             btnGerarQuestao = new Button();
             groupBox1 = new GroupBox();
             txtId = new TextBox();
+            lbErroQtdQuestoes = new Label();
             ((System.ComponentModel.ISupportInitialize)numQuestao).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -231,12 +232,25 @@
             txtId.Text = "0";
             txtId.Visible = false;
             // 
+            // lbErroQtdQuestoes
+            // 
+            lbErroQtdQuestoes.AutoSize = true;
+            lbErroQtdQuestoes.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroQtdQuestoes.ForeColor = Color.Red;
+            lbErroQtdQuestoes.Location = new Point(278, 86);
+            lbErroQtdQuestoes.Name = "lbErroQtdQuestoes";
+            lbErroQtdQuestoes.Size = new Size(155, 13);
+            lbErroQtdQuestoes.TabIndex = 100;
+            lbErroQtdQuestoes.Text = "*Limite de questões atingido";
+            lbErroQtdQuestoes.Visible = false;
+            // 
             // TelaTesteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(451, 525);
+            Controls.Add(lbErroQtdQuestoes);
             Controls.Add(txtId);
             Controls.Add(btnGerarQuestao);
             Controls.Add(groupBox1);
@@ -286,5 +300,6 @@
         public ComboBox cmbDisciplina;
         public ComboBox cmbMateria;
         public CheckBox ckbRecuperacao;
+        private Label lbErroQtdQuestoes;
     }
 }

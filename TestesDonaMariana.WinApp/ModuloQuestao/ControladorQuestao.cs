@@ -52,8 +52,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         public void CarregarAlternativas(TelaQuestaoForm telaQuestao, Questao questao)
         {
-            if (questao != null)
-                questao.Alternativas = _repositorioQuestao.ObterAlternativas(questao);
+            //if (questao != null)
+            //    questao.Alternativas = _repositorioQuestao.ObterAlternativas(questao);
         }
 
         public override TabelaQuestaoControl ObterListagem()

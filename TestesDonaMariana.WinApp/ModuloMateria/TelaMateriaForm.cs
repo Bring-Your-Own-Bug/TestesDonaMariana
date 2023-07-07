@@ -81,7 +81,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 lbErroNome.Text = "*Essa matéria já existe";
             }
 
-            //lbErroDisciplina.Visible = materia.ValidarCampoVazio(txtDisciplina.Text);
+            lbErroDisciplina.Visible = materia.ValidarCampoVazio(txtDisciplina.Text);
 
             if (lbErroNome.Visible || lbErroDisciplina.Visible)
                 isValid = false;

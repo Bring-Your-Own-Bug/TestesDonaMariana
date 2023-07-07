@@ -85,5 +85,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             return new RepositorioDisciplina().ObterListaRegistros();
         }
+        public List<Questao>? ObterListaQuestao()
+        {
+            return new RepositorioQuestao().ObterListaRegistros();
+        }
     }
 }

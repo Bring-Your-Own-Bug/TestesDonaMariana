@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
+using System.Data;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
@@ -11,7 +12,8 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
         {
             onComandoDeRelacaoAdd += AdicionarAlternativas;
             onComandoDeRelacaoEdit += EditarAlternativas;
-            onComandoDeRelacaoDelete += ExcluirAlternativas;
+            //onComandoDeRelacaoDelete += ExcluirAlternativas;
+            onComandoDeRelacaoSelect += ObterAlternativas;
         }
 
         protected override string AddCommand => @"INSERT INTO [dbo].[TBQUESTAO]
@@ -36,7 +38,9 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                          WHERE 
                                                                [ID] =                   @ID";
 
-        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBQUESTAO]
+        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBALTERNATIVAS]
+                                                    WHERE QUESTAO_ID =                  @ID
+                                                    DELETE FROM [dbo].[TBQUESTAO]
 													WHERE [ID] =		                @ID";
 
         protected override string SelectCommand => @"SELECT   Q.[ID]                    QUESTAO_ID
@@ -67,6 +71,8 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                                 ,Q.[ENUNCIADO]          QUESTAO_ENUNCIADO
                                                                 ,Q.[ALTERNATIVACORRETA] QUESTAO_ALTERNATIVACORRETA
 
+                                                                ,A.[ALTERNATIVA]        ALTERNATIVA_ALTERNATIVA
+
                                                                 ,M.[ID]                 MATERIA_ID
                                                                 ,M.[NOME]               MATERIA_NOME
                                                                 ,M.[DISCIPLINA_ID]      MATERIA_DISCIPLINA_ID
@@ -76,6 +82,9 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
                                                                 ,D.[NOME]               DISCIPLINA_NOME
 
                                                             FROM [dbo].[TBQUESTAO] AS Q
+
+                                                            INNER JOIN [dbo].[TBALTERNATIVAS] AS A
+                                                            ON Q.ID = A.QUESTAO_ID
 
                                                             INNER JOIN [dbo].[TBMATERIA] AS M
                                                             ON Q.MATERIA_ID = M.ID
@@ -96,20 +105,14 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
         protected string EditAlternativas => @"UPDATE [dbo].[TBALTERNATIVAS]
 
-                                                   SET [QUESTAO_ID] =       @QUESTAO_ID
-                                                      ,[ALTERNATIVA] =      @ALTERNATIVA
+                                                   SET
+                                                        [ALTERNATIVA] =      @ALTERNATIVA
 
                                                  WHERE
-                                                        QUESTAO_ID =         @ID";
+                                                        QUESTAO_ID =         @QUESTAO_ID";
 
         protected string DeleteAlternativas => @"DELETE FROM [dbo].[TBALTERNATIVAS]
                                                     WHERE QUESTAO_ID =       @ID";
-
-        protected string SelectAlternativas => @"SELECT    [QUESTAO_ID]
-                                                          ,[ALTERNATIVA]
-                                                      FROM [dbo].[TBALTERNATIVAS]
-
-                                                      WHERE [QUESTAO_ID] =   @ID";
 
         public void AdicionarAlternativas(Questao questao)
         {
@@ -130,9 +133,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             comandoBd.CommandText = DeleteAlternativas;
 
             comandoBd.Parameters.Clear();
-
             comandoBd.Parameters.AddWithValue("ID", questao.Id);
-
             comandoBd.ExecuteNonQuery();
 
             comandoBd.CommandText = AddAlternativas;
@@ -147,36 +148,20 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        public void ExcluirAlternativas()
+        public void ObterAlternativas(Questao questao, SqlDataReader reader)
         {
-            comandoBd.CommandText = DeleteAlternativas;
-
-            comandoBd.ExecuteNonQuery();
-        }
-
-        public List<string> ObterAlternativas(Questao questao)
-        {
-            conectarBd.Open();
-
-            comandoBd.Parameters.Clear();
-
-            comandoBd.CommandText = SelectAlternativas;
-
-            comandoBd.Parameters.AddWithValue("ID", questao.Id);
-
-            SqlDataReader reader = comandoBd.ExecuteReader();
-
             List<string> alternativas = new();
+
+            string alternativa = Convert.ToString(reader["ALTERNATIVA_ALTERNATIVA"])!;
+            alternativas.Add(alternativa);
 
             while (reader.Read())
             {
-                string alternativa = Convert.ToString(reader["ALTERNATIVA"])!;
+                alternativa = Convert.ToString(reader["ALTERNATIVA_ALTERNATIVA"])!;
                 alternativas.Add(alternativa);
             }
 
-            conectarBd.Close();
-
-            return alternativas;
+            questao.Alternativas = alternativas;
         }
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();

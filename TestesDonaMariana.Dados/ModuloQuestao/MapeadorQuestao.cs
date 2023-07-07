@@ -34,6 +34,7 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             questao.Id = id;
             questao.Materia = materia;
             questao.Enunciado = enunciado;
+            //questao.Alternativas = new RepositorioQuestao().ObterAlternativas(questao);
             questao.AlternativaCorreta = alternativaCorreta;
 
             return questao;
