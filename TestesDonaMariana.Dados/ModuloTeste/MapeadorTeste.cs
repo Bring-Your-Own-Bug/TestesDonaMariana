@@ -18,7 +18,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             comando.Parameters.AddWithValue("NUMERODEQUESTOES", registro.NumeroDeQuestoes);
             comando.Parameters.AddWithValue("DISCIPLINA_ID", registro.Disciplina.Id);
             comando.Parameters.AddWithValue("MATERIA_ID", registro.Materia == null ? DBNull.Value : registro.Materia.Id);
-            //comando.Parameters.AddWithValue("LISTA_QUESTAO_ID", registro.ListaQuestoes);
             comando.Parameters.AddWithValue("DATAGERACAO", registro.DataGeracao);
         }
 
@@ -30,8 +29,12 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             string titulo = Convert.ToString(leitorRegistros["TESTE_TITULO"]);
             int numeroDeQuestoes = Convert.ToInt32(leitorRegistros["TESTE_NUMEROQUESTOES"]);
             Disciplina disciplina = new MapeadorDisciplina().ConverterRegistro(leitorRegistros);
-            Materia materia = new MapeadorMateria().ConverterRegistro(leitorRegistros);
-           // Questao questao = new MapeadorQuestao().ConverterRegistro(leitorRegistros);
+
+            Materia materia = null;
+
+            if (leitorRegistros["MATERIA_ID"] != DBNull.Value)
+                materia = new MapeadorMateria().ConverterRegistro(leitorRegistros);
+
             DateTime dataGeracao = Convert.ToDateTime(leitorRegistros["TESTE_DATAGERACAO"]);
 
             teste.Id = id;
@@ -39,7 +42,6 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             teste.NumeroDeQuestoes = numeroDeQuestoes;
             teste.Disciplina = disciplina;
             teste.Materia = materia;
-            //teste.ListaQuestoes = questao;
             teste.DataGeracao = dataGeracao;
 
             return teste;

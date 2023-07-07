@@ -11,6 +11,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
         {
             onComandoDeRelacaoAdd += AdicionarQuestoes;
             onComandoDeRelacaoEdit += EditarQuestoes;
+            onComandoDeRelacaoSelect += ObterQuestoes;
         }
         protected override string AddCommand => @"INSERT INTO [dbo].[TBTESTE]
                                                            (
@@ -163,9 +164,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             comandoBd.CommandText = DeleteQuestoes;
 
             comandoBd.Parameters.Clear();
-
             comandoBd.Parameters.AddWithValue("ID", teste.Id);
-
             comandoBd.ExecuteNonQuery();
 
             comandoBd.CommandText = AddQuestoes;
@@ -180,30 +179,55 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             }
         }
 
-        public List<Questao> ObterQuestoes(Teste teste)
+        private void ObterQuestoes(List<Teste> testes, SqlDataReader reader)
         {
-            conectarBd.Open();
-
-            comandoBd.Parameters.Clear();
-
             comandoBd.CommandText = SelectQuestoes;
 
-            comandoBd.Parameters.AddWithValue("ID", teste.Id);
-
-            SqlDataReader reader = comandoBd.ExecuteReader();
-
-            List<Questao> questoes = new();
-
-            while (reader.Read())
+            foreach (Teste teste in testes)
             {
-                Questao questao = new MapeadorQuestao().ConverterRegistro(reader);
-                questoes.Add(questao);
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("ID", teste.Id);
+
+                reader = comandoBd.ExecuteReader();
+
+                List<Questao> questoes = new();
+
+                while (reader.Read())
+                {
+                    Questao questao = new MapeadorQuestao().ConverterRegistro(reader);
+                    questoes.Add(questao);
+                }
+
+                teste.ListaQuestoes = questoes;
+
+                reader.Close();
             }
-
-            conectarBd.Close();
-
-            return questoes;
         }
+
+        //public List<Questao> ObterQuestoes(Teste teste)
+        //{
+        //    conectarBd.Open();
+
+        //    comandoBd.Parameters.Clear();
+
+        //    comandoBd.CommandText = SelectQuestoes;
+
+        //    comandoBd.Parameters.AddWithValue("ID", teste.Id);
+
+        //    SqlDataReader reader = comandoBd.ExecuteReader();
+
+        //    List<Questao> questoes = new();
+
+        //    while (reader.Read())
+        //    {
+        //        Questao questao = new MapeadorQuestao().ConverterRegistro(reader);
+        //        questoes.Add(questao);
+        //    }
+
+        //    conectarBd.Close();
+
+        //    return questoes;
+        //}
 
         protected override MapeadorBase<Teste> Mapear => new MapeadorTeste();
     }

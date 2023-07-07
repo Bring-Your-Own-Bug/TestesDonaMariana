@@ -31,7 +31,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             _repositorioMateria = repositorio4;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
-            onComandosAdicionaisAddAndEdit += CarregarQuestoes;
         }
 
         public override TabelaTesteControl ObterListagem()
@@ -80,12 +79,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             telaTeste.cmbDisciplina.DisplayMember = "Nome";
             telaTeste.cmbDisciplina.ValueMember = "Nome";
             telaTeste.cmbDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
-        }
-
-        private void CarregarQuestoes(TelaTesteForm telaTeste, Teste teste)
-        {
-            if (teste != null)
-                teste.ListaQuestoes = _repositorioTeste.ObterQuestoes(teste);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
             TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
 
-            if ((bool)(onValidarRelacaoExistente?.Invoke(entidade)))
+            if (onValidarRelacaoExistente?.Invoke(entidade) ?? false)
                 return;
 
             if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
