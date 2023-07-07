@@ -1,7 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using TestesDonaMariana.Dados.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
-using TestesDonaMariana.Dominio.ModuloMateria;
+﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.Dados.ModuloDisciplina
 {
@@ -51,29 +48,6 @@ namespace TestesDonaMariana.Dados.ModuloDisciplina
                                                           ON M.DISCIPLINA_ID =          D.ID
 
                                                           WHERE [DISCIPLINA_ID] =                   @ID";
-
-        //public List<Materia> ObterMaterias(Disciplina disciplina)
-        //{
-        //    conectarBd.Open();
-
-        //    comandoBd.CommandText = SelectMaterias;
-
-        //    comandoBd.Parameters.AddWithValue("ID", disciplina.Id);
-
-        //    SqlDataReader reader = comandoBd.ExecuteReader();
-
-        //    List<Materia> materias = new();
-
-        //    while (reader.Read())
-        //    {
-        //        Materia materia = new MapeadorMateria().ConverterRegistro(reader);
-        //        materias.Add(materia);
-        //    }
-
-        //    conectarBd.Close();
-
-        //    return materias;
-        //}
 
         protected override MapeadorBase<Disciplina> Mapear => new MapeadorDisciplina();
     }

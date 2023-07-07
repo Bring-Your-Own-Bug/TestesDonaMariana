@@ -144,7 +144,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
                                             WHERE [TESTE_ID] =                  @ID";
 
-        public void AdicionarQuestoes(Teste teste)
+        private void AdicionarQuestoes(Teste teste)
         {
             comandoBd.CommandText = AddQuestoes;
 
@@ -158,7 +158,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             }
         }
 
-        public void EditarQuestoes(Teste teste)
+        private void EditarQuestoes(Teste teste)
         {
             comandoBd.CommandText = DeleteQuestoes;
 

@@ -2,8 +2,6 @@
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
-using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
@@ -24,11 +22,15 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             _repositorioDisciplina = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
-            onComandosAdicionaisAddAndEdit += CarregarAlternativas;
             onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
-        public bool VerificarRelacoesExistentes(Questao questao)
+        public override TabelaQuestaoControl ObterListagem()
+        {
+            return _tabelaQuestao;
+        }
+
+        private bool VerificarRelacoesExistentes(Questao questao)
         {
             if (questao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
             {
@@ -39,7 +41,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             return false;
         }
 
-        public void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
+        private void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
         {
             telaQuestao.txtMateria.DisplayMember = "Nome";
             telaQuestao.txtMateria.ValueMember = "Nome";
@@ -48,17 +50,6 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             telaQuestao.txtDisciplina.DisplayMember = "Nome";
             telaQuestao.txtDisciplina.ValueMember = "Nome";
             telaQuestao.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
-        }
-
-        public void CarregarAlternativas(TelaQuestaoForm telaQuestao, Questao questao)
-        {
-            //if (questao != null)
-            //    questao.Alternativas = _repositorioQuestao.ObterAlternativas(questao);
-        }
-
-        public override TabelaQuestaoControl ObterListagem()
-        {
-            return _tabelaQuestao;
         }
     }
 }

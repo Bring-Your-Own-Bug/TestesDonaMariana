@@ -1,12 +1,7 @@
-﻿using Microsoft.Identity.Client;
-using TestesDonaMariana.Dados.ModuloDisciplina;
+﻿using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
-using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
-using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.WinApp.ModuloMateria;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
 {
@@ -30,17 +25,6 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             
         }
 
-        public bool VerificarRelacoesExistentes(Disciplina disciplina)
-        {
-            if (disciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
-            {
-                MessageBox.Show($"Existem Matérias ou Testes cadastrados na Disciplina \"{disciplina.Nome}\", Exclua-os para excluir essa Disciplina",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
-            }
-            return false;
-        }
-
         public List<Disciplina> ObterListaDisciplina()
         {
             return new RepositorioDisciplina().ObterListaRegistros();
@@ -49,6 +33,17 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         public override TabelaDisciplinaControl ObterListagem()
         {
             return _tabelaDisciplina;
+        }
+
+        private bool VerificarRelacoesExistentes(Disciplina disciplina)
+        {
+            if (disciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
+            {
+                MessageBox.Show($"Existem Matérias ou Testes cadastrados na Disciplina \"{disciplina.Nome}\", Exclua-os para excluir essa Disciplina",
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+            return false;
         }
     }
 }

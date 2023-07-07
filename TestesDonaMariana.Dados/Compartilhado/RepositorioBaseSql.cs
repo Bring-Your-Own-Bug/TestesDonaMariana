@@ -18,9 +18,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected event Action<TEntidade> onComandoDeRelacaoEdit;
 
-        protected event Action onComandoDeRelacaoDelete;
-
-        protected event Action<TEntidade, SqlDataReader> onComandoDeRelacaoSelect;
+        protected event Action<List<TEntidade>, SqlDataReader> onComandoDeRelacaoSelect;
 
         public RepositorioBaseSql()
         {
@@ -81,8 +79,6 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             comandoBd.Parameters.AddWithValue("ID", registroSelecionado.Id);
 
-            onComandoDeRelacaoDelete?.Invoke();
-
             comandoBd.CommandText = DeleteCommand;
 
             comandoBd.ExecuteNonQuery();
@@ -104,10 +100,12 @@ namespace TestesDonaMariana.Dados.Compartilhado
             {
                 TEntidade registro = Mapear.ConverterRegistro(reader);
 
-                onComandoDeRelacaoSelect?.Invoke(registro, reader);
-
                 registros.Add(registro);
             }
+
+            reader.Close();
+
+            onComandoDeRelacaoSelect?.Invoke(registros, reader);
 
             conectarBd.Close();
 

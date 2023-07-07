@@ -1,10 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using TestesDonaMariana.Dados.ModuloDisciplina;
-using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloSerie;
 
 namespace TestesDonaMariana.Dados.ModuloMateria
