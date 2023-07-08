@@ -39,6 +39,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
                 numQuestao.Value = value.NumeroDeQuestoes;
                 listQuestoes.Items.AddRange(value.ListaQuestoes.ToArray());
+                listaQuestoesSorteadas.AddRange(value.ListaQuestoes);
                 _teste = value;
             }
         }
