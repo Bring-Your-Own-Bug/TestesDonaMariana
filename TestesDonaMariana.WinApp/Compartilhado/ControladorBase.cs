@@ -111,9 +111,17 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual string ObterTipoCadastro()
         {
-            return ((typeof(TEntidade).Name).EndsWith("ao"))
-                ? $"Cadastro de {typeof(TEntidade).Name.TrimEnd('a')}ões"
-                : $"Cadastro de {typeof(TEntidade).Name}s";
+            string nomeEntidade = typeof(TEntidade).Name;
+
+            if (nomeEntidade.EndsWith("ao"))
+            {
+                nomeEntidade = nomeEntidade.Remove(nomeEntidade.Length - 2);
+                return $"Cadastro de {nomeEntidade}ões";
+            }
+            else
+            {
+                return $"Cadastro de {nomeEntidade}s";
+            }
         }
 
         public abstract UserControl ObterListagem();

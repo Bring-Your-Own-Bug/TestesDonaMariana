@@ -40,10 +40,12 @@
             toolStripSeparator1 = new ToolStripSeparator();
             btnDetalhes = new ToolStripButton();
             btnDuplicar = new ToolStripButton();
+            btnGerarPdf = new ToolStripButton();
             lbTipoCadastro = new ToolStripLabel();
             statusStrip1 = new StatusStrip();
             lbStatus = new ToolStripStatusLabel();
             plPrincipal = new Panel();
+            toolStripSeparator2 = new ToolStripSeparator();
             toolStrip1.SuspendLayout();
             barraFuncoes.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -137,7 +139,7 @@
             // 
             barraFuncoes.BackColor = Color.White;
             barraFuncoes.GripStyle = ToolStripGripStyle.Hidden;
-            barraFuncoes.Items.AddRange(new ToolStripItem[] { btnAdicionar, btnEditar, btnExcluir, toolStripSeparator1, btnDetalhes, btnDuplicar, lbTipoCadastro });
+            barraFuncoes.Items.AddRange(new ToolStripItem[] { btnAdicionar, btnEditar, btnExcluir, toolStripSeparator1, btnDetalhes, btnDuplicar, btnGerarPdf, toolStripSeparator2, lbTipoCadastro });
             barraFuncoes.Location = new Point(0, 58);
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
@@ -205,7 +207,7 @@
             btnDetalhes.Text = "Detalhes";
             btnDetalhes.Click += btnDetalhes_Click;
             // 
-            // btnDuplicacao
+            // btnDuplicar
             // 
             btnDuplicar.BackColor = Color.Orange;
             btnDuplicar.Enabled = false;
@@ -214,11 +216,25 @@
             btnDuplicar.ImageScaling = ToolStripItemImageScaling.None;
             btnDuplicar.ImageTransparentColor = Color.Magenta;
             btnDuplicar.Margin = new Padding(10);
-            btnDuplicar.Name = "btnDuplicacao";
+            btnDuplicar.Name = "btnDuplicar";
             btnDuplicar.Padding = new Padding(5);
             btnDuplicar.Size = new Size(96, 34);
             btnDuplicar.Text = "Duplicar";
             btnDuplicar.Click += btnDuplicar_Click;
+            // 
+            // btnGerarPdf
+            // 
+            btnGerarPdf.BackColor = Color.GreenYellow;
+            btnGerarPdf.Enabled = false;
+            btnGerarPdf.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGerarPdf.Image = Properties.Resources.pdfIcon;
+            btnGerarPdf.ImageScaling = ToolStripItemImageScaling.None;
+            btnGerarPdf.ImageTransparentColor = Color.Magenta;
+            btnGerarPdf.Margin = new Padding(10);
+            btnGerarPdf.Name = "btnGerarPdf";
+            btnGerarPdf.Padding = new Padding(5);
+            btnGerarPdf.Size = new Size(106, 34);
+            btnGerarPdf.Text = "Gerar PDF";
             // 
             // lbTipoCadastro
             // 
@@ -249,6 +265,11 @@
             plPrincipal.TabIndex = 3;
             plPrincipal.ControlAdded += plPrincipal_ControlAdded;
             plPrincipal.ControlRemoved += plPrincipal_ControlRemoved;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 54);
             // 
             // TelaPrincipalForm
             // 
@@ -291,5 +312,7 @@
         private Panel plPrincipal;
         private ToolStripButton btnDetalhes;
         private ToolStripButton btnDuplicar;
+        private ToolStripButton btnGerarPdf;
+        private ToolStripSeparator toolStripSeparator2;
     }
 }
