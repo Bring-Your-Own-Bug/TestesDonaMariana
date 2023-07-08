@@ -43,7 +43,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
-            TelaDetalhesTeste tela = new();
+            TelaDetalhesTesteForm tela = new();
 
             tela.Entidade = teste;
 
@@ -70,6 +70,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 _repositorio.Adicionar(tela.DuplicarTeste);
 
             CarregarRegistros();
+        }
+
+        public override void GerarPdf()
+        {
+            //Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
+
+            //TelaPdfForm tela = new();
         }
 
         public List<Teste>? ObterListaTeste()

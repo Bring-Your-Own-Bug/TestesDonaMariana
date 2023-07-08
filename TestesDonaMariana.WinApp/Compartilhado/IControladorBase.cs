@@ -20,6 +20,8 @@
 
         public abstract void DuplicarTeste();
 
+        public abstract void GerarPdf();
+
         public abstract void CarregarRegistros();
 
         public abstract string ObterTipoCadastro();

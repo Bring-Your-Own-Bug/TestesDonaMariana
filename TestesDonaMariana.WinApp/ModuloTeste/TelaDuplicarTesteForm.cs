@@ -14,7 +14,7 @@ using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
-    public partial class TelaDuplicarTeste : Form
+    public partial class TelaDuplicarTesteForm : Form
     {
         private Teste _teste;
 
@@ -22,7 +22,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private List<Teste> ListaTeste { get; set; }
 
-        public TelaDuplicarTeste()
+        public TelaDuplicarTesteForm()
         {
             InitializeComponent();
 

@@ -9,7 +9,7 @@ using TestesDonaMariana.WinApp.ModuloQuestao;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
-    public partial class TelaDetalhesTeste : Form
+    public partial class TelaDetalhesTesteForm : Form
     {
         private Teste _teste;
         private ControladorTeste _ControladorQuestao;
@@ -17,7 +17,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         private List<Teste> ListaTeste { get; set; }
         
 
-        public TelaDetalhesTeste()
+        public TelaDetalhesTesteForm()
         {
             InitializeComponent();
 

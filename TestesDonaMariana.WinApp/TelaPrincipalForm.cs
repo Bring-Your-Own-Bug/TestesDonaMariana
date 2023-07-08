@@ -122,6 +122,12 @@ namespace TestesDonaMariana.WinApp
             ResetarBotoes();
         }
 
+        private void btnGerarPdf_Click(object sender, EventArgs e)
+        {
+            _controladorBase.GerarPdf();
+            ResetarBotoes();
+        }
+
         private void AbrirListagem()
         {
             lbTipoCadastro.Text = _controladorBase.ObterTipoCadastro();

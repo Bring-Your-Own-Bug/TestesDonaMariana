@@ -41,11 +41,11 @@
             btnDetalhes = new ToolStripButton();
             btnDuplicar = new ToolStripButton();
             btnGerarPdf = new ToolStripButton();
+            toolStripSeparator2 = new ToolStripSeparator();
             lbTipoCadastro = new ToolStripLabel();
             statusStrip1 = new StatusStrip();
             lbStatus = new ToolStripStatusLabel();
             plPrincipal = new Panel();
-            toolStripSeparator2 = new ToolStripSeparator();
             toolStrip1.SuspendLayout();
             barraFuncoes.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -235,6 +235,12 @@
             btnGerarPdf.Padding = new Padding(5);
             btnGerarPdf.Size = new Size(106, 34);
             btnGerarPdf.Text = "Gerar PDF";
+            btnGerarPdf.Click += btnGerarPdf_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 54);
             // 
             // lbTipoCadastro
             // 
@@ -265,11 +271,6 @@
             plPrincipal.TabIndex = 3;
             plPrincipal.ControlAdded += plPrincipal_ControlAdded;
             plPrincipal.ControlRemoved += plPrincipal_ControlRemoved;
-            // 
-            // toolStripSeparator2
-            // 
-            toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 54);
             // 
             // TelaPrincipalForm
             // 
