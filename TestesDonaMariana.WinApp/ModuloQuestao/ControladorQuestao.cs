@@ -43,8 +43,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
         {
-            telaQuestao.txtMateria.DisplayMember = "Nome";
-            telaQuestao.txtMateria.ValueMember = "Nome";
+            telaQuestao.txtMateria.DisplayMember = "NomeSerie";
+            telaQuestao.txtMateria.ValueMember = "NomeSerie";
             telaQuestao.txtMateria.DataSource = _repositorioMateria.ObterListaRegistros();
 
             telaQuestao.txtDisciplina.DisplayMember = "Nome";

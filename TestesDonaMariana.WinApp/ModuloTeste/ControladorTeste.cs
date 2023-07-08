@@ -39,7 +39,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             return _tabelaTeste;
         }
 
-        public override void CarregarDetalhesTeste()
+        public override void MostrarDetalhes()
         {
             Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
@@ -47,20 +47,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             tela.Entidade = teste;
 
-            TelaPrincipalForm.AtualizarStatus($"Editando {typeof(Teste).Name}");
+            TelaPrincipalForm.AtualizarStatus($"Vizualizando {typeof(Teste).Name}");
 
             tela.ShowDialog();
-            
-            CarregarRegistros();
-        }
-
-        public override void MostrarDetalhes()
-        {
-            TelaDetalhesTeste tela = new();
-
-            tela.ShowDialog();
-
-            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
 
             CarregarRegistros();
         }
