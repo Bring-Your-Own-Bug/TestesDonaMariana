@@ -7,7 +7,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         public TabelaQuestaoControl()
         {
             InitializeComponent();
-            gridQuestao.ConfigurarTabelaGrid("Número", "Enunciado", "Reposta");
+            gridQuestao.ConfigurarTabelaGrid("Número", "Enunciado", "Resposta");
         }
 
         public DataGridView DataGridView { get { return gridQuestao; } }

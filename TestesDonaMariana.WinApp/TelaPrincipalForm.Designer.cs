@@ -39,7 +39,7 @@
             btnExcluir = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             btnDetalhes = new ToolStripButton();
-            btnDuplicacao = new ToolStripButton();
+            btnDuplicar = new ToolStripButton();
             lbTipoCadastro = new ToolStripLabel();
             statusStrip1 = new StatusStrip();
             lbStatus = new ToolStripStatusLabel();
@@ -137,12 +137,11 @@
             // 
             barraFuncoes.BackColor = Color.White;
             barraFuncoes.GripStyle = ToolStripGripStyle.Hidden;
-            barraFuncoes.Items.AddRange(new ToolStripItem[] { btnAdicionar, btnEditar, btnExcluir, toolStripSeparator1, btnDetalhes, btnDuplicacao, lbTipoCadastro });
+            barraFuncoes.Items.AddRange(new ToolStripItem[] { btnAdicionar, btnEditar, btnExcluir, toolStripSeparator1, btnDetalhes, btnDuplicar, lbTipoCadastro });
             barraFuncoes.Location = new Point(0, 58);
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
             barraFuncoes.TabIndex = 1;
-            barraFuncoes.Visible = false;
             // 
             // btnAdicionar
             // 
@@ -208,18 +207,18 @@
             // 
             // btnDuplicacao
             // 
-            btnDuplicacao.BackColor = Color.Orange;
-            btnDuplicacao.Enabled = false;
-            btnDuplicacao.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDuplicacao.Image = Properties.Resources.statusCheck;
-            btnDuplicacao.ImageScaling = ToolStripItemImageScaling.None;
-            btnDuplicacao.ImageTransparentColor = Color.Magenta;
-            btnDuplicacao.Margin = new Padding(10);
-            btnDuplicacao.Name = "btnDuplicacao";
-            btnDuplicacao.Padding = new Padding(5);
-            btnDuplicacao.Size = new Size(113, 34);
-            btnDuplicacao.Text = "Duplicação";
-            btnDuplicacao.Click += btnDuplicacao_Click;
+            btnDuplicar.BackColor = Color.Orange;
+            btnDuplicar.Enabled = false;
+            btnDuplicar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDuplicar.Image = Properties.Resources.statusCheck;
+            btnDuplicar.ImageScaling = ToolStripItemImageScaling.None;
+            btnDuplicar.ImageTransparentColor = Color.Magenta;
+            btnDuplicar.Margin = new Padding(10);
+            btnDuplicar.Name = "btnDuplicacao";
+            btnDuplicar.Padding = new Padding(5);
+            btnDuplicar.Size = new Size(96, 34);
+            btnDuplicar.Text = "Duplicar";
+            btnDuplicar.Click += btnDuplicar_Click;
             // 
             // lbTipoCadastro
             // 
@@ -244,9 +243,9 @@
             // plPrincipal
             // 
             plPrincipal.Dock = DockStyle.Fill;
-            plPrincipal.Location = new Point(0, 58);
+            plPrincipal.Location = new Point(0, 112);
             plPrincipal.Name = "plPrincipal";
-            plPrincipal.Size = new Size(1013, 546);
+            plPrincipal.Size = new Size(1013, 492);
             plPrincipal.TabIndex = 3;
             plPrincipal.ControlAdded += plPrincipal_ControlAdded;
             plPrincipal.ControlRemoved += plPrincipal_ControlRemoved;
@@ -291,6 +290,6 @@
         private ToolStripLabel lbTipoCadastro;
         private Panel plPrincipal;
         private ToolStripButton btnDetalhes;
-        private ToolStripButton btnDuplicacao;
+        private ToolStripButton btnDuplicar;
     }
 }

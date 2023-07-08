@@ -112,13 +112,13 @@ namespace TestesDonaMariana.WinApp
 
         private void btnDetalhes_Click(object sender, EventArgs e)
         {
-            _controladorBase.MostrarDetalhes();
+            _controladorBase.MostrarDetalhesTeste();
             ResetarBotoes();
         }
 
-        private void btnDuplicacao_Click(object sender, EventArgs e)
+        private void btnDuplicar_Click(object sender, EventArgs e)
         {
-            _controladorBase.MostrarDuplicacao();
+            _controladorBase.DuplicarTeste();
             ResetarBotoes();
         }
 
@@ -147,7 +147,7 @@ namespace TestesDonaMariana.WinApp
 
         private void ResetarBotoes()
         {
-            ConfigurarBotaoItem();
+            ConfigurarBotaoDetalhes();
 
             //ConfigurarBotaoAtualizarStatus();
 
@@ -163,7 +163,7 @@ namespace TestesDonaMariana.WinApp
             }
         }
 
-        private void ConfigurarBotaoItem()
+        private void ConfigurarBotaoDetalhes()
         {
             if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorTeste)
                 btnDetalhes.Enabled = true;
@@ -171,9 +171,9 @@ namespace TestesDonaMariana.WinApp
                 btnDetalhes.Enabled = false;
 
             if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorTeste)
-                btnDuplicacao.Enabled = true;
+                btnDuplicar.Enabled = true;
             else
-                btnDuplicacao.Enabled = false;
+                btnDuplicar.Enabled = false;
         }
 
         //private void ConfigurarBotaoAtualizarStatus()

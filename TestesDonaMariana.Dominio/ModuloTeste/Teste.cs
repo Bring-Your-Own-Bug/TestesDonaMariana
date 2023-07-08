@@ -45,5 +45,10 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
         {
             return (@checked && selectedIndex != -1) || (!@checked && selectedIndex == -1);
         }
+
+        public bool ValidarListaQuestoes(int qtdQuestoesLista)
+        {
+            return qtdQuestoesLista == 0;
+        }
     }
 }

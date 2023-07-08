@@ -31,15 +31,10 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             set
             {
-                //txtTitulo.Text = value.Titulo;
-                //txtDisciplina.Text = value.Disciplina.Nome;
-                //txtMateria.Text = value.Materia.Nome;
-                //_teste = value;
-
                 txtTitulo.Text = value.Titulo;
                 txtDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
-                txtMateria.Text = value.Materia == null ? "Geral" : value.Materia.Nome + " " + value.Materia.Serie.ObterDescricao();
-                listQuestoesSeleciondas.Items.AddRange(ListaQuestao.ToArray());
+                txtMateria.Text = value.Materia == null ? "Geral" : $"{value.Materia.Nome}, {value.Materia.Serie.ObterDescricao()}";
+                listQuestoesSeleciondas.Items.AddRange(value.ListaQuestoes.ToArray());
                 _teste = value;
             }
 

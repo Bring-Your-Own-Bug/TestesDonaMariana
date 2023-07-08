@@ -16,9 +16,9 @@
 
         public abstract void Filtrar();
 
-        public abstract void MostrarDetalhes();
+        public abstract void MostrarDetalhesTeste();
 
-        public abstract void MostrarDuplicacao();
+        public abstract void DuplicarTeste();
 
         public abstract void CarregarRegistros();
 
