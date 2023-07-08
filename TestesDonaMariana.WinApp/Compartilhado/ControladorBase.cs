@@ -100,9 +100,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         public virtual void Filtrar() { }
 
-        public virtual void MostrarDetalhes() {}
+        public virtual void MostrarDetalhesTeste() {}
 
-        public virtual void MostrarDuplicacao() { }
+        public virtual void DuplicarTeste() { }
 
         public virtual void CarregarRegistros()
         {

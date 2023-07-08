@@ -96,6 +96,7 @@
             txtMateria.Size = new Size(103, 15);
             txtMateria.TabIndex = 5;
             txtMateria.Text = "Matéria Escolhida";
+            txtMateria.Click += txtMateria_Click;
             // 
             // btnCancelar
             // 

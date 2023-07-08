@@ -39,7 +39,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             return _tabelaTeste;
         }
 
-        public override void CarregarDetalhesTeste()
+        public override void MostrarDetalhesTeste()
         {
             Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
@@ -47,31 +47,27 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             tela.Entidade = teste;
 
-            TelaPrincipalForm.AtualizarStatus($"Editando {typeof(Teste).Name}");
+            TelaPrincipalForm.AtualizarStatus($"Vizualizando o Teste \"{teste.Titulo}\"");
 
             tela.ShowDialog();
-            
-            CarregarRegistros();
-        }
-
-        public override void MostrarDetalhes()
-        {
-            TelaDetalhesTeste tela = new();
-
-            tela.ShowDialog();
-
-            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
 
             CarregarRegistros();
         }
 
-        public override void MostrarDuplicacao()
+        public override void DuplicarTeste()
         {
-            TelaDuplicarTeste tela = new();
+            Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
-            tela.ShowDialog();
+            TelaTesteForm tela = new();
 
-            TelaPrincipalForm.AtualizarStatus($"Vizualizando {tela.Name}");
+            CarregarComboBox(tela, teste);
+
+            tela.DuplicarTeste = teste;
+
+            TelaPrincipalForm.AtualizarStatus($"Duplicando o Teste \"{teste.Titulo}\"");
+
+            if (tela.ShowDialog() == DialogResult.OK)
+                _repositorio.Adicionar(tela.DuplicarTeste);
 
             CarregarRegistros();
         }

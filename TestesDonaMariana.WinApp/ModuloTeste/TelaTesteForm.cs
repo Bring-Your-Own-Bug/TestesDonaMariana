@@ -16,12 +16,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         private List<Teste> ListaTeste { get; set; }
         private List<Materia> ListaMateria { get; set; }
 
-        private ControladorTeste _controladorTeste;
         public TelaTesteForm()
         {
             InitializeComponent();
 
-            _controladorTeste = new ControladorTeste();
+            ControladorTeste _controladorTeste = new ControladorTeste();
             ListaQuestao = _controladorTeste.ObterListaQuestao();
             ListaTeste = _controladorTeste.ObterListaTeste();
             ListaMateria = _controladorTeste.ObterListaMateria();
@@ -36,10 +35,28 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 txtId.Text = value.Id.ToString();
                 txtTitulo.Text = value.Titulo;
                 cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
-                cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
                 ckbRecuperacao.Checked = value.Materia == null ? true : false;
+                cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
                 numQuestao.Value = value.NumeroDeQuestoes;
                 listQuestoes.Items.AddRange(value.ListaQuestoes.ToArray());
+                listaQuestoesSorteadas.AddRange(value.ListaQuestoes);
+                _teste = value;
+            }
+        }
+
+        public Teste? DuplicarTeste
+        {
+            get => _teste;
+
+            set
+            {
+                txtId.Text = value.Id.ToString();
+                txtTitulo.Text = value.Titulo;
+                cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
+                ckbRecuperacao.Checked = value.Materia == null ? true : false;
+                cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
+                numQuestao.Value = value.NumeroDeQuestoes;
+                value.ListaQuestoes.Clear();
                 _teste = value;
             }
         }
@@ -54,7 +71,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 ImplementarMetodos();
                 return;
             }
-
 
             Disciplina? disciplina = cmbDisciplina.SelectedItem as Disciplina;
             Materia? materia = cmbMateria.SelectedItem as Materia;
@@ -87,13 +103,14 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             lbErroDisciplina.Visible = false;
             lbErroMateria.Visible = false;
             lbErroTitulo.Visible = false;
+            lbErroQuestoes.Visible = false;
 
             if (teste.ValidarCampoVazio(txtTitulo.Text))
             {
                 lbErroTitulo.Visible = true;
                 lbErroTitulo.Text = "*Campo obrigatório";
             }
-            else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase)) { }
+            else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase) && _teste.ListaQuestoes.Count != 0) { }
             else if (teste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
             {
                 lbErroTitulo.Visible = true;
@@ -104,7 +121,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             lbErroMateria.Visible = teste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked);
 
-            if (lbErroDisciplina.Visible || lbErroTitulo.Visible || lbErroMateria.Visible)
+            if (teste.ValidarListaQuestoes(listQuestoes.Items.Count))
+            {
+                lbErroQuestoes.Text = "*Deve ser gerado ao menos 1 questão";
+                lbErroQuestoes.Visible = true;
+            }
+
+            if (lbErroDisciplina.Visible || lbErroTitulo.Visible || lbErroMateria.Visible || lbErroQtdQuestoes.Visible || lbErroQuestoes.Visible)
                 isValid = false;
             else
                 isValid = true;
@@ -114,9 +137,12 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             ValidarCampos(sender, e);
 
+            ImplementarMetodos();
+
             LimparListas();
 
             lbErroQtdQuestoes.Visible = false;
+            lbErroNoQuestoes.Visible = false;
 
             Materia? materiaSelecionada = cmbMateria.SelectedItem as Materia;
 
@@ -127,9 +153,25 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             if (!lbErroMateria.Visible)
             {
                 if (materiaSelecionada == null)
+                {
                     listaPorMateria = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id);
+
+                    if (ValidarSeExisteQuestaoParaGerar(listaPorMateria.Count))
+                    {
+                        lbErroNoQuestoes.Text = "*Não há questões nas Matérias dessa Disciplina para gerar";
+                        lbErroNoQuestoes.Visible = true;
+                    }
+                }
                 else
+                {
                     listaPorMateria = ListaQuestao.FindAll(a => a.Materia.Id == materiaSelecionada.Id);
+
+                    if (ValidarSeExisteQuestaoParaGerar(listaPorMateria.Count))
+                    {
+                        lbErroNoQuestoes.Text = "*Não há questões na Matéria para gerar";
+                        lbErroNoQuestoes.Visible = true;
+                    }
+                }
 
                 if (ValidarQtdQuestoes(listaPorMateria.Count))
                 {
@@ -151,7 +193,52 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                     else
                         i--;
                 }
+
+                if (listQuestoes.Items.Count > 0)
+                    lbErroQuestoes.Visible = false;
             }
+        }
+
+        private void HabilitarEDesabilitarMateria(object sender, EventArgs e)
+        {
+            LimparListas();
+
+            if (ckbRecuperacao.Checked)
+            {
+                cmbMateria.Enabled = false;
+                cmbMateria.SelectedItem = null;
+            }
+            else cmbMateria.Enabled = true;
+        }
+
+        private void CarregarMateriasDisciplina(object sender, EventArgs e)
+        {
+            LimparListas();
+
+            if (ListaMateria.Count == 0)
+                ListaMateria = (List<Materia>)cmbMateria.DataSource;
+
+            if (cmbDisciplina.SelectedIndex != -1)
+            {
+                Disciplina? disciplina = cmbDisciplina.SelectedItem as Disciplina;
+
+                cmbMateria.DataSource = ListaMateria.FindAll(m => m.Disciplina.Id == disciplina.Id);
+            }
+        }
+
+        private void ResetarComboBoxMateria(object sender, EventArgs e)
+        {
+            cmbMateria.SelectedIndex = -1;
+        }
+
+        private void ResetarLista(object sender, EventArgs e)
+        {
+            LimparListas();
+        }
+
+        private bool ValidarSeExisteQuestaoParaGerar(int qtdQuestoesLista)
+        {
+            return qtdQuestoesLista == 0;
         }
 
         private void LimparListas()
@@ -165,36 +252,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             return numQuestao.Value > count;
         }
 
-        private void ckbRecuperacao_CheckedChanged(object sender, EventArgs e)
+        private void TelaTesteForm_Shown(object sender, EventArgs e)
         {
-            LimparListas();
-
-            if (ckbRecuperacao.Checked)
-            {
-                cmbMateria.Enabled = false;
-                cmbMateria.SelectedItem = null;
-            }
-            else cmbMateria.Enabled = true;
-        }
-
-        private void cmbDisciplina_SelectedValueChanged(object sender, EventArgs e)
-        {
-            LimparListas();
-
-            if (ListaMateria.Count == 0)
-                ListaMateria = (List<Materia>)cmbMateria.DataSource;
-
-            if (cmbDisciplina.SelectedIndex != -1)
-            {
-                Disciplina disciplina = cmbDisciplina.SelectedItem as Disciplina;
-
-                cmbMateria.DataSource = ListaMateria.FindAll(m => m.Disciplina.Id == disciplina.Id);
-            }
-        }
-
-        private void cmbMateria_SelectedValueChanged(object sender, EventArgs e)
-        {
-            LimparListas();
+            cmbDisciplina.SelectedIndexChanged += ResetarComboBoxMateria;
         }
     }
 }

@@ -47,6 +47,8 @@
             groupBox1 = new GroupBox();
             txtId = new TextBox();
             lbErroQtdQuestoes = new Label();
+            lbErroQuestoes = new Label();
+            lbErroNoQuestoes = new Label();
             ((System.ComponentModel.ISupportInitialize)numQuestao).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -59,7 +61,7 @@
             cmbDisciplina.Name = "cmbDisciplina";
             cmbDisciplina.Size = new Size(157, 23);
             cmbDisciplina.TabIndex = 88;
-            cmbDisciplina.SelectedValueChanged += cmbDisciplina_SelectedValueChanged;
+            cmbDisciplina.SelectedValueChanged += CarregarMateriasDisciplina;
             // 
             // cmbMateria
             // 
@@ -69,7 +71,7 @@
             cmbMateria.Name = "cmbMateria";
             cmbMateria.Size = new Size(157, 23);
             cmbMateria.TabIndex = 86;
-            cmbMateria.SelectedValueChanged += cmbMateria_SelectedValueChanged;
+            cmbMateria.SelectedValueChanged += ResetarLista;
             // 
             // lbErroMateria
             // 
@@ -180,6 +182,7 @@
             numQuestao.Name = "numQuestao";
             numQuestao.Size = new Size(46, 23);
             numQuestao.TabIndex = 93;
+            numQuestao.ValueChanged += ResetarLista;
             // 
             // ckbRecuperacao
             // 
@@ -190,7 +193,7 @@
             ckbRecuperacao.TabIndex = 94;
             ckbRecuperacao.Text = "Prova de Recuperação";
             ckbRecuperacao.UseVisualStyleBackColor = true;
-            ckbRecuperacao.CheckedChanged += ckbRecuperacao_CheckedChanged;
+            ckbRecuperacao.CheckedChanged += HabilitarEDesabilitarMateria;
             // 
             // listQuestoes
             // 
@@ -245,12 +248,38 @@
             lbErroQtdQuestoes.Text = "*Limite de questões atingido";
             lbErroQtdQuestoes.Visible = false;
             // 
+            // lbErroQuestoes
+            // 
+            lbErroQuestoes.AutoSize = true;
+            lbErroQuestoes.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroQuestoes.ForeColor = Color.Red;
+            lbErroQuestoes.Location = new Point(24, 212);
+            lbErroQuestoes.Name = "lbErroQuestoes";
+            lbErroQuestoes.Size = new Size(202, 13);
+            lbErroQuestoes.TabIndex = 101;
+            lbErroQuestoes.Text = "*Deve ser gerado ao menos 1 questão";
+            lbErroQuestoes.Visible = false;
+            // 
+            // lbErroNoQuestoes
+            // 
+            lbErroNoQuestoes.AutoSize = true;
+            lbErroNoQuestoes.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroNoQuestoes.ForeColor = Color.Red;
+            lbErroNoQuestoes.Location = new Point(27, 438);
+            lbErroNoQuestoes.Name = "lbErroNoQuestoes";
+            lbErroNoQuestoes.Size = new Size(99, 13);
+            lbErroNoQuestoes.TabIndex = 102;
+            lbErroNoQuestoes.Text = "*Não há questões";
+            lbErroNoQuestoes.Visible = false;
+            // 
             // TelaTesteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(451, 525);
+            Controls.Add(lbErroNoQuestoes);
+            Controls.Add(lbErroQuestoes);
             Controls.Add(lbErroQtdQuestoes);
             Controls.Add(txtId);
             Controls.Add(btnGerarQuestao);
@@ -276,6 +305,7 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Gerador de Testes";
+            Shown += TelaTesteForm_Shown;
             ((System.ComponentModel.ISupportInitialize)numQuestao).EndInit();
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
@@ -302,5 +332,7 @@
         public ComboBox cmbMateria;
         public CheckBox ckbRecuperacao;
         private Label lbErroQtdQuestoes;
+        private Label lbErroQuestoes;
+        private Label lbErroNoQuestoes;
     }
 }

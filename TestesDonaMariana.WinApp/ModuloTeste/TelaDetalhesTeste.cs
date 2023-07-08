@@ -1,6 +1,8 @@
 ﻿using TestesDonaMariana.Dados.ModuloQuestao;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
+using TestesDonaMariana.Dominio.ModuloSerie;
 using TestesDonaMariana.Dominio.ModuloTeste;
 using TestesDonaMariana.WinApp.ModuloMateria;
 using TestesDonaMariana.WinApp.ModuloQuestao;
@@ -11,9 +13,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
     {
         private Teste _teste;
         private ControladorTeste _ControladorQuestao;
-        private List<Questao> listaQuestao;
+        private List<Questao> ListaQuestao;
         private List<Teste> ListaTeste { get; set; }
-
+        
 
         public TelaDetalhesTeste()
         {
@@ -22,8 +24,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             this.ConfigurarDialog();
 
             ListaTeste = new ControladorTeste().ObterListaTeste();
-
-            listaQuestao = new ControladorTeste().ObterListaQuestao();
+            ListaQuestao = new ControladorTeste().ObterListaQuestao();
         }
 
         public Teste? Entidade
@@ -31,8 +32,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             set
             {
                 txtTitulo.Text = value.Titulo;
-                txtDisciplina.Text = value.Disciplina.Nome;
-                txtMateria.Text = value.Materia.Nome;
+                txtDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
+                txtMateria.Text = value.Materia == null ? "Geral" : $"{value.Materia.Nome}, {value.Materia.Serie.ObterDescricao()}";
+                listQuestoesSeleciondas.Items.AddRange(value.ListaQuestoes.ToArray());
                 _teste = value;
             }
 
@@ -48,6 +50,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void listQuestoesSeleciondas_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+
+        private void txtMateria_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
