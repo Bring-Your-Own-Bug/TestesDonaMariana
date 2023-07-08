@@ -74,9 +74,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         public override void GerarPdf()
         {
-            //Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
+            Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
-            //TelaPdfForm tela = new();
+            TelaPdfTesteForm tela = new();
         }
 
         public List<Teste>? ObterListaTeste()

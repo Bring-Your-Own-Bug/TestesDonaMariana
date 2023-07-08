@@ -93,6 +93,16 @@ namespace TestesDonaMariana.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap folderOpen {
+            get {
+                object obj = ResourceManager.GetObject("folderOpen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pdfIcon {
             get {
                 object obj = ResourceManager.GetObject("pdfIcon", resourceCulture);
