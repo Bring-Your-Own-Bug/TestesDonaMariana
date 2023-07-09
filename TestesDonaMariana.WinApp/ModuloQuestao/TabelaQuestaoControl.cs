@@ -10,8 +10,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             gridQuestao.ConfigurarTabelaGrid("Número", "Enunciado", "Resposta");
         }
 
-        public DataGridView DataGridView { get { return gridQuestao; } }
-
+        public DataGridView DataGridView => gridQuestao;
         public void AtualizarLista(List<Questao> questoes)
         {
             gridQuestao.Rows.Clear();
@@ -19,11 +18,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             foreach (Questao item in questoes)
             {
                 DataGridViewRow row = new();
-
                 row.CreateCells(gridQuestao, item.Id, item.Enunciado, item.AlternativaCorreta);
-
                 row.Cells[0].Tag = item;
-
                 gridQuestao.Rows.Add(row);
             }
 

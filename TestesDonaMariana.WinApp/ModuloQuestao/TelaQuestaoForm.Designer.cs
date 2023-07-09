@@ -209,6 +209,7 @@
             txtId.ReadOnly = true;
             txtId.Size = new Size(71, 23);
             txtId.TabIndex = 81;
+            txtId.TabStop = false;
             txtId.Text = "0";
             txtId.Visible = false;
             // 

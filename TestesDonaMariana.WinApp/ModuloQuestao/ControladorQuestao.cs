@@ -8,15 +8,13 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 {
     public class ControladorQuestao : ControladorBase<Questao, RepositorioQuestao, TabelaQuestaoControl, TelaQuestaoForm, RepositorioMateria, RepositorioDisciplina>
     {
-        private RepositorioQuestao _repositorioQuestao;
-        private TabelaQuestaoControl _tabelaQuestao;
+        private readonly TabelaQuestaoControl _tabelaQuestao;
 
-        private RepositorioMateria _repositorioMateria;
-        private RepositorioDisciplina _repositorioDisciplina;
+        private readonly RepositorioMateria _repositorioMateria;
+        private readonly RepositorioDisciplina _repositorioDisciplina;
 
         public ControladorQuestao(RepositorioQuestao _repositorio, TabelaQuestaoControl _tabela, RepositorioMateria _repositorio2, RepositorioDisciplina _repositorio3) : base(_repositorio, _tabela, _repositorio2, _repositorio3)
         {
-            _repositorioQuestao = _repositorio;
             _tabelaQuestao = _tabela;
             _repositorioMateria = _repositorio2;
             _repositorioDisciplina = _repositorio3;
@@ -32,7 +30,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private bool VerificarRelacoesExistentes(Questao questao)
         {
-            if (questao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
+            if (ValidadorQuestao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Testes cadastrados com a questão selecionada, Exclua-os para excluir essa Questão",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);

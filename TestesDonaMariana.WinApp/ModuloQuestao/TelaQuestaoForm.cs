@@ -9,7 +9,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
     {
         private Questao _questao;
 
-        private bool isValid;
+        private bool _isValid;
 
         private List<Materia> ListaMateria { get; set; } = new();
 
@@ -20,6 +20,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         public Questao? Entidade
         {
+            get => _questao;
+
             set
             {
                 txtId.Text = value.Id.ToString();
@@ -33,24 +35,18 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
                 _questao = value;
             }
-            get
-            {
-                return _questao;
-            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             ValidarCampos(sender, e);
 
-            if (isValid == false)
+            if (_isValid == false)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
                 return;
             }
-
-            Disciplina? disciplina = txtDisciplina.SelectedItem as Disciplina;
 
             Materia? materia = txtMateria.SelectedItem as Materia;
 
@@ -71,16 +67,14 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private void ValidarCampos(object sender, EventArgs e)
         {
-            Questao questao = new();
-
             lbErroAlternativas.Visible = false;
 
-            if (questao.ValidarQtdMinimaAlternativas(listAlternativas.Items.Count))
+            if (ValidadorQuestao.ValidarQtdMinimaAlternativas(listAlternativas.Items.Count))
             {
                 lbErroAlternativas.Text = "*Deve ter no mínimo 3 alternativas";
                 lbErroAlternativas.Visible = true;
             }
-            else if (questao.ValidarAlternativaCorreta(listAlternativas.CheckedItems.Count))
+            else if (ValidadorQuestao.ValidarAlternativaCorreta(listAlternativas.CheckedItems.Count))
             {
                 lbErroAlternativas.Text = "*Precisa ter 1 Resposta Correta";
                 lbErroAlternativas.Visible = true;
@@ -93,25 +87,23 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             lbErroDisciplina.Visible = txtDisciplina.Text.ValidarCampoVazio();
 
             if (lbErroDisciplina.Visible || lbErroMateria.Visible || lbErroEnunciado.Visible || lbErroAlternativas.Visible)
-                isValid = false;
+                _isValid = false;
             else
-                isValid = true;
+                _isValid = true;
         }
 
         private void btnAddAlternativa_Click(object sender, EventArgs e)
         {
             ValidarCampos(sender, e);
 
-            Questao questao = new();
-
-            if (!string.IsNullOrEmpty(txtResposta.Text))
+            if (!string.IsNullOrWhiteSpace(txtResposta.Text))
             {
-                if (questao.ValidarAlternativaExistente(txtResposta.Text, listAlternativas.Items.Cast<string>().ToList()))
+                if (ValidadorQuestao.ValidarAlternativaExistente(txtResposta.Text, listAlternativas.Items.Cast<string>().ToList()))
                 {
                     lbErroAlternativas.Text = "*Alternativa já existente";
                     lbErroAlternativas.Visible = true;
                 }
-                else if (questao.ValidarQtdMaximaAlternativas(listAlternativas.Items.Count))
+                else if (ValidadorQuestao.ValidarQtdMaximaAlternativas(listAlternativas.Items.Count))
                 {
                     lbErroAlternativas.Text = "*Máximo de 4 alternativas";
                     lbErroAlternativas.Visible = true;

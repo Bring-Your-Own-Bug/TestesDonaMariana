@@ -15,18 +15,11 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             comando.Parameters.AddWithValue("ALTERNATIVACORRETA", registro.AlternativaCorreta);
         }
 
-        public void ConfigurarParametrosAlternativas(SqlCommand comando, Questao registro)
-        {
-            comando.Parameters.Clear();
-            comando.Parameters.AddWithValue("QUESTAO_ID", registro.Id);
-            comando.Parameters.AddWithValue("ALTERNATIVA", registro.Alternativas);
-        }
-
         public override Questao ConverterRegistro(SqlDataReader leitorRegistros)
         {
-            Questao questao = new Questao();
+            Questao questao = new();
 
-            int id = (int)leitorRegistros["QUESTAO_ID"];
+            int id = Convert.ToInt32(leitorRegistros["QUESTAO_ID"]);
             Materia materia = new MapeadorMateria().ConverterRegistro(leitorRegistros);
             string enunciado = Convert.ToString(leitorRegistros["QUESTAO_ENUNCIADO"])!;
             string alternativaCorreta = Convert.ToString(leitorRegistros["QUESTAO_ALTERNATIVACORRETA"])!;
