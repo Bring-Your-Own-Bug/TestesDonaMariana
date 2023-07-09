@@ -1,6 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Win32;
-using System.Data;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
@@ -45,9 +43,7 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             Mapear.ConfigurarParametros(comandoBd, registro);
 
-            object id = comandoBd.ExecuteScalar();
-
-            registro.Id = Convert.ToInt32(id);
+            registro.Id = Convert.ToInt32(comandoBd.ExecuteScalar());
 
             onComandoDeRelacaoAdd?.Invoke(registro);
 
