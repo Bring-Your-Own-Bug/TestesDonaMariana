@@ -7,6 +7,7 @@ using iText.Layout.Properties;
 using TestesDonaMariana.Dominio.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -53,13 +54,69 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 return;
             }
 
-            if (!ckbGabarito.Checked)
-                GerarTeste();
+            GerarTeste();
+
+            if (ckbGabarito.Checked)
+                GerarGabarito();
+        }
+
+        private void GerarGabarito()
+        {
+            PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Titulo + " - Gabarito.pdf");
+            PdfDocument pdf = new(writer);
+            Document document = new(pdf);
+
+            document.Add(new LineSeparator(new SolidLine(1f)));
+            document.Add(new Paragraph(""));
+
+            Paragraph info = new Paragraph()
+                .SetTextAlignment(TextAlignment.LEFT)
+                .SetFontSize(13)
+                .Add(new Text("• Aluno:").SetBold());
+
+            info.Add(new Text($"\n• Disciplina: ").SetBold());
+            info.Add(new Text(_teste.Disciplina.Nome));
+
+            if (_teste.Materia != null)
+            {
+                info.Add(new Text($"\n• Matéria: ").SetBold());
+                info.Add(new Text(_teste.Materia.Nome));
+                info.Add(new Text($"\n• Série: ").SetBold());
+                info.Add(new Text(_teste.Materia.Serie.ObterDescricao()));
+            }
+            else
+            {
+                info.Add(new Text($"\n• Provão").SetBold());
+            }
+
+            document.Add(info);
+            document.Add(new Paragraph(""));
+            document.Add(new LineSeparator(new SolidLine(1f)));
+            document.Add(new Paragraph("\n"));
+
+            Paragraph title = new Paragraph(_teste.Titulo)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(21)
+                .SetBold();
+
+            document.Add(title);
+            document.Add(new Paragraph("\n"));
+
+            foreach (Questao questao in ListaQuestoes)
+            {
+                Paragraph question = new(questao.Enunciado);
+                document.Add(question);
+
+                Paragraph alternativaParagraph = new(questao.AlternativaCorreta);
+                document.Add(alternativaParagraph);
+            }
+
+            document.Close();
         }
 
         private void GerarTeste()
         {
-            PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Id + ".pdf");
+            PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Titulo + ".pdf");
             PdfDocument pdf = new(writer);
             Document document = new(pdf);
 
