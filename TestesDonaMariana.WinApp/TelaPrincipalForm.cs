@@ -171,15 +171,10 @@ namespace TestesDonaMariana.WinApp
 
         private void ConfigurarBotaoDetalhes()
         {
-            if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorTeste)
-                btnDetalhes.Enabled = true;
-            else
-                btnDetalhes.Enabled = false;
-
-            if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorTeste)
-                btnDuplicar.Enabled = true;
-            else
-                btnDuplicar.Enabled = false;
+            bool isSelectedAndTestController = ((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorTeste;
+            btnDetalhes.Enabled = isSelectedAndTestController;
+            btnDuplicar.Enabled = isSelectedAndTestController;
+            btnGerarPdf.Enabled = isSelectedAndTestController;
         }
 
         //private void ConfigurarBotaoAtualizarStatus()

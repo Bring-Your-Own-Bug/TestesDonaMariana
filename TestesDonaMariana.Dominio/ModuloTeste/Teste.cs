@@ -50,5 +50,10 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
         {
             return qtdQuestoesLista == 0;
         }
+
+        public bool ValidarDiretorioExistente(string text)
+        {
+            return !Directory.Exists(text);
+        }
     }
 }

@@ -47,7 +47,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             tela.Entidade = teste;
 
-            TelaPrincipalForm.AtualizarStatus($"Vizualizando o Teste \"{teste.Titulo}\"");
+            TelaPrincipalForm.AtualizarStatus($"Visualizando o Teste \"{teste.Titulo}\"");
 
             tela.ShowDialog();
 
@@ -77,6 +77,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
             TelaPdfTesteForm tela = new();
+
+            tela.Entidade = teste;
+
+            TelaPrincipalForm.AtualizarStatus($"Gerando PDF do Teste \"{teste.Titulo}\"");
+
+            if(tela.ShowDialog() == DialogResult.OK) { }
+
+            CarregarRegistros();
+
         }
 
         public List<Teste>? ObterListaTeste()
