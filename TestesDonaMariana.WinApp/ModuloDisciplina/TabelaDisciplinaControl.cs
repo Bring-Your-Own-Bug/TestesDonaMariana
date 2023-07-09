@@ -10,7 +10,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             gridDisciplina.ConfigurarTabelaGrid("Número", "Nome");
         }
 
-        public DataGridView DataGridView { get { return gridDisciplina; } }
+        public DataGridView DataGridView => gridDisciplina;
 
         public void AtualizarLista(List<Disciplina> disciplinas)
         {
@@ -19,11 +19,8 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             foreach (Disciplina item in disciplinas)
             {
                 DataGridViewRow row = new();
-
                 row.CreateCells(gridDisciplina, item.Id, item.Nome);
-
                 row.Cells[0].Tag = item;
-
                 gridDisciplina.Rows.Add(row);
             }
 

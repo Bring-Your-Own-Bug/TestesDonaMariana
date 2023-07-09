@@ -6,7 +6,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
     {
         private Disciplina _disciplina;
 
-        private bool isValid;
+        private bool _isValid;
 
         private List<Disciplina> ListaDisciplinas { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         {
             ValidarCampos(sender, e);
 
-            if (isValid == false)
+            if (_isValid == false)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
@@ -63,16 +63,16 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
                 lbErroNome.Text = "*Campo obrigatório";
             }
             else if (_disciplina != null && string.Equals(_disciplina.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
-            else if (disciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
+            else if (Disciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Essa disciplina já existe";
             }
 
             if (lbErroNome.Visible)
-                isValid = false;
+                _isValid = false;
             else
-                isValid = true;
+                _isValid = true;
         }
     }
 }
