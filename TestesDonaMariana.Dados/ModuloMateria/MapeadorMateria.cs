@@ -3,7 +3,6 @@ using System.Data;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloSerie;
 
 namespace TestesDonaMariana.Dados.ModuloMateria
 {

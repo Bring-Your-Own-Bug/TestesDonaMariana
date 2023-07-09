@@ -11,9 +11,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 {
     public partial class TelaPdfTesteForm : Form, ITelaBase<Teste>
     {
-        private Teste _teste;
+        private readonly Teste _teste;
 
-        private bool isValid;
+        private bool _isValid;
 
         private List<Questao> ListaQuestoes { get; set; }
         public TelaPdfTesteForm(Teste teste)
@@ -23,7 +23,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             this.ConfigurarDialog();
 
             _teste = teste;
-            ListaQuestoes = new ControladorTeste().ObterListaQuestao();
+            ListaQuestoes = ControladorTeste.ObterListaQuestao();
         }
 
         public Teste? Entidade
@@ -45,7 +45,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             ValidarCampos(sender, e);
 
-            if (isValid == false)
+            if (_isValid == false)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
@@ -184,8 +184,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void ValidarCampos(object sender, EventArgs e)
         {
-            Teste teste = new();
-
             lbErroTitulo.Visible = false;
             lbErroDiretorio.Visible = false;
 
@@ -195,16 +193,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 lbErroTitulo.Text = "*Campo obrigatório";
             }
 
-            if (teste.ValidarDiretorioExistente(txtDiretorio.Text))
+            if (ValidadorTeste.ValidarDiretorioExistente(txtDiretorio.Text))
             {
                 lbErroDiretorio.Text = "*Diretório inválido";
                 lbErroDiretorio.Visible = true;
             }
 
-            if (lbErroTitulo.Visible || lbErroDiretorio.Visible)
-                isValid = false;
-            else
-                isValid = true;
+            _isValid = !(lbErroTitulo.Visible || lbErroDiretorio.Visible);
         }
     }
 }

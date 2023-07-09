@@ -1,6 +1,5 @@
 ﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloQuestao;
-using TestesDonaMariana.Dominio.ModuloSerie;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria
 {

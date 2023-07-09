@@ -1,5 +1,4 @@
 ﻿using TestesDonaMariana.Dominio.ModuloQuestao;
-using TestesDonaMariana.Dominio.ModuloSerie;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria

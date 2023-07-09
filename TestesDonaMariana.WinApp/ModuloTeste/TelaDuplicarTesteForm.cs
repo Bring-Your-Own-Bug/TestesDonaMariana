@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
@@ -19,7 +11,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
     {
         private Teste _teste;
 
-        private bool isValid;
+        private bool _isValid;
 
         private List<Teste> ListaTeste { get; set; }
 
@@ -27,7 +19,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             InitializeComponent();
 
-            ListaTeste = new ControladorTeste().ObterListaTeste();
+            ListaTeste = ControladorTeste.ObterListaTeste();
         }
 
 
@@ -41,12 +33,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
                 cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
                 numericQtdQuestoes.Value = value.NumeroDeQuestoes;
-
-                if (value.Recuperacao == Recuperacao.Sim)
-                    ckbRecuperacao.Checked = true;
-                else
-                    ckbRecuperacao.Checked = false;
-
+                ckbRecuperacao.Checked = (value.Recuperacao == Recuperacao.Sim);
                 listQuestoesSorteadas.Items.AddRange(value.ListaQuestoes.ToArray());
                 _teste = value;
             }
@@ -56,7 +43,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             ValidarCampos(sender, e);
 
-            if (isValid == false)
+            if (_isValid == false)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
@@ -88,8 +75,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void ValidarCampos(object sender, EventArgs e)
         {
-            Teste teste = new();
-
             lbErroDisciplina.Visible = false;
 
             if (txtTitulo.Text.ValidarCampoVazio())
@@ -98,21 +83,18 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 lbErroDisciplina.Text = "*Campo obrigatório";
             }
             else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase)) { }
-            else if (teste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
+            else if (ValidadorTeste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
             {
                 lbErroDisciplina.Visible = true;
                 lbErroDisciplina.Text = "*Esse teste já existe";
             }
-            else if (teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex))
+            else if (ValidadorTeste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex))
             {
                 lbErroDisciplina.Visible = true;
                 lbErroDisciplina.Text = "*Esse teste já existe";
             }
 
-            if (lbErroDisciplina.Visible)
-                isValid = false;
-            else
-                isValid = true;
+            _isValid = !lbErroDisciplina.Visible;
         }
 
         private void ckbRecuperacao_CheckedChanged(object sender, EventArgs e)
@@ -128,7 +110,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         private void cmbDisciplina_SelectedIndexChanged(object sender, EventArgs e)
         {
             Disciplina disciplina = cmbDisciplina.SelectedItem as Disciplina;
-
             cmbMateria.Items.AddRange(disciplina.ListaMaterias.ToArray());
         }
     }

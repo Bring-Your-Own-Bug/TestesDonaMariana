@@ -96,7 +96,6 @@
             txtMateria.Size = new Size(103, 15);
             txtMateria.TabIndex = 5;
             txtMateria.Text = "Matéria Escolhida";
-            txtMateria.Click += txtMateria_Click;
             // 
             // btnCancelar
             // 
@@ -130,7 +129,6 @@
             listQuestoesSeleciondas.Name = "listQuestoesSeleciondas";
             listQuestoesSeleciondas.Size = new Size(421, 247);
             listQuestoesSeleciondas.TabIndex = 95;
-            listQuestoesSeleciondas.SelectedIndexChanged += listQuestoesSeleciondas_SelectedIndexChanged;
             // 
             // TelaDetalhesTeste
             // 
@@ -148,7 +146,6 @@
             Name = "TelaDetalhesTeste";
             ShowIcon = false;
             Text = "Vizualização de Testes";
-            Load += TelaDetalhesTeste_Load;
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();

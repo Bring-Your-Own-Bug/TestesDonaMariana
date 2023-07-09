@@ -1,7 +1,6 @@
 ﻿using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloSerie;
 
 namespace TestesDonaMariana.WinApp.ModuloMateria
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TestesDonaMariana.Dominio.ModuloSerie
+namespace TestesDonaMariana.Dominio.ModuloMateria
 {
     public enum Serie
     {

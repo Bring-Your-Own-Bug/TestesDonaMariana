@@ -2,10 +2,8 @@
 using System.Data;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
-using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dados.ModuloTeste
@@ -25,9 +23,9 @@ namespace TestesDonaMariana.Dados.ModuloTeste
 
         public override Teste ConverterRegistro(SqlDataReader leitorRegistros)
         {
-            Teste teste = new Teste();
+            Teste teste = new();
 
-            int id = (int)leitorRegistros["TESTE_ID"];
+            int id = Convert.ToInt32(leitorRegistros["TESTE_ID"]);
             string titulo = Convert.ToString(leitorRegistros["TESTE_TITULO"]);
             int numeroDeQuestoes = Convert.ToInt32(leitorRegistros["TESTE_NUMEROQUESTOES"]);
             Disciplina disciplina = new MapeadorDisciplina().ConverterRegistro(leitorRegistros);

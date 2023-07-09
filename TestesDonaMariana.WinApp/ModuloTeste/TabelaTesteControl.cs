@@ -1,5 +1,5 @@
 ﻿using TestesDonaMariana.Dominio.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloSerie;
+using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
@@ -12,7 +12,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             gridTeste.ConfigurarTabelaGrid("Número", "Título", "Disciplina", "Matéria", "N° Questões", "Série", "Recuperação");
         }
 
-        public DataGridView DataGridView { get { return gridTeste; } }
+        public DataGridView DataGridView => gridTeste;
 
         public void AtualizarLista(List<Teste> testes)
         {
@@ -21,11 +21,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             foreach (Teste item in testes)
             {
                 DataGridViewRow row = new();
-
                 row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, item.ListaQuestoes.Count, item.Materia == null ? Serie.Primeira.ObterDescricao() + " e " + Serie.Segunda.ObterDescricao() : item.Materia.Serie.ObterDescricao(), item.Recuperacao.ObterDescricao());
-
                 row.Cells[0].Tag = item;
-
                 gridTeste.Rows.Add(row);
             }
 

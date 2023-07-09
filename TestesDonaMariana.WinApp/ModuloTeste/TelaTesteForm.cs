@@ -10,9 +10,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
     {
         private Teste _teste;
 
-        private bool isValid;
+        private bool _isValid;
 
-        private List<Questao> listaQuestoesSorteadas = new();
+        private readonly List<Questao> _listaQuestoesSorteadas;
         private List<Questao> ListaQuestao { get; set; }
         private List<Teste> ListaTeste { get; set; }
         private List<Materia> ListaMateria { get; set; }
@@ -21,10 +21,10 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             InitializeComponent();
 
-            ControladorTeste _controladorTeste = new ControladorTeste();
-            ListaQuestao = _controladorTeste.ObterListaQuestao();
-            ListaTeste = _controladorTeste.ObterListaTeste();
-            ListaMateria = _controladorTeste.ObterListaMateria();
+            _listaQuestoesSorteadas = new List<Questao>();
+            ListaQuestao = ControladorTeste.ObterListaQuestao();
+            ListaTeste = ControladorTeste.ObterListaTeste();
+            ListaMateria = ControladorTeste.ObterListaMateria();
         }
 
         public Teste? Entidade
@@ -40,7 +40,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
                 numQuestao.Value = value.NumeroDeQuestoes;
                 listQuestoes.Items.AddRange(value.ListaQuestoes.ToArray());
-                listaQuestoesSorteadas.AddRange(value.ListaQuestoes);
+                _listaQuestoesSorteadas.AddRange(value.ListaQuestoes);
                 _teste = value;
             }
         }
@@ -66,7 +66,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             ValidarCampos(sender, e);
 
-            if (isValid == false)
+            if (_isValid == false)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
@@ -80,7 +80,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
 
-            List<Questao> questoes = listaQuestoesSorteadas;
+            List<Questao> questoes = _listaQuestoesSorteadas;
 
             _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, questoes, DateTime.Now, recuperacao);
 
@@ -99,8 +99,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void ValidarCampos(object sender, EventArgs e)
         {
-            Teste teste = new();
-
             lbErroDisciplina.Visible = false;
             lbErroMateria.Visible = false;
             lbErroTitulo.Visible = false;
@@ -112,26 +110,26 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 lbErroTitulo.Text = "*Campo obrigatório";
             }
             else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase) && _teste.ListaQuestoes.Count != 0) { }
-            else if (teste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
+            else if (ValidadorTeste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
             {
                 lbErroTitulo.Visible = true;
                 lbErroTitulo.Text = "*Esse teste já existe";
             }
 
-            lbErroDisciplina.Visible = teste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex);
+            lbErroDisciplina.Visible = ValidadorTeste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex);
 
-            lbErroMateria.Visible = teste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked);
+            lbErroMateria.Visible = ValidadorTeste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked);
 
-            if (teste.ValidarListaQuestoes(listQuestoes.Items.Count))
+            if (ValidadorTeste.ValidarListaQuestoes(listQuestoes.Items.Count))
             {
                 lbErroQuestoes.Text = "*Deve ser gerado ao menos 1 questão";
                 lbErroQuestoes.Visible = true;
             }
 
             if (lbErroDisciplina.Visible || lbErroTitulo.Visible || lbErroMateria.Visible || lbErroQtdQuestoes.Visible || lbErroQuestoes.Visible)
-                isValid = false;
+                _isValid = false;
             else
-                isValid = true;
+                _isValid = true;
         }
 
         private void btnGerarQuestao_Click(object sender, EventArgs e)
@@ -145,15 +143,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             lbErroQtdQuestoes.Visible = false;
             lbErroNoQuestoes.Visible = false;
 
-            Materia? materiaSelecionada = cmbMateria.SelectedItem as Materia;
-
             Disciplina? disciplinaSelecionada = cmbDisciplina.SelectedItem as Disciplina;
 
             List<Questao> listaPorMateria;
 
             if (!lbErroMateria.Visible)
             {
-                if (materiaSelecionada == null)
+                if (cmbMateria.SelectedItem is not Materia materiaSelecionada)
                 {
                     listaPorMateria = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id);
 
@@ -188,7 +184,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
                     if (!listQuestoes.Items.Contains(listaPorMateria[indexRandom].Enunciado))
                     {
-                        listaQuestoesSorteadas.Add(listaPorMateria[indexRandom]);
+                        _listaQuestoesSorteadas.Add(listaPorMateria[indexRandom]);
                         listQuestoes.Items.Add(listaPorMateria[indexRandom].Enunciado);
                     }
                     else
@@ -237,14 +233,14 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             LimparListas();
         }
 
-        private bool ValidarSeExisteQuestaoParaGerar(int qtdQuestoesLista)
+        private static bool ValidarSeExisteQuestaoParaGerar(int qtdQuestoesLista)
         {
             return qtdQuestoesLista == 0;
         }
 
         private void LimparListas()
         {
-            listaQuestoesSorteadas.Clear();
+            _listaQuestoesSorteadas.Clear();
             listQuestoes.Items.Clear();
         }
 
