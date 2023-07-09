@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using TestesDonaMariana.Dados.Compartilhado;
+﻿using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
@@ -46,9 +45,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         }
 
         public virtual string ToolTipAdicionar => $"Adicionar {typeof(TEntidade).Name}";
-
         public virtual string ToolTipEditar => $"Editar {typeof(TEntidade).Name} existente";
-
         public virtual string ToolTipExcluir => $"Excluir {typeof(TEntidade).Name} existente";
 
         public virtual void Adicionar()

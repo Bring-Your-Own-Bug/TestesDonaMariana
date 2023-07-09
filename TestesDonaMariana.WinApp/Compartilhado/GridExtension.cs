@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace TestesDonaMariana.WinApp.Compartilhado
+﻿namespace TestesDonaMariana.WinApp.Compartilhado
 {
     public static class GridExtension
     {
@@ -10,7 +8,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             for (int i = 0; i < addColumns.Length; i++)
             {
-                DataGridViewTextBoxColumn coluna = new DataGridViewTextBoxColumn()
+                DataGridViewTextBoxColumn coluna = new()
                 {
                     Name = "Column" + i,
                     HeaderText = addColumns[i],
@@ -26,9 +24,9 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         private static void ConfiguracaoPadrao(DataGridView grid)
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new();
 
             grid.AllowUserToAddRows = false;
             grid.AllowUserToDeleteRows = false;
