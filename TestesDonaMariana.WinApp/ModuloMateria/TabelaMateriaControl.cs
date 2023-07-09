@@ -11,7 +11,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             gridMateria.ConfigurarTabelaGrid("Número", "Nome", "Disciplina", "Série");
         }
 
-        public DataGridView DataGridView { get { return gridMateria; } }
+        public DataGridView DataGridView => gridMateria;
 
         public void AtualizarLista(List<Materia> materias)
         {
@@ -20,11 +20,8 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             foreach (Materia item in materias)
             {
                 DataGridViewRow row = new();
-
                 row.CreateCells(gridMateria, item.Id, item.Nome, item.Disciplina.Nome, item.Serie.ObterDescricao());
-
                 row.Cells[0].Tag = item;
-
                 gridMateria.Rows.Add(row);
             }
 

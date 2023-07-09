@@ -35,7 +35,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private bool VerificarRelacoesExistentes(Disciplina disciplina)
         {
-            if (Disciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
+            if (ValidadorDisciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Matérias ou Testes cadastrados na Disciplina \"{disciplina.Nome}\", Exclua-os para excluir essa Disciplina",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);

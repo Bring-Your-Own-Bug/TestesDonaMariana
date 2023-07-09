@@ -19,12 +19,12 @@ namespace TestesDonaMariana.Dados.ModuloMateria
 
         public override Materia ConverterRegistro(SqlDataReader leitorRegistros)
         {
-            Materia materia = new Materia();
+            Materia materia = new();
 
-            int id = (int)leitorRegistros["MATERIA_ID"];
+            int id = Convert.ToInt32(leitorRegistros["MATERIA_ID"]);
             string nome = Convert.ToString(leitorRegistros["MATERIA_NOME"])!;
             Disciplina disciplina = new MapeadorDisciplina().ConverterRegistro(leitorRegistros);
-            Serie serie = (Serie)(int)leitorRegistros["MATERIA_SERIE"];
+            Serie serie = (Serie)Convert.ToInt32(leitorRegistros["MATERIA_SERIE"]);
 
             materia.Id = id;
             materia.Nome = nome;

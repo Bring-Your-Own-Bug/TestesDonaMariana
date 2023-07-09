@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
 {
@@ -53,26 +54,21 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private void ValidarCampos(object sender, EventArgs e)
         {
-            Disciplina disciplina = new();
-
             lbErroNome.Visible = false;
 
-            if (disciplina.ValidarCampoVazio(txtNome.Text))
+            if (txtNome.Text.ValidarCampoVazio())
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
             }
             else if (_disciplina != null && string.Equals(_disciplina.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
-            else if (Disciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
+            else if (ValidadorDisciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Essa disciplina já existe";
             }
 
-            if (lbErroNome.Visible)
-                _isValid = false;
-            else
-                _isValid = true;
+            _isValid = lbErroNome.Visible ? false : true;
         }
     }
 }

@@ -13,5 +13,10 @@ namespace TestesDonaMariana.Dominio.Compartilhado
                     .ToArray())
                     .Normalize(NormalizationForm.FormC);
         }
+
+        public static bool ValidarCampoVazio(this string campo)
+        {
+            return string.IsNullOrWhiteSpace(campo);
+        }
     }
 }

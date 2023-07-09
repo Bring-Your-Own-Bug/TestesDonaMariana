@@ -74,7 +74,7 @@
             btnCancelar.Location = new Point(301, 206);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(70, 36);
-            btnCancelar.TabIndex = 53;
+            btnCancelar.TabIndex = 6;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
@@ -85,7 +85,7 @@
             btnAdd.Location = new Point(225, 206);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(70, 36);
-            btnAdd.TabIndex = 52;
+            btnAdd.TabIndex = 5;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
@@ -123,7 +123,7 @@
             txtNome.Location = new Point(100, 79);
             txtNome.Name = "txtNome";
             txtNome.Size = new Size(249, 23);
-            txtNome.TabIndex = 47;
+            txtNome.TabIndex = 1;
             // 
             // txtId
             // 
@@ -132,6 +132,7 @@
             txtId.ReadOnly = true;
             txtId.Size = new Size(71, 23);
             txtId.TabIndex = 46;
+            txtId.TabStop = false;
             txtId.Text = "0";
             // 
             // txtDisciplina
@@ -141,7 +142,7 @@
             txtDisciplina.Location = new Point(100, 121);
             txtDisciplina.Name = "txtDisciplina";
             txtDisciplina.Size = new Size(121, 23);
-            txtDisciplina.TabIndex = 56;
+            txtDisciplina.TabIndex = 2;
             // 
             // label1
             // 
@@ -159,7 +160,7 @@
             rdPrimeiraSerie.Location = new Point(100, 166);
             rdPrimeiraSerie.Name = "rdPrimeiraSerie";
             rdPrimeiraSerie.Size = new Size(36, 19);
-            rdPrimeiraSerie.TabIndex = 58;
+            rdPrimeiraSerie.TabIndex = 3;
             rdPrimeiraSerie.TabStop = true;
             rdPrimeiraSerie.Text = "1ª";
             rdPrimeiraSerie.UseVisualStyleBackColor = true;
@@ -170,7 +171,7 @@
             rdSegundaSerie.Location = new Point(142, 166);
             rdSegundaSerie.Name = "rdSegundaSerie";
             rdSegundaSerie.Size = new Size(36, 19);
-            rdSegundaSerie.TabIndex = 59;
+            rdSegundaSerie.TabIndex = 4;
             rdSegundaSerie.TabStop = true;
             rdSegundaSerie.Text = "2ª";
             rdSegundaSerie.UseVisualStyleBackColor = true;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
@@ -91,7 +92,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             lbErroDisciplina.Visible = false;
 
-            if (teste.ValidarCampoVazio(txtTitulo.Text))
+            if (txtTitulo.Text.ValidarCampoVazio())
             {
                 lbErroDisciplina.Visible = true;
                 lbErroDisciplina.Text = "*Campo obrigatório";

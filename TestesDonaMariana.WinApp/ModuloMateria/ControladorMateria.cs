@@ -10,13 +10,11 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
     {
         private readonly TabelaMateriaControl _tabelaMateria;
         private readonly RepositorioDisciplina _repositorioDisciplina;
-        private readonly RepositorioMateria _repositorioMateria;
         private readonly RepositorioQuestao _repositorioQuestao;
 
         public ControladorMateria(RepositorioMateria _repositorio, TabelaMateriaControl _tabela, RepositorioDisciplina _repositorio2, RepositorioQuestao _repositorio3) : base(_repositorio, _tabela, _repositorio2, _repositorio3)
         {
             _tabelaMateria = _tabela;
-            _repositorioMateria = _repositorio;
             _repositorioDisciplina = _repositorio2;
             _repositorioQuestao = _repositorio3;
 
@@ -29,7 +27,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             
         }
 
-        public List<Materia> ObterListaMateria()
+        public static List<Materia> ObterListaMateria()
         {
             return new RepositorioMateria().ObterListaRegistros();
         }
@@ -41,7 +39,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         private bool VerificarRelacoesExistentes(Materia materia)
         {
-            if (materia.ValidarDependencia(materia, _repositorioQuestao.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
+            if (ValidadorMateria.ValidarDependencia(materia, _repositorioQuestao.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
             {
                 MessageBox.Show($"Existem Questões ou Testes cadastrados na Matéria \"{materia.Nome}\", Exclua-os para excluir essa Matéria",
                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
@@ -105,7 +106,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             lbErroTitulo.Visible = false;
             lbErroQuestoes.Visible = false;
 
-            if (teste.ValidarCampoVazio(txtTitulo.Text))
+            if (txtTitulo.Text.ValidarCampoVazio())
             {
                 lbErroTitulo.Visible = true;
                 lbErroTitulo.Text = "*Campo obrigatório";

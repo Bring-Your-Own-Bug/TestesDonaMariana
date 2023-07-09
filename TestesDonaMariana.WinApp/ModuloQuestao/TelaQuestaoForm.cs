@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
@@ -85,11 +86,11 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 lbErroAlternativas.Visible = true;
             }
 
-            lbErroEnunciado.Visible = questao.ValidarCampoVazio(txtEnunciado.Text);
+            lbErroEnunciado.Visible = txtEnunciado.Text.ValidarCampoVazio();
 
-            lbErroMateria.Visible = questao.ValidarCampoVazio(txtMateria.Text);
+            lbErroMateria.Visible = txtMateria.Text.ValidarCampoVazio();
 
-            lbErroDisciplina.Visible = questao.ValidarCampoVazio(txtDisciplina.Text);
+            lbErroDisciplina.Visible = txtDisciplina.Text.ValidarCampoVazio();
 
             if (lbErroDisciplina.Visible || lbErroMateria.Visible || lbErroEnunciado.Visible || lbErroAlternativas.Visible)
                 isValid = false;

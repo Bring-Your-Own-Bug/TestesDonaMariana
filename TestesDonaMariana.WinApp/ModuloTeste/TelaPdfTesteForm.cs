@@ -189,7 +189,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             lbErroTitulo.Visible = false;
             lbErroDiretorio.Visible = false;
 
-            if (teste.ValidarCampoVazio(txtTitulo.Text))
+            if (txtTitulo.Text.ValidarCampoVazio())
             {
                 lbErroTitulo.Visible = true;
                 lbErroTitulo.Text = "*Campo obrigatório";

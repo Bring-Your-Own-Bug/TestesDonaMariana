@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloSerie;
 
@@ -8,18 +9,20 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
     {
         private Materia _materia;
 
-        private bool isValid;
+        private bool _isValid;
 
         private List<Materia> ListaMateria { get; set; }
 
         public TelaMateriaForm()
         {
             InitializeComponent();
-            ListaMateria = new ControladorMateria().ObterListaMateria();
+            ListaMateria = ControladorMateria.ObterListaMateria();
         }
 
         public Materia? Entidade
         {
+            get => _materia;
+
             set
             {
                 txtId.Text = value.Id.ToString();
@@ -27,17 +30,13 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 txtDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
                 _materia = value;
             }
-            get
-            {
-                return _materia;
-            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             ValidarCampos(sender, e);
 
-            if (isValid == false)
+            if (_isValid == false)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
@@ -62,31 +61,26 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
         }
 
         private void ValidarCampos(object sender, EventArgs e)
-       {
-            Materia materia = new();
-
+        {
             Serie serie = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
 
             lbErroNome.Visible = false;
 
-            if (materia.ValidarCampoVazio(txtNome.Text))
+            if (txtNome.Text.ValidarCampoVazio())
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
             }
             else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
-            else if (materia.ValidarNomeExistente(txtNome.Text, serie, ListaMateria))
+            else if (ValidadorMateria.ValidarNomeExistente(txtNome.Text, serie, ListaMateria))
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Essa matéria já existe";
             }
 
-            lbErroDisciplina.Visible = materia.ValidarCampoVazio(txtDisciplina.Text);
+            lbErroDisciplina.Visible = txtDisciplina.Text.ValidarCampoVazio();
 
-            if (lbErroNome.Visible || lbErroDisciplina.Visible)
-                isValid = false;
-            else
-                isValid = true;
+            _isValid = !(lbErroNome.Visible || lbErroDisciplina.Visible);
         }
     }
 }
