@@ -157,7 +157,7 @@
             Controls.Add(btnCancelar);
             Controls.Add(btnGerarPdf);
             Name = "TelaPdfTesteForm";
-            Text = "TelaPdfTeste";
+            Text = "Gerar PDF";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -2,12 +2,10 @@
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout;
 using iText.Layout.Element;
-using Org.BouncyCastle;
 using iText.Layout.Properties;
 using TestesDonaMariana.Dominio.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -104,10 +102,10 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             foreach (Questao questao in ListaQuestoes)
             {
-                Paragraph question = new(questao.Enunciado);
+                Paragraph question = new($"\n{questao.Enunciado}");
                 document.Add(question);
 
-                Paragraph alternativaParagraph = new(questao.AlternativaCorreta);
+                Paragraph alternativaParagraph = new($"Resposta correta: {questao.AlternativaCorreta}");
                 document.Add(alternativaParagraph);
             }
 
@@ -123,19 +121,25 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Add(new LineSeparator(new SolidLine(1f)));
             document.Add(new Paragraph(""));
 
-            Paragraph info = new Paragraph("• Aluno:")
+            Paragraph info = new Paragraph()
                 .SetTextAlignment(TextAlignment.LEFT)
-                .SetFontSize(13);
+                .SetFontSize(13)
+                .Add(new Text("• Aluno:").SetBold());
 
-            info.Add($"\n• Disciplina: {_teste.Disciplina.Nome}");
+            info.Add(new Text($"\n• Disciplina: ").SetBold());
+            info.Add(new Text(_teste.Disciplina.Nome));
 
             if (_teste.Materia != null)
             {
-                info.Add($"\n• Matéria: {_teste.Materia.Nome}");
-                info.Add($"\n• Série: {_teste.Materia.Serie.ObterDescricao()}");
+                info.Add(new Text($"\n• Matéria: ").SetBold());
+                info.Add(new Text(_teste.Materia.Nome));
+                info.Add(new Text($"\n• Série: ").SetBold());
+                info.Add(new Text(_teste.Materia.Serie.ObterDescricao()));
             }
             else
-                info.Add($"\n• Provão");
+            {
+                info.Add(new Text($"\n• Provão").SetBold());
+            }
 
             document.Add(info);
             document.Add(new Paragraph(""));
@@ -154,7 +158,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             foreach (Questao questao in ListaQuestoes)
             {
-                Paragraph question = new(questao.Enunciado);
+                Paragraph question = new($"\n{questao.Enunciado}");
                 document.Add(question);
 
                 for (int i = 0; i < questao.Alternativas.Count; i++)
