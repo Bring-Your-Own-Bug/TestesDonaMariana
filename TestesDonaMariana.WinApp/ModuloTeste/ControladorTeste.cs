@@ -76,7 +76,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             Teste? teste = _tabelaTeste.ObterRegistroSelecionado();
 
-            TelaPdfTesteForm tela = new();
+            TelaPdfTesteForm tela = new(teste);
 
             tela.Entidade = teste;
 
