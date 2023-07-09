@@ -1,10 +1,8 @@
 using TestesDonaMariana.Dados.ModuloDisciplina;
-using TestesDonaMariana.Dados.ModuloGabarito;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
 using TestesDonaMariana.WinApp.ModuloDisciplina;
-using TestesDonaMariana.WinApp.ModuloGabarito;
 using TestesDonaMariana.WinApp.ModuloMateria;
 using TestesDonaMariana.WinApp.ModuloQuestao;
 using TestesDonaMariana.WinApp.ModuloTeste;
@@ -13,22 +11,22 @@ namespace TestesDonaMariana.WinApp
 {
     public partial class TelaPrincipalForm : Form
     {
-        private Dictionary<Control, ToolStripButton> coresBotoes = new();
+        private readonly Dictionary<Control, ToolStripButton> coresBotoes = new();
 
         private IControladorBase _controladorBase;
         private UserControl _tabela;
 
         private static TelaPrincipalForm _telaPrincipal;
 
-        private RepositorioDisciplina _repositorioDisciplina = new();
-        private RepositorioMateria _repositorioMateria = new();
-        private RepositorioQuestao _repositorioQuestao = new();
-        private RepositorioTeste _repositorioTeste = new();
+        private readonly RepositorioDisciplina _repositorioDisciplina = new();
+        private readonly RepositorioMateria _repositorioMateria = new();
+        private readonly RepositorioQuestao _repositorioQuestao = new();
+        private readonly RepositorioTeste _repositorioTeste = new();
 
-        private TabelaDisciplinaControl _tabelaDisciplina = new();
-        private TabelaMateriaControl _tabelaMateria = new();
-        private TabelaQuestaoControl _tabelaQuestao = new();
-        private TabelaTesteControl _tabelaTeste = new();
+        private readonly TabelaDisciplinaControl _tabelaDisciplina = new();
+        private readonly TabelaMateriaControl _tabelaMateria = new();
+        private readonly TabelaQuestaoControl _tabelaQuestao = new();
+        private readonly TabelaTesteControl _tabelaTeste = new();
 
         public TelaPrincipalForm()
         {
