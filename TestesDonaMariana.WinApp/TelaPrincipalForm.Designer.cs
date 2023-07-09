@@ -144,6 +144,7 @@
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
             barraFuncoes.TabIndex = 1;
+            barraFuncoes.Visible = false;
             // 
             // btnAdicionar
             // 

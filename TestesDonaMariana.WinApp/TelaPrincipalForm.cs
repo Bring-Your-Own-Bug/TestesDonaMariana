@@ -24,13 +24,11 @@ namespace TestesDonaMariana.WinApp
         private RepositorioMateria _repositorioMateria = new();
         private RepositorioQuestao _repositorioQuestao = new();
         private RepositorioTeste _repositorioTeste = new();
-        private RepositorioGabarito _repositorioGabarito = new();
 
         private TabelaDisciplinaControl _tabelaDisciplina = new();
         private TabelaMateriaControl _tabelaMateria = new();
         private TabelaQuestaoControl _tabelaQuestao = new();
         private TabelaTesteControl _tabelaTeste = new();
-        private TabelaGabaritoControl _tabelaGabarito = new();
 
         public TelaPrincipalForm()
         {
@@ -63,32 +61,26 @@ namespace TestesDonaMariana.WinApp
         private void btnMateria_Click(object sender, EventArgs e)
         {
             _controladorBase = new ControladorMateria(_repositorioMateria, _tabelaMateria, _repositorioDisciplina, _repositorioQuestao);
-
             ConfigurarTelaPrincipal();
         }
 
         private void btnQuestao_Click(object sender, EventArgs e)
         {
             _controladorBase = new ControladorQuestao(_repositorioQuestao, _tabelaQuestao, _repositorioMateria, _repositorioDisciplina);
-
             ConfigurarTelaPrincipal();
         }
 
         private void btnTeste_Click(object sender, EventArgs e)
         {
             _controladorBase = new ControladorTeste(_repositorioTeste, _tabelaTeste, _repositorioDisciplina, _repositorioQuestao, _repositorioMateria);
-
             ConfigurarTelaPrincipal();
         }
 
         private void ConfigurarTelaPrincipal()
         {
             ConfigurarListagem();
-
             ConfigurarToolTipsAndButtons();
-
             AbrirListagem();
-
             ResetarBotoes();
         }
 
@@ -139,7 +131,6 @@ namespace TestesDonaMariana.WinApp
         private void ConfigurarListagem()
         {
             _tabela = _controladorBase.ObterListagem();
-
             _tabela.Dock = DockStyle.Fill;
         }
 
@@ -154,8 +145,6 @@ namespace TestesDonaMariana.WinApp
         private void ResetarBotoes()
         {
             ConfigurarBotaoDetalhes();
-
-            //ConfigurarBotaoAtualizarStatus();
 
             if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0)
             {
@@ -177,33 +166,21 @@ namespace TestesDonaMariana.WinApp
             btnGerarPdf.Enabled = isSelectedAndTestController;
         }
 
-        //private void ConfigurarBotaoAtualizarStatus()
-        //{
-        //    if (((DataGridView)_tabela.Controls[0]).SelectedRows.Count > 0 && _controladorBase is ControladorAluguel)
-        //        btnAttStatus.Enabled = true;
-        //    else
-        //        btnAttStatus.Enabled = false;
-        //}
-
         private void btnColor_MouseEnter(object sender, EventArgs e)
         {
             ToolStripButton btn = (ToolStripButton)sender;
-
             btn.ForeColor = Color.Black;
         }
 
         private void btnColor_MouseLeave(object sender, EventArgs e)
         {
             ToolStripButton btn = (ToolStripButton)sender;
-
             btn.ForeColor = Color.White;
         }
 
         private void plPrincipal_ControlAdded(object sender, ControlEventArgs e)
         {
-            ToolStripButton btn;
-
-            coresBotoes.TryGetValue(e.Control, out btn);
+            coresBotoes.TryGetValue(e.Control, out ToolStripButton btn);
 
             btn.BackColor = Color.White;
             btn.ForeColor = Color.Black;
@@ -212,9 +189,7 @@ namespace TestesDonaMariana.WinApp
 
         private void plPrincipal_ControlRemoved(object sender, ControlEventArgs e)
         {
-            ToolStripButton btn;
-
-            coresBotoes.TryGetValue(e.Control, out btn);
+            coresBotoes.TryGetValue(e.Control, out ToolStripButton btn);
 
             btn.BackColor = Color.FromArgb(0, 165, 100);
             btn.ForeColor = Color.White;
