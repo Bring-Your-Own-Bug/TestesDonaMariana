@@ -6,7 +6,7 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
     {
         public static bool ValidarAlternativaExistente(string alternativaAdd, List<string> lista)
         {
-            return (lista.Any(alternativa => string.Equals(alternativa, alternativaAdd, StringComparison.OrdinalIgnoreCase)));
+            return (lista.Any(alternativa => string.Equals(alternativa.Substring(3), alternativaAdd, StringComparison.OrdinalIgnoreCase)));
         }
 
         public static bool ValidarAlternativaCorreta(int checkCount)
