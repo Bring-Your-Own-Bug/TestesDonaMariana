@@ -21,6 +21,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                ,[MATERIA_ID]
                                                                ,[DATAGERACAO]
                                                                ,[RECUPERACAO]
+                                                               ,[SERIE]
                                                            )
                                                      VALUES
                                                            (
@@ -30,6 +31,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                 ,@MATERIA_ID
                                                                 ,@DATAGERACAO
                                                                 ,@RECUPERACAO
+                                                                ,@SERIE
                                                            )
                                                            SELECT SCOPE_IDENTITY();";
 
@@ -41,6 +43,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                      ,[MATERIA_ID] =         @MATERIA_ID
                                                      ,[DATAGERACAO] =        @DATAGERACAO
                                                      ,[RECUPERACAO] =        @RECUPERACAO
+                                                     ,[SERIE] =              @SERIE
 
                                                 WHERE[ID] = @ID";
 
@@ -55,6 +58,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                               ,T.[MATERIA_ID]           TESTE_MATERIA_ID
                                                               ,T.[DATAGERACAO]          TESTE_DATAGERACAO
                                                               ,T.[RECUPERACAO]          TESTE_RECUPERACAO
+                                                              ,T.[SERIE]                TESTE_SERIE
 
                                                               ,D.[ID]                   DISCIPLINA_ID
                                                               ,D.[NOME]                 DISCIPLINA_NOME
@@ -81,6 +85,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                                                                      ,T.[MATERIA_ID]           TESTE_MATERIA_ID
                                                                      ,T.[DATAGERACAO]          TESTE_DATAGERACAO
                                                                      ,T.[RECUPERACAO]          TESTE_RECUPERACAO
+                                                                     ,T.[SERIE]                TESTE_SERIE
 
                                                                      ,D.[ID]                   DISCIPLINA_ID
                                                                      ,D.[NOME]                 DISCIPLINA_NOME

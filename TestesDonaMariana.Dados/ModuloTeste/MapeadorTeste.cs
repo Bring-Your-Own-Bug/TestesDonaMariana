@@ -19,6 +19,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             comando.Parameters.AddWithValue("MATERIA_ID", registro.Materia == null ? DBNull.Value : registro.Materia.Id);
             comando.Parameters.AddWithValue("DATAGERACAO", registro.DataGeracao);
             comando.Parameters.AddWithValue("RECUPERACAO", SqlDbType.Bit).Value = registro.Recuperacao;
+            comando.Parameters.AddWithValue("SERIE", SqlDbType.Bit).Value = registro.Serie;
         }
 
         public override Teste ConverterRegistro(SqlDataReader leitorRegistros)
@@ -35,6 +36,8 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             if (leitorRegistros["MATERIA_ID"] != DBNull.Value)
                 materia = new MapeadorMateria().ConverterRegistro(leitorRegistros);
 
+            Serie serie = (Serie)Convert.ToInt32(leitorRegistros["TESTE_SERIE"]);
+
             DateTime dataGeracao = Convert.ToDateTime(leitorRegistros["TESTE_DATAGERACAO"]);
 
             Recuperacao recuperacao = (Recuperacao)leitorRegistros["TESTE_RECUPERACAO"];
@@ -44,6 +47,7 @@ namespace TestesDonaMariana.Dados.ModuloTeste
             teste.NumeroDeQuestoes = numeroDeQuestoes;
             teste.Disciplina = disciplina;
             teste.Materia = materia;
+            teste.Serie = serie;
             teste.DataGeracao = dataGeracao;
             teste.Recuperacao = recuperacao;
 

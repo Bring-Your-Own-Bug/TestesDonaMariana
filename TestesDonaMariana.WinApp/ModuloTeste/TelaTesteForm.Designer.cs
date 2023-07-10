@@ -49,8 +49,13 @@
             lbErroQtdQuestoes = new Label();
             lbErroQuestoes = new Label();
             lbErroNoQuestoes = new Label();
+            rdSegundaSerie = new RadioButton();
+            rdPrimeiraSerie = new RadioButton();
+            label1 = new Label();
+            plSerie = new Panel();
             ((System.ComponentModel.ISupportInitialize)numQuestao).BeginInit();
             groupBox1.SuspendLayout();
+            plSerie.SuspendLayout();
             SuspendLayout();
             // 
             // cmbDisciplina
@@ -272,12 +277,57 @@
             lbErroNoQuestoes.Text = "*Não há questões";
             lbErroNoQuestoes.Visible = false;
             // 
+            // rdSegundaSerie
+            // 
+            rdSegundaSerie.AutoSize = true;
+            rdSegundaSerie.Location = new Point(91, 8);
+            rdSegundaSerie.Name = "rdSegundaSerie";
+            rdSegundaSerie.Size = new Size(36, 19);
+            rdSegundaSerie.TabIndex = 104;
+            rdSegundaSerie.TabStop = true;
+            rdSegundaSerie.Text = "2ª";
+            rdSegundaSerie.UseVisualStyleBackColor = true;
+            // 
+            // rdPrimeiraSerie
+            // 
+            rdPrimeiraSerie.AutoSize = true;
+            rdPrimeiraSerie.Checked = true;
+            rdPrimeiraSerie.Location = new Point(49, 8);
+            rdPrimeiraSerie.Name = "rdPrimeiraSerie";
+            rdPrimeiraSerie.Size = new Size(36, 19);
+            rdPrimeiraSerie.TabIndex = 103;
+            rdPrimeiraSerie.TabStop = true;
+            rdPrimeiraSerie.Text = "1ª";
+            rdPrimeiraSerie.UseVisualStyleBackColor = true;
+            rdPrimeiraSerie.CheckedChanged += ResetarLista;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(8, 8);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 15);
+            label1.TabIndex = 105;
+            label1.Text = "Série:";
+            // 
+            // plSerie
+            // 
+            plSerie.Controls.Add(rdSegundaSerie);
+            plSerie.Controls.Add(label1);
+            plSerie.Controls.Add(rdPrimeiraSerie);
+            plSerie.Enabled = false;
+            plSerie.Location = new Point(43, 173);
+            plSerie.Name = "plSerie";
+            plSerie.Size = new Size(132, 34);
+            plSerie.TabIndex = 106;
+            // 
             // TelaTesteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(451, 525);
+            Controls.Add(plSerie);
             Controls.Add(lbErroNoQuestoes);
             Controls.Add(lbErroQuestoes);
             Controls.Add(lbErroQtdQuestoes);
@@ -308,6 +358,8 @@
             Shown += TelaTesteForm_Shown;
             ((System.ComponentModel.ISupportInitialize)numQuestao).EndInit();
             groupBox1.ResumeLayout(false);
+            plSerie.ResumeLayout(false);
+            plSerie.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -334,5 +386,9 @@
         private Label lbErroQtdQuestoes;
         private Label lbErroQuestoes;
         private Label lbErroNoQuestoes;
+        private RadioButton rdSegundaSerie;
+        private RadioButton rdPrimeiraSerie;
+        private Label label1;
+        private Panel plSerie;
     }
 }

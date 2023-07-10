@@ -38,6 +38,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
                 ckbRecuperacao.Checked = value.Materia == null ? true : false;
                 cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
+                rdPrimeiraSerie.Checked = ckbRecuperacao.Checked && value.Serie == Serie.Primeira;
+                rdSegundaSerie.Checked = ckbRecuperacao.Checked && value.Serie == Serie.Segunda;
                 numQuestao.Value = value.NumeroDeQuestoes;
                 listQuestoes.Items.AddRange(value.ListaQuestoes.ToArray());
                 _listaQuestoesSorteadas.AddRange(value.ListaQuestoes);
@@ -57,6 +59,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
                 ckbRecuperacao.Checked = value.Materia == null ? true : false;
                 cmbMateria.Text = value.Materia == null ? "" : value.Materia.Nome;
+                rdPrimeiraSerie.Checked = ckbRecuperacao.Checked && value.Serie == Serie.Primeira;
+                rdSegundaSerie.Checked = ckbRecuperacao.Checked && value.Serie == Serie.Segunda;
                 numQuestao.Value = value.NumeroDeQuestoes;
                 value.ListaQuestoes.Clear();
                 _teste = value;
@@ -79,11 +83,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             int numeroQuestoes = Convert.ToInt32(numQuestao.Value);
 
+            Serie serieSelecao = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
+
+            Serie serie = ckbRecuperacao.Checked ? serieSelecao : materia.Serie;
+
             Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
 
             List<Questao> questoes = _listaQuestoesSorteadas;
 
-            _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, questoes, DateTime.Now, recuperacao);
+            _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, serie, questoes, DateTime.Now, recuperacao);
 
             if (_teste.Id == 0)
                 _teste.Id = Convert.ToInt32(txtId.Text);
@@ -152,7 +160,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             {
                 if (cmbMateria.SelectedItem is not Materia materiaSelecionada)
                 {
-                    listaPorMateria = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id);
+                    Serie serie = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
+
+                    listaPorMateria = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id && q.Materia.Serie == serie);
 
                     if (ValidarSeExisteQuestaoParaGerar(listaPorMateria.Count))
                     {
@@ -205,8 +215,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             {
                 cmbMateria.Enabled = false;
                 cmbMateria.SelectedItem = null;
+                plSerie.Enabled = true;
             }
-            else cmbMateria.Enabled = true;
+            else
+            {
+                cmbMateria.Enabled = true;
+                plSerie.Enabled = false;
+            }
         }
 
         private void AtualizarComboBoxMateria(object sender, EventArgs e)

@@ -27,6 +27,8 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 txtId.Text = value.Id.ToString();
                 txtNome.Text = value.Nome;
                 txtDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
+                rdPrimeiraSerie.Checked = value.Serie == Serie.Primeira;
+                rdSegundaSerie.Checked = value.Serie == Serie.Segunda;
                 _materia = value;
             }
         }

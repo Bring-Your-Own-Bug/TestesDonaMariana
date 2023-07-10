@@ -144,6 +144,7 @@
             barraFuncoes.Name = "barraFuncoes";
             barraFuncoes.Size = new Size(1013, 54);
             barraFuncoes.TabIndex = 1;
+            barraFuncoes.Visible = false;
             // 
             // btnAdicionar
             // 
@@ -197,7 +198,7 @@
             btnDetalhes.BackColor = Color.Yellow;
             btnDetalhes.Enabled = false;
             btnDetalhes.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDetalhes.Image = Properties.Resources.addItem;
+            btnDetalhes.Image = Properties.Resources.detailIcon;
             btnDetalhes.ImageScaling = ToolStripItemImageScaling.None;
             btnDetalhes.ImageTransparentColor = Color.Magenta;
             btnDetalhes.Margin = new Padding(10);
@@ -212,7 +213,7 @@
             btnDuplicar.BackColor = Color.Orange;
             btnDuplicar.Enabled = false;
             btnDuplicar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDuplicar.Image = Properties.Resources.statusCheck;
+            btnDuplicar.Image = Properties.Resources.duplicateIcon;
             btnDuplicar.ImageScaling = ToolStripItemImageScaling.None;
             btnDuplicar.ImageTransparentColor = Color.Magenta;
             btnDuplicar.Margin = new Padding(10);

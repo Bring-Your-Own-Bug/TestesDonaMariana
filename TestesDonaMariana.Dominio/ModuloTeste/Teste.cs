@@ -13,18 +13,20 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
         public List<Questao> ListaQuestoes { get; set; }
         public DateTime DataGeracao { get; set; }
         public Recuperacao Recuperacao { get; set; }
+        public Serie Serie { get; set; }
 
         public Teste()
         {
 
         }
 
-        public Teste(string titulo, int numeroDeQuestoes, Disciplina disciplina, Materia materia, List<Questao> listaQuestoes, DateTime dataGeracao, Recuperacao recuperacao)
+        public Teste(string titulo, int numeroDeQuestoes, Disciplina disciplina, Materia materia, Serie serie, List<Questao> listaQuestoes, DateTime dataGeracao, Recuperacao recuperacao)
         {
             Titulo = titulo;
             NumeroDeQuestoes = numeroDeQuestoes;
             Disciplina = disciplina;
             Materia = materia;
+            Serie = serie;
             ListaQuestoes = listaQuestoes;
             DataGeracao = dataGeracao;
             Recuperacao = recuperacao;
