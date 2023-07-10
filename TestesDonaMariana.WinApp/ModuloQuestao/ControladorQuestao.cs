@@ -49,5 +49,10 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             telaQuestao.txtDisciplina.ValueMember = "Nome";
             telaQuestao.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
         }
+
+        public static List<Questao>? ObterListaQuestao()
+        {
+            return new RepositorioQuestao().ObterListaRegistros();
+        }
     }
 }

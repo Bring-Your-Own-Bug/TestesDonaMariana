@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
+﻿using iText.StyledXmlParser.Jsoup.Nodes;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
@@ -12,10 +13,12 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         private bool _isValid;
 
         private List<Materia> ListaMateria { get; set; } = new();
+        private List<Questao> ListaQuestao { get; set; } = new();
 
         public TelaQuestaoForm()
         {
             InitializeComponent();
+            ListaQuestao = ControladorQuestao.ObterListaQuestao();
         }
 
         public Questao? Entidade
@@ -80,7 +83,17 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 lbErroAlternativas.Visible = true;
             }
 
-            lbErroEnunciado.Visible = txtEnunciado.Text.ValidarCampoVazio();
+            if (txtEnunciado.Text.ValidarCampoVazio())
+            {
+                lbErroEnunciado.Text = "*Campo obrigatório";
+                lbErroEnunciado.Visible = true;
+            }
+            else if (_questao != null && string.Equals(_questao.Enunciado, lbErroEnunciado.Text, StringComparison.OrdinalIgnoreCase)) { }
+            else if (ValidadorQuestao.ValidarQuestaoExistente(txtEnunciado.Text, ListaQuestao))
+            {
+                lbErroEnunciado.Visible = true;
+                lbErroEnunciado.Text = "*Essa questão já existe";
+            }
 
             lbErroMateria.Visible = txtMateria.Text.ValidarCampoVazio();
 

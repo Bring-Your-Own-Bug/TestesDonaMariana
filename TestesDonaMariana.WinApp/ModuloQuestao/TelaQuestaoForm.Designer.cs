@@ -190,6 +190,8 @@
             listAlternativas.Name = "listAlternativas";
             listAlternativas.Size = new Size(372, 153);
             listAlternativas.TabIndex = 5;
+            listAlternativas.TabStop = false;
+            listAlternativas.UseTabStops = false;
             listAlternativas.ItemCheck += ApenasUmaAlternativaCheck;
             // 
             // groupBox1

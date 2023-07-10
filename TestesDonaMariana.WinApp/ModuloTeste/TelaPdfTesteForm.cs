@@ -138,7 +138,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             }
             else
             {
-                info.Add(new Text($"\n• Provão").SetBold());
+                info.Add(new Text($"\n• Prova de Recuperação").SetBold());
             }
 
             document.Add(info);

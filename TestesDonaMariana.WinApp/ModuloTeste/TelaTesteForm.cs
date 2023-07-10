@@ -51,6 +51,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             set
             {
+                this.Text = "Duplicador de Teste";
                 txtId.Text = value.Id.ToString();
                 txtTitulo.Text = value.Titulo;
                 cmbDisciplina.Text = value.Disciplina == null ? "" : value.Disciplina.Nome;
