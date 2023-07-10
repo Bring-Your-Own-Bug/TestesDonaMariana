@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.ModuloMateria;
+﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloQuestao
@@ -10,9 +11,9 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
             return (lista.Any(alternativa => string.Equals(alternativa.Substring(3), alternativaAdd, StringComparison.OrdinalIgnoreCase)));
         }
 
-        public static bool ValidarQuestaoExistente(string enunciado, Materia materia, List<Questao> listaQuestao)
+        public static bool ValidarQuestaoExistente(string enunciado, Disciplina disciplina, Materia materia, List<Questao> listaQuestao)
         {
-            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && materia.Nome == q.Materia.Nome));
+            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && materia != null && materia.Nome == q.Materia.Nome && materia.Serie == q.Materia.Serie && disciplina.Nome == q.Disciplina.Nome));
         }
 
         public static bool ValidarAlternativaCorreta(int checkCount)
