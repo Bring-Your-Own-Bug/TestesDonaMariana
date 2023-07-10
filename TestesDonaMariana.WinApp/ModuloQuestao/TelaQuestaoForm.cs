@@ -110,7 +110,11 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 }
                 else
                 {
-                    listAlternativas.Items.Add(txtResposta.Text);
+                    char letra = 'A';
+
+                    letra = (char)(letra + listAlternativas.Items.Count);
+
+                    listAlternativas.Items.Add($"{letra}) {txtResposta.Text}");
                     lbErroAlternativas.Visible = false;
                 }
             }
@@ -124,7 +128,17 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             ValidarCampos(sender, e);
 
             if (listAlternativas.SelectedIndex != -1)
+            {
                 listAlternativas.Items.RemoveAt(listAlternativas.SelectedIndex);
+
+                char letra = 'A';
+
+                for (int i = 0; i < listAlternativas.Items.Count; i++)
+                {
+                    listAlternativas.Items[i] = $"{letra}) {listAlternativas.Items[i].ToString().Substring(3)}";
+                    letra++;
+                }
+            }
         }
 
         private void ApenasUmaAlternativaCheck(object sender, ItemCheckEventArgs e)

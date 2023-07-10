@@ -63,50 +63,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void GerarGabaritoPdf()
         {
-            PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Titulo + " - Gabarito.pdf");
-            PdfDocument pdf = new(writer);
-            Document document = new(pdf);
+            Document document = GerarCabecalho($"{_teste.Titulo} - Gabarito");
 
-            document.Add(new LineSeparator(new SolidLine(1f)));
-            document.Add(new Paragraph(""));
-
-            Paragraph info = new Paragraph()
-                .SetTextAlignment(TextAlignment.LEFT)
-                .SetFontSize(13)
-                .Add(new Text("• Aluno:").SetBold());
-
-            info.Add(new Text($"\n• Disciplina: ").SetBold());
-            info.Add(new Text(_teste.Disciplina.Nome));
-
-            if (_teste.Materia != null)
-            {
-                info.Add(new Text($"\n• Matéria: ").SetBold());
-                info.Add(new Text(_teste.Materia.Nome));
-                info.Add(new Text($"\n• Série: ").SetBold());
-                info.Add(new Text(_teste.Materia.Serie.ObterDescricao()));
-            }
-            else
-            {
-                info.Add(new Text($"\n• Provão").SetBold());
-            }
-
-            document.Add(info);
-            document.Add(new Paragraph(""));
-            document.Add(new LineSeparator(new SolidLine(1f)));
-            document.Add(new Paragraph("\n"));
-
-            Paragraph title = new Paragraph(_teste.Titulo)
-                .SetTextAlignment(TextAlignment.CENTER)
-                .SetFontSize(21)
-                .SetBold();
-
-            document.Add(title);
-            document.Add(new Paragraph("\n"));
+            int numeroQuestao = 1;
 
             foreach (Questao questao in _teste.ListaQuestoes)
             {
-                Paragraph question = new($"\n{questao.Enunciado}");
+                Paragraph question = new($"\n{numeroQuestao} - {questao.Enunciado}");
                 document.Add(question);
+                numeroQuestao++;
 
                 Paragraph alternativaParagraph = new($"Resposta correta: {questao.AlternativaCorreta}");
                 document.Add(alternativaParagraph);
@@ -117,7 +82,30 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void GerarTestePdf()
         {
-            PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Titulo + ".pdf");
+            Document document = GerarCabecalho(_teste.Titulo);
+
+            int numeroQuestao = 1;
+
+            foreach (Questao questao in _teste.ListaQuestoes)
+            {
+                Paragraph question = new($"\n{numeroQuestao} - {questao.Enunciado}");
+                document.Add(question);
+                numeroQuestao++;
+
+                for (int i = 0; i < questao.Alternativas.Count; i++)
+                {
+                    string alternativa = questao.Alternativas[i];
+                    Paragraph alternativaParagraph = new(alternativa);
+                    document.Add(alternativaParagraph);
+                }
+            }
+
+            document.Close();
+        }
+
+        private Document GerarCabecalho(string nomeArquivo)
+        {
+            PdfWriter writer = new($"{txtDiretorio.Text}/{nomeArquivo}.pdf");
             PdfDocument pdf = new(writer);
             Document document = new(pdf);
 
@@ -156,27 +144,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
-
-            char letra = 'a';
-
-            foreach (Questao questao in _teste.ListaQuestoes)
-            {
-                Paragraph question = new($"\n{questao.Enunciado}");
-                document.Add(question);
-
-                for (int i = 0; i < questao.Alternativas.Count; i++)
-                {
-                    string alternativa = $"{letra}) {questao.Alternativas[i]}";
-                    Paragraph alternativaParagraph = new(alternativa);
-                    document.Add(alternativaParagraph);
-
-                    letra++;
-                }
-
-                letra = 'a';
-            }
-
-            document.Close();
+            return document;
         }
 
         private void ImplementarMetodos()
