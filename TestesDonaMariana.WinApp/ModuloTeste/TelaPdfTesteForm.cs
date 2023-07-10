@@ -131,19 +131,19 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Close();
         }
 
-        private string VerificarENomearArquivo(string diretorioEscolhido, string prefixo)
+        private string VerificarENomearArquivo(string diretorioEscolhido, string sufixo)
         {
             int contador = 1;
-            string diretorio = diretorioEscolhido + prefixo + ".pdf";
+            string diretorio = diretorioEscolhido + sufixo + ".pdf";
 
             if (File.Exists(diretorio))
             {
-                while (File.Exists($"{txtDiretorio.Text}/{txtTitulo.Text}({contador}){prefixo}.pdf"))
+                while (File.Exists($"{txtDiretorio.Text}/{txtTitulo.Text}{sufixo}({contador}).pdf"))
                 {
                     contador++;
                 }
 
-                diretorio = $"{txtDiretorio.Text}/{txtTitulo.Text}({contador}){prefixo}.pdf";
+                diretorio = $"{txtDiretorio.Text}/{txtTitulo.Text}{sufixo}({contador}).pdf";
             }
 
             return diretorio;
