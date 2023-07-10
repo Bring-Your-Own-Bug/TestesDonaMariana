@@ -26,5 +26,10 @@
         {
             return !Directory.Exists(text);
         }
+
+        public static bool ValidarArquivoExistente(string text, string titulo)
+        {
+            return File.Exists($"{text}/{titulo}.pdf") && File.Exists($"{text}/{titulo} - Gabarito.pdf");
+        }
     }
 }

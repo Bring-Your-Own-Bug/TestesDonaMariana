@@ -15,7 +15,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool _isValid;
 
-        private List<Questao> ListaQuestoes { get; set; }
+        private int _contador;
+
         public TelaPdfTesteForm(Teste teste)
         {
             InitializeComponent();
@@ -23,7 +24,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             this.ConfigurarDialog();
 
             _teste = teste;
-            ListaQuestoes = ControladorTeste.ObterListaQuestao();
+            _contador = 1;
         }
 
         public Teste? Entidade
@@ -63,7 +64,14 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void GerarGabaritoPdf()
         {
-            Document document = GerarCabecalho($"{_teste.Titulo} - Gabarito");
+            PdfWriter writer = new(rdbSim.Checked
+            ? $"{txtDiretorio.Text}/{txtTitulo.Text} - Gabarito ({_contador}).pdf"
+            : $"{txtDiretorio.Text}/{txtTitulo.Text} - Gabarito.pdf");
+
+            PdfDocument pdf = new(writer);
+            Document document = new(pdf);
+
+            GerarCabecalho(document);
 
             int numeroQuestao = 1;
 
@@ -91,7 +99,23 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void GerarTestePdf()
         {
-            Document document = GerarCabecalho(_teste.Titulo);
+
+            PdfWriter writer = new(rdbSim.Checked
+            ? $"{txtDiretorio.Text}/{txtTitulo.Text} ({_contador}).pdf"
+            : $"{txtDiretorio.Text}/{txtTitulo.Text}.pdf");
+
+            PdfDocument pdf = new(writer);
+            Document document = new(pdf);
+
+            GerarCabecalho(document);
+
+            Paragraph title = new Paragraph(_teste.Titulo)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(21)
+                .SetBold();
+
+            document.Add(title);
+            document.Add(new Paragraph("\n"));
 
             int numeroQuestao = 1;
 
@@ -112,12 +136,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Close();
         }
 
-        private Document GerarCabecalho(string nomeArquivo)
+        private void GerarCabecalho(Document document)
         {
-            PdfWriter writer = new($"{txtDiretorio.Text}/{nomeArquivo}.pdf");
-            PdfDocument pdf = new(writer);
-            Document document = new(pdf);
-
             document.Add(new LineSeparator(new SolidLine(1f)));
             document.Add(new Paragraph(""));
 
@@ -145,15 +165,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Add(new Paragraph(""));
             document.Add(new LineSeparator(new SolidLine(1f)));
             document.Add(new Paragraph("\n"));
-
-            Paragraph title = new Paragraph(_teste.Titulo)
-                .SetTextAlignment(TextAlignment.CENTER)
-                .SetFontSize(21)
-                .SetBold();
-
-            document.Add(title);
-            document.Add(new Paragraph("\n"));
-            return document;
         }
 
         private void ImplementarMetodos()
@@ -177,6 +188,19 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             {
                 lbErroDiretorio.Text = "*Diretório inválido";
                 lbErroDiretorio.Visible = true;
+            }
+
+            if (ValidadorTeste.ValidarArquivoExistente(txtDiretorio.Text, txtTitulo.Text))
+            {
+                lbErroDiretorio.Text = "*Já existe um arquivo com mesmo nome nesse diretório";
+                lbErroDiretorio.Visible = true;
+                gboxDuplicar.Visible = true;
+
+                if (rdbSim.Checked)
+                {
+                    lbErroDiretorio.Visible = false;
+                    _contador++;
+                }                   
             }
 
             _isValid = !(lbErroTitulo.Visible || lbErroDiretorio.Visible);
