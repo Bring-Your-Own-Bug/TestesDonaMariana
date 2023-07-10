@@ -71,6 +71,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         private void ValidarCampos(object sender, EventArgs e)
         {
             lbErroAlternativas.Visible = false;
+            lbErroEnunciado.Visible = false;
 
             if (ValidadorQuestao.ValidarQtdMinimaAlternativas(listAlternativas.Items.Count))
             {
@@ -88,7 +89,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 lbErroEnunciado.Text = "*Campo obrigatório";
                 lbErroEnunciado.Visible = true;
             }
-            else if (_questao != null && string.Equals(_questao.Enunciado, lbErroEnunciado.Text, StringComparison.OrdinalIgnoreCase)) { }
+            else if (_questao != null && string.Equals(_questao.Enunciado, txtEnunciado.Text, StringComparison.OrdinalIgnoreCase)) { }
             else if (ValidadorQuestao.ValidarQuestaoExistente(txtEnunciado.Text, ListaQuestao))
             {
                 lbErroEnunciado.Visible = true;
