@@ -6,7 +6,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
     {
         public DataGridView DataGridView { get; }
 
-        public void AtualizarLista(List<TEntidade> contatos);
+        public void AtualizarLista(List<TEntidade> registros);
 
         public TEntidade ObterRegistroSelecionado();
     }

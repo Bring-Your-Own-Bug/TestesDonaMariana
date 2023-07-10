@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lbErroTelefone = new Label();
+            lbErroDisciplina = new Label();
             lbErroNome = new Label();
             btnCancelar = new Button();
             btnAdd = new Button();
@@ -37,23 +37,23 @@
             lbId = new Label();
             txtNome = new TextBox();
             txtId = new TextBox();
-            comboBox1 = new ComboBox();
+            txtDisciplina = new ComboBox();
             label1 = new Label();
             rdPrimeiraSerie = new RadioButton();
             rdSegundaSerie = new RadioButton();
             SuspendLayout();
             // 
-            // lbErroTelefone
+            // lbErroDisciplina
             // 
-            lbErroTelefone.AutoSize = true;
-            lbErroTelefone.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroTelefone.ForeColor = Color.Red;
-            lbErroTelefone.Location = new Point(100, 105);
-            lbErroTelefone.Name = "lbErroTelefone";
-            lbErroTelefone.Size = new Size(112, 13);
-            lbErroTelefone.TabIndex = 55;
-            lbErroTelefone.Text = "*Campo Obrigatório";
-            lbErroTelefone.Visible = false;
+            lbErroDisciplina.AutoSize = true;
+            lbErroDisciplina.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroDisciplina.ForeColor = Color.Red;
+            lbErroDisciplina.Location = new Point(100, 105);
+            lbErroDisciplina.Name = "lbErroDisciplina";
+            lbErroDisciplina.Size = new Size(112, 13);
+            lbErroDisciplina.TabIndex = 55;
+            lbErroDisciplina.Text = "*Campo Obrigatório";
+            lbErroDisciplina.Visible = false;
             // 
             // lbErroNome
             // 
@@ -74,7 +74,7 @@
             btnCancelar.Location = new Point(301, 206);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(70, 36);
-            btnCancelar.TabIndex = 53;
+            btnCancelar.TabIndex = 6;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
@@ -85,9 +85,10 @@
             btnAdd.Location = new Point(225, 206);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(70, 36);
-            btnAdd.TabIndex = 52;
+            btnAdd.TabIndex = 5;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // lbNome
             // 
@@ -122,7 +123,7 @@
             txtNome.Location = new Point(100, 79);
             txtNome.Name = "txtNome";
             txtNome.Size = new Size(249, 23);
-            txtNome.TabIndex = 47;
+            txtNome.TabIndex = 1;
             // 
             // txtId
             // 
@@ -131,15 +132,17 @@
             txtId.ReadOnly = true;
             txtId.Size = new Size(71, 23);
             txtId.TabIndex = 46;
+            txtId.TabStop = false;
+            txtId.Text = "0";
             // 
-            // comboBox1
+            // txtDisciplina
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(100, 121);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 56;
+            txtDisciplina.DropDownStyle = ComboBoxStyle.DropDownList;
+            txtDisciplina.FormattingEnabled = true;
+            txtDisciplina.Location = new Point(100, 121);
+            txtDisciplina.Name = "txtDisciplina";
+            txtDisciplina.Size = new Size(121, 23);
+            txtDisciplina.TabIndex = 2;
             // 
             // label1
             // 
@@ -157,7 +160,7 @@
             rdPrimeiraSerie.Location = new Point(100, 166);
             rdPrimeiraSerie.Name = "rdPrimeiraSerie";
             rdPrimeiraSerie.Size = new Size(36, 19);
-            rdPrimeiraSerie.TabIndex = 58;
+            rdPrimeiraSerie.TabIndex = 3;
             rdPrimeiraSerie.TabStop = true;
             rdPrimeiraSerie.Text = "1ª";
             rdPrimeiraSerie.UseVisualStyleBackColor = true;
@@ -168,7 +171,7 @@
             rdSegundaSerie.Location = new Point(142, 166);
             rdSegundaSerie.Name = "rdSegundaSerie";
             rdSegundaSerie.Size = new Size(36, 19);
-            rdSegundaSerie.TabIndex = 59;
+            rdSegundaSerie.TabIndex = 4;
             rdSegundaSerie.TabStop = true;
             rdSegundaSerie.Text = "2ª";
             rdSegundaSerie.UseVisualStyleBackColor = true;
@@ -181,8 +184,8 @@
             Controls.Add(rdSegundaSerie);
             Controls.Add(rdPrimeiraSerie);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
-            Controls.Add(lbErroTelefone);
+            Controls.Add(txtDisciplina);
+            Controls.Add(lbErroDisciplina);
             Controls.Add(lbErroNome);
             Controls.Add(btnCancelar);
             Controls.Add(btnAdd);
@@ -196,14 +199,14 @@
             MinimizeBox = false;
             Name = "TelaMateriaForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Cadastro de Materias";
+            Text = "Cadastro de Matérias";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label lbErroTelefone;
+        private Label lbErroDisciplina;
         private Label lbErroNome;
         private Button btnCancelar;
         private Button btnAdd;
@@ -212,9 +215,9 @@
         private Label lbId;
         private TextBox txtNome;
         public TextBox txtId;
-        private ComboBox comboBox1;
         private Label label1;
         private RadioButton rdPrimeiraSerie;
         private RadioButton rdSegundaSerie;
+        internal ComboBox txtDisciplina;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using TestesDonaMariana.Dados.Compartilhado;
+﻿using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
@@ -15,9 +14,14 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         protected TRepositorio3 _repositorio3;
         protected TTabela _tabela;
 
-        protected event Action<TTela> onCarregarArquivosEComandos;
+        protected event Action<TTela, TEntidade> onComandosAdicionaisAddAndEdit;
 
-        protected event Action<TEntidade> onAtualizarItensReferentes;
+        protected event Predicate<TEntidade> onValidarRelacaoExistente;
+
+        public ControladorBase()
+        {
+
+        }
 
         public ControladorBase(TRepositorio _repositorio, TTabela _tabela)
         {
@@ -41,31 +45,20 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         }
 
         public virtual string ToolTipAdicionar => $"Adicionar {typeof(TEntidade).Name}";
-
         public virtual string ToolTipEditar => $"Editar {typeof(TEntidade).Name} existente";
-
         public virtual string ToolTipExcluir => $"Excluir {typeof(TEntidade).Name} existente";
 
         public virtual void Adicionar()
         {
-            TTela tela = new TTela();
+            TTela tela = new();
 
-            if (onCarregarArquivosEComandos != null)
-                onCarregarArquivosEComandos(tela);
-
-            tela.TxtId.Text = _repositorio.Id.ToString();
+            onComandosAdicionaisAddAndEdit?.Invoke(tela, tela.Entidade);
 
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
-            DialogResult opcaoEscolhida = tela.ShowDialog();
+            if (tela.ShowDialog() == DialogResult.OK)
+                _repositorio.Adicionar(tela.Entidade);
 
-            if (opcaoEscolhida == DialogResult.OK)
-            {
-                TEntidade? entidade = tela.Entidade;
-
-                _repositorio.Adicionar(entidade);
-
-            }
             CarregarRegistros();
         }
 
@@ -73,66 +66,65 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
 
-            TTela tela = new TTela();
+            TTela tela = new();
 
-            if (onCarregarArquivosEComandos != null)
-                onCarregarArquivosEComandos(tela);
+            onComandosAdicionaisAddAndEdit?.Invoke(tela, entidade);
 
             tela.Entidade = entidade;
 
             TelaPrincipalForm.AtualizarStatus($"Editando {typeof(TEntidade).Name}");
 
-            DialogResult opcaoEscolhida = tela.ShowDialog();
-
-            if (opcaoEscolhida == DialogResult.OK)
-            {
+            if (tela.ShowDialog() == DialogResult.OK)
                 _repositorio.Editar(tela.Entidade);
 
-            }
             CarregarRegistros();
         }
 
         public virtual void Excluir()
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
-
             TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
 
-            DialogResult opcaoEscolhida = MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (onValidarRelacaoExistente?.Invoke(entidade) ?? false)
+                return;
 
-            if (opcaoEscolhida == DialogResult.Yes)
-            {
+            if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 _repositorio.Excluir(entidade);
 
-                if (onAtualizarItensReferentes != null)
-                    onAtualizarItensReferentes(entidade);
-            }
             CarregarRegistros();
         }
 
         public virtual void Filtrar() { }
 
-        public virtual void AdicionarItens() { }
+        public virtual void MostrarDetalhesTeste() { }
 
-        public virtual void AtualizarStatus() { }
+        public virtual void DuplicarTeste() { }
+
+        public virtual void GerarPdf() { }
 
         public virtual void CarregarRegistros()
         {
-            Stopwatch contador = Stopwatch.StartNew();
             _tabela.AtualizarLista(_repositorio.ObterListaRegistros());
-            contador.Stop();
-            MessageBox.Show((contador.ElapsedMilliseconds/1000).ToString());
         }
 
         public virtual string ObterTipoCadastro()
         {
-            if ((typeof(TEntidade).Name).EndsWith("el"))
-                return $"Cadastro de {typeof(TEntidade).Name.TrimEnd('l').Replace('e', 'é')}is";
+            string nomeEntidade = typeof(TEntidade).Name;
+
+            if (nomeEntidade.EndsWith("ao"))
+            {
+                nomeEntidade = nomeEntidade.Remove(nomeEntidade.Length - 2);
+                return $"Cadastro de {nomeEntidade}ões";
+            }
             else
-                return $"Cadastro de {typeof(TEntidade).Name}s";
+            {
+                return $"Cadastro de {nomeEntidade}s";
+            }
         }
 
         public abstract UserControl ObterListagem();
+
+        public virtual void CarregarDetalhesTeste() { }
     }
 }

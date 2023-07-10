@@ -29,64 +29,68 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            comboBox1 = new ComboBox();
-            lbErroTelefone = new Label();
-            lbErroNome = new Label();
+            txtMateria = new ComboBox();
+            lbErroMateria = new Label();
+            lbErroDisciplina = new Label();
             btnCancelar = new Button();
             btnAdd = new Button();
             lbNome = new Label();
             lbDisciplina = new Label();
-            comboBox2 = new ComboBox();
+            txtDisciplina = new ComboBox();
             label2 = new Label();
-            textBox1 = new TextBox();
-            label3 = new Label();
-            textBox2 = new TextBox();
-            checkedListBox1 = new CheckedListBox();
+            txtEnunciado = new TextBox();
+            lbErroEnunciado = new Label();
+            txtResposta = new TextBox();
+            listAlternativas = new CheckedListBox();
             groupBox1 = new GroupBox();
+            txtId = new TextBox();
+            lbErroAlternativas = new Label();
+            btnAddAlternativa = new Button();
+            btnExcluirAlternativa = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(18, 193);
+            label1.Location = new Point(18, 194);
             label1.Name = "label1";
             label1.Size = new Size(66, 15);
             label1.TabIndex = 70;
             label1.Text = "Enunciado:";
             // 
-            // comboBox1
+            // txtMateria
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(90, 100);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(157, 23);
-            comboBox1.TabIndex = 69;
+            txtMateria.DropDownStyle = ComboBoxStyle.DropDownList;
+            txtMateria.FormattingEnabled = true;
+            txtMateria.Location = new Point(90, 98);
+            txtMateria.Name = "txtMateria";
+            txtMateria.Size = new Size(157, 23);
+            txtMateria.TabIndex = 2;
             // 
-            // lbErroTelefone
+            // lbErroMateria
             // 
-            lbErroTelefone.AutoSize = true;
-            lbErroTelefone.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroTelefone.ForeColor = Color.Red;
-            lbErroTelefone.Location = new Point(90, 84);
-            lbErroTelefone.Name = "lbErroTelefone";
-            lbErroTelefone.Size = new Size(112, 13);
-            lbErroTelefone.TabIndex = 68;
-            lbErroTelefone.Text = "*Campo Obrigatório";
-            lbErroTelefone.Visible = false;
+            lbErroMateria.AutoSize = true;
+            lbErroMateria.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroMateria.ForeColor = Color.Red;
+            lbErroMateria.Location = new Point(90, 82);
+            lbErroMateria.Name = "lbErroMateria";
+            lbErroMateria.Size = new Size(112, 13);
+            lbErroMateria.TabIndex = 68;
+            lbErroMateria.Text = "*Campo Obrigatório";
+            lbErroMateria.Visible = false;
             // 
-            // lbErroNome
+            // lbErroDisciplina
             // 
-            lbErroNome.AutoSize = true;
-            lbErroNome.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroNome.ForeColor = Color.Red;
-            lbErroNome.Location = new Point(90, 42);
-            lbErroNome.Name = "lbErroNome";
-            lbErroNome.Size = new Size(112, 13);
-            lbErroNome.TabIndex = 67;
-            lbErroNome.Text = "*Campo Obrigatório";
-            lbErroNome.Visible = false;
+            lbErroDisciplina.AutoSize = true;
+            lbErroDisciplina.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroDisciplina.ForeColor = Color.Red;
+            lbErroDisciplina.Location = new Point(90, 40);
+            lbErroDisciplina.Name = "lbErroDisciplina";
+            lbErroDisciplina.Size = new Size(112, 13);
+            lbErroDisciplina.TabIndex = 67;
+            lbErroDisciplina.Text = "*Campo Obrigatório";
+            lbErroDisciplina.Visible = false;
             // 
             // btnCancelar
             // 
@@ -95,7 +99,7 @@
             btnCancelar.Location = new Point(360, 590);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(70, 36);
-            btnCancelar.TabIndex = 66;
+            btnCancelar.TabIndex = 9;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
@@ -106,14 +110,15 @@
             btnAdd.Location = new Point(284, 590);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(70, 36);
-            btnAdd.TabIndex = 65;
+            btnAdd.TabIndex = 8;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // lbNome
             // 
             lbNome.AutoSize = true;
-            lbNome.Location = new Point(34, 103);
+            lbNome.Location = new Point(34, 101);
             lbNome.Name = "lbNome";
             lbNome.Size = new Size(50, 15);
             lbNome.TabIndex = 64;
@@ -122,72 +127,76 @@
             // lbDisciplina
             // 
             lbDisciplina.AutoSize = true;
-            lbDisciplina.Location = new Point(23, 61);
+            lbDisciplina.Location = new Point(23, 59);
             lbDisciplina.Name = "lbDisciplina";
             lbDisciplina.Size = new Size(61, 15);
             lbDisciplina.TabIndex = 63;
             lbDisciplina.Text = "Disciplina:";
             // 
-            // comboBox2
+            // txtDisciplina
             // 
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(90, 58);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(121, 23);
-            comboBox2.TabIndex = 73;
+            txtDisciplina.DropDownStyle = ComboBoxStyle.DropDownList;
+            txtDisciplina.FormattingEnabled = true;
+            txtDisciplina.Location = new Point(90, 56);
+            txtDisciplina.Name = "txtDisciplina";
+            txtDisciplina.Size = new Size(157, 23);
+            txtDisciplina.TabIndex = 1;
+            txtDisciplina.SelectedValueChanged += AtualizarComboBoxMateria;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(17, 308);
+            label2.Location = new Point(27, 306);
             label2.Name = "label2";
             label2.Size = new Size(57, 15);
             label2.TabIndex = 74;
             label2.Text = "Resposta:";
             // 
-            // textBox1
+            // txtEnunciado
             // 
-            textBox1.Location = new Point(90, 154);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(321, 99);
-            textBox1.TabIndex = 75;
+            txtEnunciado.Location = new Point(90, 154);
+            txtEnunciado.Multiline = true;
+            txtEnunciado.Name = "txtEnunciado";
+            txtEnunciado.Size = new Size(321, 99);
+            txtEnunciado.TabIndex = 3;
             // 
-            // label3
+            // lbErroEnunciado
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.ForeColor = Color.Red;
-            label3.Location = new Point(90, 138);
-            label3.Name = "label3";
-            label3.Size = new Size(112, 13);
-            label3.TabIndex = 76;
-            label3.Text = "*Campo Obrigatório";
-            label3.Visible = false;
+            lbErroEnunciado.AutoSize = true;
+            lbErroEnunciado.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroEnunciado.ForeColor = Color.Red;
+            lbErroEnunciado.Location = new Point(90, 138);
+            lbErroEnunciado.Name = "lbErroEnunciado";
+            lbErroEnunciado.Size = new Size(112, 13);
+            lbErroEnunciado.TabIndex = 76;
+            lbErroEnunciado.Text = "*Campo Obrigatório";
+            lbErroEnunciado.Visible = false;
             // 
-            // textBox2
+            // txtResposta
             // 
-            textBox2.Location = new Point(90, 283);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(321, 64);
-            textBox2.TabIndex = 77;
+            txtResposta.Location = new Point(90, 284);
+            txtResposta.Multiline = true;
+            txtResposta.Name = "txtResposta";
+            txtResposta.Size = new Size(321, 64);
+            txtResposta.TabIndex = 4;
             // 
-            // checkedListBox1
+            // listAlternativas
             // 
-            checkedListBox1.BackColor = SystemColors.Control;
-            checkedListBox1.BorderStyle = BorderStyle.None;
-            checkedListBox1.Dock = DockStyle.Fill;
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(3, 19);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(372, 153);
-            checkedListBox1.TabIndex = 78;
+            listAlternativas.BackColor = SystemColors.Control;
+            listAlternativas.BorderStyle = BorderStyle.None;
+            listAlternativas.Dock = DockStyle.Fill;
+            listAlternativas.FormattingEnabled = true;
+            listAlternativas.Location = new Point(3, 19);
+            listAlternativas.Name = "listAlternativas";
+            listAlternativas.Size = new Size(372, 153);
+            listAlternativas.TabIndex = 5;
+            listAlternativas.TabStop = false;
+            listAlternativas.UseTabStops = false;
+            listAlternativas.ItemCheck += ApenasUmaAlternativaCheck;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(checkedListBox1);
+            groupBox1.Controls.Add(listAlternativas);
             groupBox1.Location = new Point(33, 385);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(378, 175);
@@ -195,21 +204,67 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Alternativas";
             // 
+            // txtId
+            // 
+            txtId.Location = new Point(303, 30);
+            txtId.Name = "txtId";
+            txtId.ReadOnly = true;
+            txtId.Size = new Size(71, 23);
+            txtId.TabIndex = 81;
+            txtId.Text = "0";
+            txtId.Visible = false;
+            // 
+            // lbErroAlternativas
+            // 
+            lbErroAlternativas.AutoSize = true;
+            lbErroAlternativas.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroAlternativas.ForeColor = Color.Red;
+            lbErroAlternativas.Location = new Point(272, 375);
+            lbErroAlternativas.Name = "lbErroAlternativas";
+            lbErroAlternativas.Size = new Size(138, 13);
+            lbErroAlternativas.TabIndex = 82;
+            lbErroAlternativas.Text = "*Mínimo de 3 alternativas";
+            lbErroAlternativas.Visible = false;
+            // 
+            // btnAddAlternativa
+            // 
+            btnAddAlternativa.Location = new Point(33, 563);
+            btnAddAlternativa.Name = "btnAddAlternativa";
+            btnAddAlternativa.Size = new Size(75, 23);
+            btnAddAlternativa.TabIndex = 6;
+            btnAddAlternativa.Text = "Adicionar";
+            btnAddAlternativa.UseVisualStyleBackColor = true;
+            btnAddAlternativa.Click += AdicionarAlternativa;
+            // 
+            // btnExcluirAlternativa
+            // 
+            btnExcluirAlternativa.Location = new Point(114, 563);
+            btnExcluirAlternativa.Name = "btnExcluirAlternativa";
+            btnExcluirAlternativa.Size = new Size(75, 23);
+            btnExcluirAlternativa.TabIndex = 7;
+            btnExcluirAlternativa.Text = "Excluir";
+            btnExcluirAlternativa.UseVisualStyleBackColor = true;
+            btnExcluirAlternativa.Click += ExcluirAlternativa;
+            // 
             // TelaQuestaoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(442, 638);
+            Controls.Add(btnExcluirAlternativa);
+            Controls.Add(btnAddAlternativa);
+            Controls.Add(lbErroAlternativas);
+            Controls.Add(txtId);
             Controls.Add(groupBox1);
-            Controls.Add(textBox2);
-            Controls.Add(label3);
-            Controls.Add(textBox1);
+            Controls.Add(txtResposta);
+            Controls.Add(lbErroEnunciado);
+            Controls.Add(txtEnunciado);
             Controls.Add(label2);
-            Controls.Add(comboBox2);
+            Controls.Add(txtDisciplina);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
-            Controls.Add(lbErroTelefone);
-            Controls.Add(lbErroNome);
+            Controls.Add(txtMateria);
+            Controls.Add(lbErroMateria);
+            Controls.Add(lbErroDisciplina);
             Controls.Add(btnCancelar);
             Controls.Add(btnAdd);
             Controls.Add(lbNome);
@@ -229,19 +284,23 @@
         #endregion
 
         private Label label1;
-        private ComboBox comboBox1;
-        private Label lbErroTelefone;
-        private Label lbErroNome;
+        private Label lbErroMateria;
+        private Label lbErroDisciplina;
         private Button btnCancelar;
         private Button btnAdd;
         private Label lbNome;
         private Label lbDisciplina;
-        private ComboBox comboBox2;
         private Label label2;
-        private TextBox textBox1;
-        private Label label3;
-        private TextBox textBox2;
-        private CheckedListBox checkedListBox1;
+        private TextBox txtEnunciado;
+        private Label lbErroEnunciado;
+        private TextBox txtResposta;
         private GroupBox groupBox1;
+        internal ComboBox txtMateria;
+        internal ComboBox txtDisciplina;
+        public TextBox txtId;
+        private Label lbErroAlternativas;
+        private Button btnAddAlternativa;
+        private Button btnExcluirAlternativa;
+        internal CheckedListBox listAlternativas;
     }
 }

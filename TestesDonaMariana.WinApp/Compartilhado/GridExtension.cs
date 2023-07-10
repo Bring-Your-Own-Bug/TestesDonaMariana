@@ -8,7 +8,7 @@
 
             for (int i = 0; i < addColumns.Length; i++)
             {
-                DataGridViewTextBoxColumn coluna = new DataGridViewTextBoxColumn()
+                DataGridViewTextBoxColumn coluna = new()
                 {
                     Name = "Column" + i,
                     HeaderText = addColumns[i],
@@ -24,9 +24,9 @@
 
         private static void ConfiguracaoPadrao(DataGridView grid)
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new();
 
             grid.AllowUserToAddRows = false;
             grid.AllowUserToDeleteRows = false;
@@ -41,6 +41,7 @@
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.BackgroundColor = SystemColors.Control;
             grid.MultiSelect = false;
+            grid.RowHeadersVisible = false;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;

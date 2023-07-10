@@ -3,13 +3,25 @@ using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.Dados.Compartilhado
 {
-    public abstract class RepositorioBaseSql<TEntidade> where TEntidade : Entidade<TEntidade>, new()
+    public abstract class RepositorioBaseSql<TEntidade>
+        where TEntidade : Entidade<TEntidade>, new()
     {
-        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True";
+        private const string ENDERECO_BD = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=TestesDonaMarianaDb;Integrated Security=True;";
 
-        private static SqlConnection conectarBd = new(ENDERECO_BD);
+        protected static SqlConnection conectarBd = new(ENDERECO_BD);
 
         protected SqlCommand comandoBd = conectarBd.CreateCommand();
+
+        protected event Action<TEntidade> onComandoDeRelacaoAdd;
+
+        protected event Action<TEntidade> onComandoDeRelacaoEdit;
+
+        protected event Action<List<TEntidade>, SqlDataReader> onComandoDeRelacaoSelect;
+
+        public RepositorioBaseSql()
+        {
+
+        }
 
         protected abstract string AddCommand { get; }
 
@@ -21,84 +33,84 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
         protected abstract string SelectAllCommand { get; }
 
-        public int Id { get; private set; }
+        protected abstract MapeadorBase<TEntidade> Mapear { get; }
 
-        public void Adicionar(TEntidade registro)
+        public virtual void Adicionar(TEntidade registro)
         {
             conectarBd.Open();
 
             comandoBd.CommandText = AddCommand;
 
-            ConfigurarParametros(registro);
+            Mapear.ConfigurarParametros(comandoBd, registro);
 
-            object id = comandoBd.ExecuteScalar();
+            registro.Id = Convert.ToInt32(comandoBd.ExecuteScalar());
 
-            Id = Convert.ToInt32(id) + 1;
-
-            registro.Id = Convert.ToInt32(id);
+            onComandoDeRelacaoAdd?.Invoke(registro);
 
             conectarBd.Close();
         }
 
-        public void Editar(TEntidade novoRegistro)
+        public virtual void Editar(TEntidade novoRegistro)
         {
             conectarBd.Open();
 
             comandoBd.CommandText = EditCommand;
 
-            ConfigurarParametros(novoRegistro);
+            Mapear.ConfigurarParametros(comandoBd, novoRegistro);
 
             comandoBd.Parameters.AddWithValue("ID", novoRegistro.Id);
 
             comandoBd.ExecuteNonQuery();
 
+            onComandoDeRelacaoEdit?.Invoke(novoRegistro);
+
             conectarBd.Close();
         }
 
-        public void Excluir(TEntidade registroSelecionado)
+        public virtual void Excluir(TEntidade registroSelecionado)
         {
             conectarBd.Open();
-
-            comandoBd.CommandText = DeleteCommand;
 
             comandoBd.Parameters.Clear();
 
             comandoBd.Parameters.AddWithValue("ID", registroSelecionado.Id);
+
+            comandoBd.CommandText = DeleteCommand;
 
             comandoBd.ExecuteNonQuery();
 
             conectarBd.Close();
         }
 
-        public List<TEntidade> ObterListaRegistros()
+        public virtual List<TEntidade> ObterListaRegistros()
         {
             conectarBd.Open();
-
-            List<TEntidade> lista = new();
 
             comandoBd.CommandText = SelectAllCommand;
 
             SqlDataReader reader = comandoBd.ExecuteReader();
 
+            List<TEntidade> registros = new();
+
             while (reader.Read())
             {
-                TEntidade entidade = new();
+                TEntidade registro = Mapear.ConverterRegistro(reader);
 
-                ObterPropriedadesEntidade(entidade, reader);
-
-                lista.Add(entidade);
+                registros.Add(registro);
             }
+
+            reader.Close();
+
+            onComandoDeRelacaoSelect?.Invoke(registros, reader);
 
             conectarBd.Close();
 
-            return lista;
+            return registros;
         }
 
-        public TEntidade? SelecionarPorId(int idSelecionado)
+        public virtual TEntidade? SelecionarPorId(int idSelecionado)
         {
             conectarBd.Open();
-
-            TEntidade entidade = new();
 
             comandoBd.CommandText = SelectCommand;
 
@@ -106,18 +118,14 @@ namespace TestesDonaMariana.Dados.Compartilhado
 
             SqlDataReader reader = comandoBd.ExecuteReader();
 
+            TEntidade registro = null;
+
             if (reader.Read())
-            {
-                ObterPropriedadesEntidade(entidade, reader);
-            }
+                registro = Mapear.ConverterRegistro(reader);
 
             conectarBd.Close();
 
-            return entidade;
+            return registro;
         }
-
-        protected abstract void ObterPropriedadesEntidade(TEntidade entidade, SqlDataReader reader);
-
-        protected abstract void ConfigurarParametros(TEntidade registro);
     }
 }

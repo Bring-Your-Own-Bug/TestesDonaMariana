@@ -28,68 +28,79 @@
         /// </summary>
         private void InitializeComponent()
         {
-            comboBox2 = new ComboBox();
-            comboBox1 = new ComboBox();
-            lbErroTelefone = new Label();
-            lbErroNome = new Label();
+            cmbDisciplina = new ComboBox();
+            cmbMateria = new ComboBox();
+            lbErroMateria = new Label();
+            lbErroDisciplina = new Label();
             btnCancelar = new Button();
             btnAdd = new Button();
             lbNome = new Label();
             lbDisciplina = new Label();
-            label1 = new Label();
+            lbErroTitulo = new Label();
             label2 = new Label();
-            txtNome = new TextBox();
+            txtTitulo = new TextBox();
             label3 = new Label();
-            numericUpDown1 = new NumericUpDown();
-            checkBox1 = new CheckBox();
-            listBox1 = new ListBox();
-            button1 = new Button();
+            numQuestao = new NumericUpDown();
+            ckbRecuperacao = new CheckBox();
+            listQuestoes = new ListBox();
+            btnGerarQuestao = new Button();
             groupBox1 = new GroupBox();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            txtId = new TextBox();
+            lbErroQtdQuestoes = new Label();
+            lbErroQuestoes = new Label();
+            lbErroNoQuestoes = new Label();
+            rdSegundaSerie = new RadioButton();
+            rdPrimeiraSerie = new RadioButton();
+            label1 = new Label();
+            plSerie = new Panel();
+            ((System.ComponentModel.ISupportInitialize)numQuestao).BeginInit();
             groupBox1.SuspendLayout();
+            plSerie.SuspendLayout();
             SuspendLayout();
             // 
-            // comboBox2
+            // cmbDisciplina
             // 
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(92, 102);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(157, 23);
-            comboBox2.TabIndex = 88;
+            cmbDisciplina.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbDisciplina.FormattingEnabled = true;
+            cmbDisciplina.Location = new Point(92, 102);
+            cmbDisciplina.Name = "cmbDisciplina";
+            cmbDisciplina.Size = new Size(157, 23);
+            cmbDisciplina.TabIndex = 88;
+            cmbDisciplina.SelectedValueChanged += AtualizarComboBoxMateria;
             // 
-            // comboBox1
+            // cmbMateria
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(92, 144);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(157, 23);
-            comboBox1.TabIndex = 86;
+            cmbMateria.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbMateria.FormattingEnabled = true;
+            cmbMateria.Location = new Point(92, 144);
+            cmbMateria.Name = "cmbMateria";
+            cmbMateria.Size = new Size(157, 23);
+            cmbMateria.TabIndex = 86;
+            cmbMateria.SelectedValueChanged += ResetarLista;
             // 
-            // lbErroTelefone
+            // lbErroMateria
             // 
-            lbErroTelefone.AutoSize = true;
-            lbErroTelefone.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroTelefone.ForeColor = Color.Red;
-            lbErroTelefone.Location = new Point(92, 128);
-            lbErroTelefone.Name = "lbErroTelefone";
-            lbErroTelefone.Size = new Size(112, 13);
-            lbErroTelefone.TabIndex = 85;
-            lbErroTelefone.Text = "*Campo Obrigatório";
-            lbErroTelefone.Visible = false;
+            lbErroMateria.AutoSize = true;
+            lbErroMateria.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroMateria.ForeColor = Color.Red;
+            lbErroMateria.Location = new Point(92, 128);
+            lbErroMateria.Name = "lbErroMateria";
+            lbErroMateria.Size = new Size(112, 13);
+            lbErroMateria.TabIndex = 85;
+            lbErroMateria.Text = "*Campo Obrigatório";
+            lbErroMateria.Visible = false;
             // 
-            // lbErroNome
+            // lbErroDisciplina
             // 
-            lbErroNome.AutoSize = true;
-            lbErroNome.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            lbErroNome.ForeColor = Color.Red;
-            lbErroNome.Location = new Point(92, 86);
-            lbErroNome.Name = "lbErroNome";
-            lbErroNome.Size = new Size(112, 13);
-            lbErroNome.TabIndex = 84;
-            lbErroNome.Text = "*Campo Obrigatório";
-            lbErroNome.Visible = false;
+            lbErroDisciplina.AutoSize = true;
+            lbErroDisciplina.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroDisciplina.ForeColor = Color.Red;
+            lbErroDisciplina.Location = new Point(92, 86);
+            lbErroDisciplina.Name = "lbErroDisciplina";
+            lbErroDisciplina.Size = new Size(112, 13);
+            lbErroDisciplina.TabIndex = 84;
+            lbErroDisciplina.Text = "*Campo Obrigatório";
+            lbErroDisciplina.Visible = false;
             // 
             // btnCancelar
             // 
@@ -112,6 +123,7 @@
             btnAdd.TabIndex = 82;
             btnAdd.Text = "Adicionar";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // lbNome
             // 
@@ -131,17 +143,17 @@
             lbDisciplina.TabIndex = 80;
             lbDisciplina.Text = "Disciplina:";
             // 
-            // label1
+            // lbErroTitulo
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.ForeColor = Color.Red;
-            label1.Location = new Point(92, 44);
-            label1.Name = "label1";
-            label1.Size = new Size(112, 13);
-            label1.TabIndex = 91;
-            label1.Text = "*Campo Obrigatório";
-            label1.Visible = false;
+            lbErroTitulo.AutoSize = true;
+            lbErroTitulo.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroTitulo.ForeColor = Color.Red;
+            lbErroTitulo.Location = new Point(92, 44);
+            lbErroTitulo.Name = "lbErroTitulo";
+            lbErroTitulo.Size = new Size(112, 13);
+            lbErroTitulo.TabIndex = 91;
+            lbErroTitulo.Text = "*Campo Obrigatório";
+            lbErroTitulo.Visible = false;
             // 
             // label2
             // 
@@ -152,13 +164,13 @@
             label2.TabIndex = 90;
             label2.Text = "Título:";
             // 
-            // txtNome
+            // txtTitulo
             // 
-            txtNome.BackColor = SystemColors.Window;
-            txtNome.Location = new Point(92, 60);
-            txtNome.Name = "txtNome";
-            txtNome.Size = new Size(323, 23);
-            txtNome.TabIndex = 89;
+            txtTitulo.BackColor = SystemColors.Window;
+            txtTitulo.Location = new Point(92, 60);
+            txtTitulo.Name = "txtTitulo";
+            txtTitulo.Size = new Size(323, 23);
+            txtTitulo.TabIndex = 89;
             // 
             // label3
             // 
@@ -169,45 +181,48 @@
             label3.TabIndex = 92;
             label3.Text = "Qtd. Questões:";
             // 
-            // numericUpDown1
+            // numQuestao
             // 
-            numericUpDown1.Location = new Point(369, 102);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(46, 23);
-            numericUpDown1.TabIndex = 93;
+            numQuestao.Location = new Point(369, 102);
+            numQuestao.Name = "numQuestao";
+            numQuestao.Size = new Size(46, 23);
+            numQuestao.TabIndex = 93;
+            numQuestao.ValueChanged += ResetarLista;
             // 
-            // checkBox1
+            // ckbRecuperacao
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(278, 146);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(143, 19);
-            checkBox1.TabIndex = 94;
-            checkBox1.Text = "Prova de Recuperação";
-            checkBox1.UseVisualStyleBackColor = true;
+            ckbRecuperacao.AutoSize = true;
+            ckbRecuperacao.Location = new Point(278, 146);
+            ckbRecuperacao.Name = "ckbRecuperacao";
+            ckbRecuperacao.Size = new Size(143, 19);
+            ckbRecuperacao.TabIndex = 94;
+            ckbRecuperacao.Text = "Prova de Recuperação";
+            ckbRecuperacao.UseVisualStyleBackColor = true;
+            ckbRecuperacao.CheckedChanged += HabilitarEDesabilitarMateria;
             // 
-            // listBox1
+            // listQuestoes
             // 
-            listBox1.Dock = DockStyle.Fill;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(3, 19);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(397, 185);
-            listBox1.TabIndex = 95;
+            listQuestoes.Dock = DockStyle.Fill;
+            listQuestoes.FormattingEnabled = true;
+            listQuestoes.ItemHeight = 15;
+            listQuestoes.Location = new Point(3, 19);
+            listQuestoes.Name = "listQuestoes";
+            listQuestoes.Size = new Size(397, 185);
+            listQuestoes.TabIndex = 95;
             // 
-            // button1
+            // btnGerarQuestao
             // 
-            button1.Location = new Point(301, 201);
-            button1.Name = "button1";
-            button1.Size = new Size(123, 30);
-            button1.TabIndex = 96;
-            button1.Text = "Gerar Questões";
-            button1.UseVisualStyleBackColor = true;
+            btnGerarQuestao.Location = new Point(301, 201);
+            btnGerarQuestao.Name = "btnGerarQuestao";
+            btnGerarQuestao.Size = new Size(123, 30);
+            btnGerarQuestao.TabIndex = 96;
+            btnGerarQuestao.Text = "Gerar Questões";
+            btnGerarQuestao.UseVisualStyleBackColor = true;
+            btnGerarQuestao.Click += GerarQuestoes;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(listBox1);
+            groupBox1.Controls.Add(listQuestoes);
             groupBox1.Location = new Point(24, 228);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(403, 207);
@@ -215,24 +230,120 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Questões";
             // 
+            // txtId
+            // 
+            txtId.Enabled = false;
+            txtId.Location = new Point(92, 12);
+            txtId.Name = "txtId";
+            txtId.ReadOnly = true;
+            txtId.Size = new Size(100, 23);
+            txtId.TabIndex = 99;
+            txtId.Text = "0";
+            txtId.Visible = false;
+            // 
+            // lbErroQtdQuestoes
+            // 
+            lbErroQtdQuestoes.AutoSize = true;
+            lbErroQtdQuestoes.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroQtdQuestoes.ForeColor = Color.Red;
+            lbErroQtdQuestoes.Location = new Point(278, 86);
+            lbErroQtdQuestoes.Name = "lbErroQtdQuestoes";
+            lbErroQtdQuestoes.Size = new Size(155, 13);
+            lbErroQtdQuestoes.TabIndex = 100;
+            lbErroQtdQuestoes.Text = "*Limite de questões atingido";
+            lbErroQtdQuestoes.Visible = false;
+            // 
+            // lbErroQuestoes
+            // 
+            lbErroQuestoes.AutoSize = true;
+            lbErroQuestoes.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroQuestoes.ForeColor = Color.Red;
+            lbErroQuestoes.Location = new Point(24, 212);
+            lbErroQuestoes.Name = "lbErroQuestoes";
+            lbErroQuestoes.Size = new Size(202, 13);
+            lbErroQuestoes.TabIndex = 101;
+            lbErroQuestoes.Text = "*Deve ser gerado ao menos 1 questão";
+            lbErroQuestoes.Visible = false;
+            // 
+            // lbErroNoQuestoes
+            // 
+            lbErroNoQuestoes.AutoSize = true;
+            lbErroNoQuestoes.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            lbErroNoQuestoes.ForeColor = Color.Red;
+            lbErroNoQuestoes.Location = new Point(27, 438);
+            lbErroNoQuestoes.Name = "lbErroNoQuestoes";
+            lbErroNoQuestoes.Size = new Size(99, 13);
+            lbErroNoQuestoes.TabIndex = 102;
+            lbErroNoQuestoes.Text = "*Não há questões";
+            lbErroNoQuestoes.Visible = false;
+            // 
+            // rdSegundaSerie
+            // 
+            rdSegundaSerie.AutoSize = true;
+            rdSegundaSerie.Location = new Point(91, 8);
+            rdSegundaSerie.Name = "rdSegundaSerie";
+            rdSegundaSerie.Size = new Size(36, 19);
+            rdSegundaSerie.TabIndex = 104;
+            rdSegundaSerie.TabStop = true;
+            rdSegundaSerie.Text = "2ª";
+            rdSegundaSerie.UseVisualStyleBackColor = true;
+            // 
+            // rdPrimeiraSerie
+            // 
+            rdPrimeiraSerie.AutoSize = true;
+            rdPrimeiraSerie.Checked = true;
+            rdPrimeiraSerie.Location = new Point(49, 8);
+            rdPrimeiraSerie.Name = "rdPrimeiraSerie";
+            rdPrimeiraSerie.Size = new Size(36, 19);
+            rdPrimeiraSerie.TabIndex = 103;
+            rdPrimeiraSerie.TabStop = true;
+            rdPrimeiraSerie.Text = "1ª";
+            rdPrimeiraSerie.UseVisualStyleBackColor = true;
+            rdPrimeiraSerie.CheckedChanged += ResetarLista;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(8, 8);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 15);
+            label1.TabIndex = 105;
+            label1.Text = "Série:";
+            // 
+            // plSerie
+            // 
+            plSerie.Controls.Add(rdSegundaSerie);
+            plSerie.Controls.Add(label1);
+            plSerie.Controls.Add(rdPrimeiraSerie);
+            plSerie.Enabled = false;
+            plSerie.Location = new Point(43, 173);
+            plSerie.Name = "plSerie";
+            plSerie.Size = new Size(132, 34);
+            plSerie.TabIndex = 106;
+            // 
             // TelaTesteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(451, 525);
-            Controls.Add(button1);
+            Controls.Add(plSerie);
+            Controls.Add(lbErroNoQuestoes);
+            Controls.Add(lbErroQuestoes);
+            Controls.Add(lbErroQtdQuestoes);
+            Controls.Add(txtId);
+            Controls.Add(btnGerarQuestao);
             Controls.Add(groupBox1);
-            Controls.Add(checkBox1);
-            Controls.Add(numericUpDown1);
+            Controls.Add(ckbRecuperacao);
+            Controls.Add(numQuestao);
             Controls.Add(label3);
-            Controls.Add(label1);
+            Controls.Add(lbErroTitulo);
             Controls.Add(label2);
-            Controls.Add(txtNome);
-            Controls.Add(comboBox2);
-            Controls.Add(comboBox1);
-            Controls.Add(lbErroTelefone);
-            Controls.Add(lbErroNome);
+            Controls.Add(txtTitulo);
+            Controls.Add(cmbDisciplina);
+            Controls.Add(cmbMateria);
+            Controls.Add(lbErroMateria);
+            Controls.Add(lbErroDisciplina);
             Controls.Add(btnCancelar);
             Controls.Add(btnAdd);
             Controls.Add(lbNome);
@@ -244,30 +355,40 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Gerador de Testes";
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            Shown += TelaTesteForm_Shown;
+            ((System.ComponentModel.ISupportInitialize)numQuestao).EndInit();
             groupBox1.ResumeLayout(false);
+            plSerie.ResumeLayout(false);
+            plSerie.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
-        private Label lbErroTelefone;
-        private Label lbErroNome;
+        private Label lbErroMateria;
+        private Label lbErroDisciplina;
         private Button btnCancelar;
         private Button btnAdd;
         private Label lbNome;
         private Label lbDisciplina;
-        private Label label1;
+        private Label lbErroTitulo;
         private Label label2;
-        private TextBox txtNome;
+        private TextBox txtTitulo;
         private Label label3;
-        private NumericUpDown numericUpDown1;
-        private CheckBox checkBox1;
-        private ListBox listBox1;
-        private Button button1;
+        private NumericUpDown numQuestao;
+        private ListBox listQuestoes;
+        private Button btnGerarQuestao;
         private GroupBox groupBox1;
+        private TextBox txtId;
+        public ComboBox cmbDisciplina;
+        public ComboBox cmbMateria;
+        public CheckBox ckbRecuperacao;
+        private Label lbErroQtdQuestoes;
+        private Label lbErroQuestoes;
+        private Label lbErroNoQuestoes;
+        private RadioButton rdSegundaSerie;
+        private RadioButton rdPrimeiraSerie;
+        private Label label1;
+        private Panel plSerie;
     }
 }

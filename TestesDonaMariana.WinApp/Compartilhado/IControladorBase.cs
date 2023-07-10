@@ -16,13 +16,17 @@
 
         public abstract void Filtrar();
 
-        public abstract void AdicionarItens();
+        public abstract void MostrarDetalhesTeste();
 
-        public abstract void AtualizarStatus();
+        public abstract void DuplicarTeste();
+
+        public abstract void GerarPdf();
 
         public abstract void CarregarRegistros();
 
         public abstract string ObterTipoCadastro();
+
+        public abstract void CarregarDetalhesTeste();
 
         public UserControl ObterListagem();
     }

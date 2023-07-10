@@ -1,28 +1,221 @@
 ﻿using Microsoft.Data.SqlClient;
+using TestesDonaMariana.Dados.ModuloQuestao;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dados.ModuloTeste
 {
     public class RepositorioTeste : RepositorioBaseSql<Teste>
     {
-        protected override string AddCommand => throw new NotImplementedException();
-
-        protected override string EditCommand => throw new NotImplementedException();
-
-        protected override string DeleteCommand => throw new NotImplementedException();
-
-        protected override string SelectCommand => throw new NotImplementedException();
-
-        protected override string SelectAllCommand => throw new NotImplementedException();
-
-        protected override void ConfigurarParametros(Teste registro)
+        public RepositorioTeste()
         {
-            throw new NotImplementedException();
+            onComandoDeRelacaoAdd += AdicionarQuestoes;
+            onComandoDeRelacaoEdit += EditarQuestoes;
+            onComandoDeRelacaoSelect += ObterQuestoes;
+        }
+        protected override string AddCommand => @"INSERT INTO [dbo].[TBTESTE]
+                                                           (
+                                                                [TITULO]
+                                                               ,[NUMERODEQUESTOES]
+                                                               ,[DISCIPLINA_ID]
+                                                               ,[MATERIA_ID]
+                                                               ,[DATAGERACAO]
+                                                               ,[RECUPERACAO]
+                                                               ,[SERIE]
+                                                           )
+                                                     VALUES
+                                                           (
+                                                                 @TITULO
+                                                                ,@NUMERODEQUESTOES
+                                                                ,@DISCIPLINA_ID
+                                                                ,@MATERIA_ID
+                                                                ,@DATAGERACAO
+                                                                ,@RECUPERACAO
+                                                                ,@SERIE
+                                                           )
+                                                           SELECT SCOPE_IDENTITY();";
+
+        protected override string EditCommand => @"UPDATE [dbo].[TBTESTE]
+
+                                                  SET [TITULO] =             @TITULO
+                                                     ,[NUMERODEQUESTOES] =   @NUMERODEQUESTOES                                                  
+                                                     ,[DISCIPLINA_ID] =      @DISCIPLINA_ID
+                                                     ,[MATERIA_ID] =         @MATERIA_ID
+                                                     ,[DATAGERACAO] =        @DATAGERACAO
+                                                     ,[RECUPERACAO] =        @RECUPERACAO
+                                                     ,[SERIE] =              @SERIE
+
+                                                WHERE[ID] = @ID";
+
+        protected override string DeleteCommand => @"DELETE FROM [dbo].[TBTESTE_TBQUESTAO]
+                                                    WHERE [TESTE_ID] =                         @ID
+                                                    DELETE FROM [dbo].[TBTESTE]
+													WHERE [ID] =                               @ID";
+
+        protected override string SelectCommand => @"SELECT    T.[ID]                   TESTE_ID
+                                                              ,T.[TITULO]               TESTE_TITULO
+                                                              ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
+                                                              ,T.[MATERIA_ID]           TESTE_MATERIA_ID
+                                                              ,T.[DATAGERACAO]          TESTE_DATAGERACAO
+                                                              ,T.[RECUPERACAO]          TESTE_RECUPERACAO
+                                                              ,T.[SERIE]                TESTE_SERIE
+
+                                                              ,D.[ID]                   DISCIPLINA_ID
+                                                              ,D.[NOME]                 DISCIPLINA_NOME
+
+                                                              ,M.[ID]                   MATERIA_ID
+                                                              ,M.[NOME]                 MATERIA_NOME
+                                                              ,M.[DISCIPLINA_ID]        MATERIA_DISCIPLINA_ID
+                                                              ,M.[SERIE]                MATERIA_SERIE
+
+                                                          FROM [dbo].[TBTESTE] AS T
+
+                                                          INNER JOIN [dbo].[TBDISCIPLINA] AS D
+                                                          ON T.DISCIPLINA_ID =          D.ID
+
+                                                          INNER JOIN [dbo].[TBMATERIA] AS M
+                                                          ON T.MATERIA_ID =          M.ID
+
+                                                          WHERE [ID] =                   @ID";
+
+        protected override string SelectAllCommand => @"SELECT        T.[ID]                   TESTE_ID
+                                                                     ,T.[TITULO]               TESTE_TITULO
+                                                                     ,T.[NUMERODEQUESTOES]     TESTE_NUMEROQUESTOES 
+                                                                     ,T.[DISCIPLINA_ID]        TESTE_DISCIPLINA_ID
+                                                                     ,T.[MATERIA_ID]           TESTE_MATERIA_ID
+                                                                     ,T.[DATAGERACAO]          TESTE_DATAGERACAO
+                                                                     ,T.[RECUPERACAO]          TESTE_RECUPERACAO
+                                                                     ,T.[SERIE]                TESTE_SERIE
+
+                                                                     ,D.[ID]                   DISCIPLINA_ID
+                                                                     ,D.[NOME]                 DISCIPLINA_NOME
+
+                                                                     ,M.[ID]                   MATERIA_ID
+                                                                     ,M.[NOME]                 MATERIA_NOME
+                                                                     ,M.[DISCIPLINA_ID]        MATERIA_DISCIPLINA_ID
+                                                                     ,M.[SERIE]                MATERIA_SERIE
+                                                                     
+                                                                     FROM [dbo].[TBTESTE] AS T
+
+                                                                     INNER JOIN [dbo].[TBDISCIPLINA] AS D
+                                                                     ON T.DISCIPLINA_ID =          D.ID
+            
+                                                                     LEFT JOIN [dbo].[TBMATERIA] AS M
+                                                                     ON T.MATERIA_ID =          M.ID";
+
+        protected string AddQuestoes => @"INSERT INTO [dbo].[TBTESTE_TBQUESTAO]
+                                                   (
+                                                        [TESTE_ID]
+                                                       ,[QUESTAO_ID]
+                                                   )
+                                             VALUES
+                                                   (
+                                                        @TESTE_ID
+                                                       ,@QUESTAO_ID
+                                                   )";
+
+        protected string EditQuestoes => @"UPDATE [dbo].[TBTESTE_TBQUESTAO]
+
+                                                   SET [TESTE_ID] =         @TESTE_ID
+                                                      ,[QUESTAO_ID] =       @QUESTAO_ID
+
+                                                 WHERE
+                                                        TESTE_ID =          @ID";
+
+        protected string DeleteQuestoes => @"DELETE FROM [dbo].[TBTESTE_TBQUESTAO]
+                                                    WHERE TESTE_ID =        @ID";
+
+        protected string SelectQuestoes => @"SELECT        
+                                                     TQ.[TESTE_ID]
+                                                    ,TQ.[QUESTAO_ID]
+
+                                                    ,Q.[ID]                     QUESTAO_ID
+                                                    ,Q.[MATERIA_ID]             QUESTAO_MATERIA_ID
+                                                    ,Q.[ENUNCIADO]              QUESTAO_ENUNCIADO
+                                                    ,Q.[ALTERNATIVACORRETA]     QUESTAO_ALTERNATIVACORRETA
+
+                                                    ,M.[ID]                     MATERIA_ID
+                                                    ,M.[NOME]                   MATERIA_NOME
+                                                    ,M.[DISCIPLINA_ID]          MATERIA_DISCIPLINA_ID
+                                                    ,M.[SERIE]                  MATERIA_SERIE
+
+                                                    ,D.[ID]                     DISCIPLINA_ID
+                                                    ,D.[NOME]                   DISCIPLINA_NOME
+
+                                            FROM [dbo].[TBTESTE_TBQUESTAO] AS TQ
+
+                                            INNER JOIN [dbo].[TBQUESTAO] AS Q
+                                            ON TQ.[QUESTAO_ID] =                Q.[ID]
+
+                                            INNER JOIN [dbo].[TBMATERIA] AS M
+                                            ON Q.[MATERIA_ID] =                 M.[ID]
+
+                                            INNER JOIN [dbo].[TBDISCIPLINA] AS D
+                                            ON M.[DISCIPLINA_ID] =              D.[ID]
+
+                                            WHERE [TESTE_ID] =                  @ID";
+
+        private void AdicionarQuestoes(Teste teste)
+        {
+            comandoBd.CommandText = AddQuestoes;
+
+            for (int i = 0; i < teste.ListaQuestoes.Count; i++)
+            {
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("TESTE_ID", teste.Id);
+                comandoBd.Parameters.AddWithValue("QUESTAO_ID", teste.ListaQuestoes[i].Id);
+
+                comandoBd.ExecuteNonQuery();
+            }
         }
 
-        protected override void ObterPropriedadesEntidade(Teste entidade, SqlDataReader reader)
+        private void EditarQuestoes(Teste teste)
         {
-            throw new NotImplementedException();
+            comandoBd.CommandText = DeleteQuestoes;
+
+            comandoBd.Parameters.Clear();
+            comandoBd.Parameters.AddWithValue("ID", teste.Id);
+            comandoBd.ExecuteNonQuery();
+
+            comandoBd.CommandText = AddQuestoes;
+
+            for (int i = 0; i < teste.ListaQuestoes.Count; i++)
+            {
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("TESTE_ID", teste.Id);
+                comandoBd.Parameters.AddWithValue("QUESTAO_ID", teste.ListaQuestoes[i].Id);
+
+                comandoBd.ExecuteNonQuery();
+            }
         }
+
+        private void ObterQuestoes(List<Teste> testes, SqlDataReader reader)
+        {
+            comandoBd.CommandText = SelectQuestoes;
+
+            foreach (Teste teste in testes)
+            {
+                comandoBd.Parameters.Clear();
+                comandoBd.Parameters.AddWithValue("ID", teste.Id);
+
+                reader = comandoBd.ExecuteReader();
+
+                List<Questao> questoes = new();
+
+                while (reader.Read())
+                {
+                    Questao questao = new MapeadorQuestao().ConverterRegistro(reader);
+                    questoes.Add(questao);
+                }
+
+                new RepositorioQuestao().ObterAlternativas(questoes, reader);
+
+                teste.ListaQuestoes = questoes;
+
+                reader.Close();
+            }
+        }
+
+        protected override MapeadorBase<Teste> Mapear => new MapeadorTeste();
     }
 }
