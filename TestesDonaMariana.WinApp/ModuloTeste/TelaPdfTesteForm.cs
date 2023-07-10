@@ -73,8 +73,17 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 document.Add(question);
                 numeroQuestao++;
 
-                Paragraph alternativaParagraph = new($"Resposta correta: {questao.AlternativaCorreta}");
-                document.Add(alternativaParagraph);
+                for (int i = 0; i < questao.Alternativas.Count; i++)
+                {
+                    string alternativa = questao.Alternativas[i];
+                    Paragraph alternativaParagraph = new(alternativa);
+                    document.Add(alternativaParagraph);
+                }
+
+                Paragraph respostaCorreta = new();
+                respostaCorreta.Add(new Text($"\nAlternativa Correta: "));
+                respostaCorreta.Add(new Text($"{questao.AlternativaCorreta.Substring(0, 2)}").SetBold());
+                document.Add(respostaCorreta);
             }
 
             document.Close();
