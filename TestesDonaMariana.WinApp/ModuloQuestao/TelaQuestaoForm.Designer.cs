@@ -141,7 +141,7 @@
             txtDisciplina.Name = "txtDisciplina";
             txtDisciplina.Size = new Size(157, 23);
             txtDisciplina.TabIndex = 1;
-            txtDisciplina.SelectedValueChanged += txtDisciplina_SelectedValueChanged;
+            txtDisciplina.SelectedValueChanged += AtualizarComboBoxMateria;
             // 
             // label2
             // 
@@ -190,7 +190,7 @@
             listAlternativas.Name = "listAlternativas";
             listAlternativas.Size = new Size(372, 153);
             listAlternativas.TabIndex = 5;
-            listAlternativas.ItemCheck += listAlternativas_ItemCheck;
+            listAlternativas.ItemCheck += ApenasUmaAlternativaCheck;
             // 
             // groupBox1
             // 
@@ -209,7 +209,6 @@
             txtId.ReadOnly = true;
             txtId.Size = new Size(71, 23);
             txtId.TabIndex = 81;
-            txtId.TabStop = false;
             txtId.Text = "0";
             txtId.Visible = false;
             // 
@@ -233,7 +232,7 @@
             btnAddAlternativa.TabIndex = 6;
             btnAddAlternativa.Text = "Adicionar";
             btnAddAlternativa.UseVisualStyleBackColor = true;
-            btnAddAlternativa.Click += btnAddAlternativa_Click;
+            btnAddAlternativa.Click += AdicionarAlternativa;
             // 
             // btnExcluirAlternativa
             // 
@@ -243,7 +242,7 @@
             btnExcluirAlternativa.TabIndex = 7;
             btnExcluirAlternativa.Text = "Excluir";
             btnExcluirAlternativa.UseVisualStyleBackColor = true;
-            btnExcluirAlternativa.Click += btnExcluirAlternativa_Click;
+            btnExcluirAlternativa.Click += ExcluirAlternativa;
             // 
             // TelaQuestaoForm
             // 

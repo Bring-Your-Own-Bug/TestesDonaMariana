@@ -203,6 +203,8 @@ namespace TestesDonaMariana.Dados.ModuloTeste
                     questoes.Add(questao);
                 }
 
+                new RepositorioQuestao().ObterAlternativas(questoes, reader);
+
                 teste.ListaQuestoes = questoes;
 
                 reader.Close();

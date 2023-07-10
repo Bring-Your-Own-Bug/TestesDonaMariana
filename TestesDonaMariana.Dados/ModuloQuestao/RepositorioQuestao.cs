@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.Data;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Dados.ModuloQuestao
@@ -146,8 +147,11 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
             }
         }
 
-        private void ObterAlternativas(List<Questao> questoes, SqlDataReader reader)
+        internal void ObterAlternativas(List<Questao> questoes, SqlDataReader reader)
         {
+            if (comandoBd.Connection.State == ConnectionState.Closed)
+                comandoBd.Connection.Open();
+
             comandoBd.CommandText = SelectAlternativas;
 
             foreach (Questao questao in questoes)
@@ -169,6 +173,9 @@ namespace TestesDonaMariana.Dados.ModuloQuestao
 
                 reader.Close();
             }
+
+            if (comandoBd.Connection.State == ConnectionState.Open)
+                comandoBd.Connection.Close();
         }
 
         protected override MapeadorBase<Questao> Mapear => new MapeadorQuestao();

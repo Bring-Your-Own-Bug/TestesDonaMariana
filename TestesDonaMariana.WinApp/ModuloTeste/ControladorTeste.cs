@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dados.ModuloDisciplina;
+﻿using Microsoft.Data.SqlClient;
+using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
@@ -79,10 +80,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             TelaPrincipalForm.AtualizarStatus($"Gerando PDF do Teste \"{teste.Titulo}\"");
 
-            if(tela.ShowDialog() == DialogResult.OK) { }
+            tela.ShowDialog();
 
             CarregarRegistros();
-
         }
 
         public static List<Teste>? ObterListaTeste()

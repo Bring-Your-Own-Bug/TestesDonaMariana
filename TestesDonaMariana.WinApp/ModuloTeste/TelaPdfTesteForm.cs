@@ -33,7 +33,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             set { txtTitulo.Text = value.Titulo; }
         }
 
-        private void btnLocalizar_Click(object sender, EventArgs e)
+        private void SelecionarLocalizacao(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new();
 
@@ -52,13 +52,16 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 return;
             }
 
-            GerarTeste();
+            GerarTestePdf();
 
             if (ckbGabarito.Checked)
-                GerarGabarito();
+                GerarGabaritoPdf();
+
+            MessageBox.Show($"PDF Gerado com Sucesso!",
+                    "Gerar PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void GerarGabarito()
+        private void GerarGabaritoPdf()
         {
             PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Titulo + " - Gabarito.pdf");
             PdfDocument pdf = new(writer);
@@ -100,7 +103,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
-            foreach (Questao questao in ListaQuestoes)
+            foreach (Questao questao in _teste.ListaQuestoes)
             {
                 Paragraph question = new($"\n{questao.Enunciado}");
                 document.Add(question);
@@ -112,7 +115,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Close();
         }
 
-        private void GerarTeste()
+        private void GerarTestePdf()
         {
             PdfWriter writer = new(txtDiretorio.Text + "/" + _teste.Titulo + ".pdf");
             PdfDocument pdf = new(writer);
@@ -156,7 +159,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             char letra = 'a';
 
-            foreach (Questao questao in ListaQuestoes)
+            foreach (Questao questao in _teste.ListaQuestoes)
             {
                 Paragraph question = new($"\n{questao.Enunciado}");
                 document.Add(question);

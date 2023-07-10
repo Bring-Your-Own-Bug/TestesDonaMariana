@@ -132,7 +132,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 _isValid = true;
         }
 
-        private void btnGerarQuestao_Click(object sender, EventArgs e)
+        private void GerarQuestoes(object sender, EventArgs e)
         {
             ValidarCampos(sender, e);
 
@@ -208,7 +208,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             else cmbMateria.Enabled = true;
         }
 
-        private void CarregarMateriasDisciplina(object sender, EventArgs e)
+        private void AtualizarComboBoxMateria(object sender, EventArgs e)
         {
             LimparListas();
 
@@ -233,15 +233,15 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             LimparListas();
         }
 
-        private static bool ValidarSeExisteQuestaoParaGerar(int qtdQuestoesLista)
-        {
-            return qtdQuestoesLista == 0;
-        }
-
         private void LimparListas()
         {
             _listaQuestoesSorteadas.Clear();
             listQuestoes.Items.Clear();
+        }
+
+        private static bool ValidarSeExisteQuestaoParaGerar(int qtdQuestoesLista)
+        {
+            return qtdQuestoesLista == 0;
         }
 
         private bool ValidarQtdQuestoes(int count)

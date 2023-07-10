@@ -92,7 +92,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 _isValid = true;
         }
 
-        private void btnAddAlternativa_Click(object sender, EventArgs e)
+        private void AdicionarAlternativa(object sender, EventArgs e)
         {
             ValidarCampos(sender, e);
 
@@ -119,7 +119,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             txtResposta.Focus();
         }
 
-        private void btnExcluirAlternativa_Click(object sender, EventArgs e)
+        private void ExcluirAlternativa(object sender, EventArgs e)
         {
             ValidarCampos(sender, e);
 
@@ -127,7 +127,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 listAlternativas.Items.RemoveAt(listAlternativas.SelectedIndex);
         }
 
-        private void listAlternativas_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void ApenasUmaAlternativaCheck(object sender, ItemCheckEventArgs e)
         {
             foreach (int index in listAlternativas.CheckedIndices)
             {
@@ -136,7 +136,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             }
         }
 
-        private void txtDisciplina_SelectedValueChanged(object sender, EventArgs e)
+        private void AtualizarComboBoxMateria(object sender, EventArgs e)
         {
             if (ListaMateria.Count == 0)
                 ListaMateria = (List<Materia>)txtMateria.DataSource;

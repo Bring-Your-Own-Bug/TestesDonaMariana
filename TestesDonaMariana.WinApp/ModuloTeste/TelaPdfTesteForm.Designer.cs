@@ -60,7 +60,7 @@
             btnLocalizar.TabIndex = 76;
             btnLocalizar.Text = "Localizar...";
             btnLocalizar.UseVisualStyleBackColor = true;
-            btnLocalizar.Click += btnLocalizar_Click;
+            btnLocalizar.Click += SelecionarLocalizacao;
             // 
             // txtDiretorio
             // 

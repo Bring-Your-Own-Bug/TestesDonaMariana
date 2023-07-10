@@ -61,7 +61,7 @@
             cmbDisciplina.Name = "cmbDisciplina";
             cmbDisciplina.Size = new Size(157, 23);
             cmbDisciplina.TabIndex = 88;
-            cmbDisciplina.SelectedValueChanged += CarregarMateriasDisciplina;
+            cmbDisciplina.SelectedValueChanged += AtualizarComboBoxMateria;
             // 
             // cmbMateria
             // 
@@ -213,7 +213,7 @@
             btnGerarQuestao.TabIndex = 96;
             btnGerarQuestao.Text = "Gerar Questões";
             btnGerarQuestao.UseVisualStyleBackColor = true;
-            btnGerarQuestao.Click += btnGerarQuestao_Click;
+            btnGerarQuestao.Click += GerarQuestoes;
             // 
             // groupBox1
             // 
