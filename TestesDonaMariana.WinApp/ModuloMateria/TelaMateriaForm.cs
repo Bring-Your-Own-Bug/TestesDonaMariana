@@ -70,7 +70,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
             }
-            else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
+            else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase) && _materia.Serie == serie) { }
             else if (ValidadorMateria.ValidarNomeExistente(txtNome.Text, serie, ListaMateria))
             {
                 lbErroNome.Visible = true;
