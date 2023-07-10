@@ -38,10 +38,6 @@
             btnGerarPdf = new Button();
             lbErroTitulo = new Label();
             lbErroDiretorio = new Label();
-            rdbSim = new RadioButton();
-            rdbNao = new RadioButton();
-            gboxDuplicar = new GroupBox();
-            gboxDuplicar.SuspendLayout();
             SuspendLayout();
             // 
             // ckbGabarito
@@ -145,46 +141,11 @@
             lbErroDiretorio.Text = "*Campo Obrigatório";
             lbErroDiretorio.Visible = false;
             // 
-            // rdbSim
-            // 
-            rdbSim.AutoSize = true;
-            rdbSim.Location = new Point(24, 32);
-            rdbSim.Name = "rdbSim";
-            rdbSim.Size = new Size(45, 19);
-            rdbSim.TabIndex = 94;
-            rdbSim.TabStop = true;
-            rdbSim.Text = "Sim";
-            rdbSim.UseVisualStyleBackColor = true;
-            // 
-            // rdbNao
-            // 
-            rdbNao.AutoSize = true;
-            rdbNao.Location = new Point(98, 32);
-            rdbNao.Name = "rdbNao";
-            rdbNao.Size = new Size(47, 19);
-            rdbNao.TabIndex = 95;
-            rdbNao.TabStop = true;
-            rdbNao.Text = "Não";
-            rdbNao.UseVisualStyleBackColor = true;
-            // 
-            // GBoxDuplicar
-            // 
-            gboxDuplicar.Controls.Add(rdbNao);
-            gboxDuplicar.Controls.Add(rdbSim);
-            gboxDuplicar.Location = new Point(27, 165);
-            gboxDuplicar.Name = "GBoxDuplicar";
-            gboxDuplicar.Size = new Size(178, 60);
-            gboxDuplicar.TabIndex = 96;
-            gboxDuplicar.TabStop = false;
-            gboxDuplicar.Text = "Deseja duplicar o arquivo?";
-            gboxDuplicar.Visible = false;
-            // 
             // TelaPdfTesteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(490, 237);
-            Controls.Add(gboxDuplicar);
             Controls.Add(lbErroDiretorio);
             Controls.Add(lbErroTitulo);
             Controls.Add(ckbGabarito);
@@ -197,8 +158,6 @@
             Controls.Add(btnGerarPdf);
             Name = "TelaPdfTesteForm";
             Text = "Gerar PDF";
-            gboxDuplicar.ResumeLayout(false);
-            gboxDuplicar.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -215,8 +174,5 @@
         private Button btnGerarPdf;
         private Label lbErroTitulo;
         private Label lbErroDiretorio;
-        private RadioButton rdbSim;
-        private RadioButton rdbNao;
-        private GroupBox gboxDuplicar;
     }
 }

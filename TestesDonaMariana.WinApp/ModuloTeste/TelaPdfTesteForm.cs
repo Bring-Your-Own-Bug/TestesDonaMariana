@@ -6,6 +6,8 @@ using iText.Layout.Properties;
 using TestesDonaMariana.Dominio.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
+using static System.Net.Mime.MediaTypeNames;
+using Text = iText.Layout.Element.Text;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -15,8 +17,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool _isValid;
 
-        private int _contador;
-
         public TelaPdfTesteForm(Teste teste)
         {
             InitializeComponent();
@@ -24,7 +24,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             this.ConfigurarDialog();
 
             _teste = teste;
-            _contador = 1;
         }
 
         public Teste? Entidade
@@ -61,13 +60,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             MessageBox.Show($"PDF Gerado com Sucesso!",
                     "Gerar PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void GerarGabaritoPdf()
         {
-            PdfWriter writer = new(rdbSim.Checked
-            ? $"{txtDiretorio.Text}/{txtTitulo.Text} - Gabarito ({_contador}).pdf"
-            : $"{txtDiretorio.Text}/{txtTitulo.Text} - Gabarito.pdf");
+            string diretorio = VerificarENomearArquivo($"{txtDiretorio.Text}/{txtTitulo.Text}", " - Gabarito");
 
+            PdfWriter writer = new(diretorio);
             PdfDocument pdf = new(writer);
             Document document = new(pdf);
 
@@ -99,11 +96,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void GerarTestePdf()
         {
+            string diretorio = VerificarENomearArquivo($"{txtDiretorio.Text}/{txtTitulo.Text}", "");
 
-            PdfWriter writer = new(rdbSim.Checked
-            ? $"{txtDiretorio.Text}/{txtTitulo.Text} ({_contador}).pdf"
-            : $"{txtDiretorio.Text}/{txtTitulo.Text}.pdf");
-
+            PdfWriter writer = new(diretorio);
             PdfDocument pdf = new(writer);
             Document document = new(pdf);
 
@@ -136,6 +131,24 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             document.Close();
         }
 
+        private string VerificarENomearArquivo(string diretorioEscolhido, string prefixo)
+        {
+            int contador = 1;
+            string diretorio = diretorioEscolhido + prefixo + ".pdf";
+
+            if (File.Exists(diretorio))
+            {
+                while (File.Exists($"{txtDiretorio.Text}/{txtTitulo.Text}({contador}){prefixo}.pdf"))
+                {
+                    contador++;
+                }
+
+                diretorio = $"{txtDiretorio.Text}/{txtTitulo.Text}({contador}){prefixo}.pdf";
+            }
+
+            return diretorio;
+        }
+
         private void GerarCabecalho(Document document)
         {
             document.Add(new LineSeparator(new SolidLine(1f)));
@@ -148,13 +161,13 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
             info.Add(new Text($"\n• Disciplina: ").SetBold());
             info.Add(new Text(_teste.Disciplina.Nome));
+            info.Add(new Text($"\n• Série: ").SetBold());
+            info.Add(new Text(_teste.Serie.ObterDescricao()));
 
             if (_teste.Materia != null)
             {
                 info.Add(new Text($"\n• Matéria: ").SetBold());
                 info.Add(new Text(_teste.Materia.Nome));
-                info.Add(new Text($"\n• Série: ").SetBold());
-                info.Add(new Text(_teste.Materia.Serie.ObterDescricao()));
             }
             else
             {
@@ -188,19 +201,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             {
                 lbErroDiretorio.Text = "*Diretório inválido";
                 lbErroDiretorio.Visible = true;
-            }
-
-            if (ValidadorTeste.ValidarArquivoExistente(txtDiretorio.Text, txtTitulo.Text))
-            {
-                lbErroDiretorio.Text = "*Já existe um arquivo com mesmo nome nesse diretório";
-                lbErroDiretorio.Visible = true;
-                gboxDuplicar.Visible = true;
-
-                if (rdbSim.Checked)
-                {
-                    lbErroDiretorio.Visible = false;
-                    _contador++;
-                }                   
             }
 
             _isValid = !(lbErroTitulo.Visible || lbErroDiretorio.Visible);
