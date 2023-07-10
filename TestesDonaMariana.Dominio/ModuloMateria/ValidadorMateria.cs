@@ -5,9 +5,9 @@ namespace TestesDonaMariana.Dominio.ModuloMateria
 {
     public static class ValidadorMateria
     {
-        public static bool ValidarNomeExistente(string nome, Serie serie, List<Materia> listaMateria)
+        public static bool ValidarNomeExistente(string nome, Serie serie, ModuloDisciplina.Disciplina? disciplina, List<Materia> listaMateria)
         {
-            return (listaMateria.Any(m => string.Equals(m.Nome.RemoverAcento(), nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Serie == serie));
+            return (listaMateria.Any(m => string.Equals(m.Nome.RemoverAcento(), nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Serie == serie && m.Disciplina.Nome == disciplina.Nome));
         }
 
         public static bool ValidarDependencia(Materia materia, List<Questao> questoes, List<Teste> testes)

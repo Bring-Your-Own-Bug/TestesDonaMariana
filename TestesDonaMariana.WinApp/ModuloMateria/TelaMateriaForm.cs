@@ -63,6 +63,8 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
         {
             Serie serie = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
 
+            Disciplina? disciplina = txtDisciplina.SelectedItem as Disciplina;
+
             lbErroNome.Visible = false;
 
             if (txtNome.Text.ValidarCampoVazio())
@@ -70,8 +72,8 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
             }
-            else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase) && _materia.Serie == serie) { }
-            else if (ValidadorMateria.ValidarNomeExistente(txtNome.Text, serie, ListaMateria))
+            else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase) && _materia.Serie == serie && _materia.Disciplina.Nome == disciplina.Nome) { }
+            else if (ValidadorMateria.ValidarNomeExistente(txtNome.Text, serie, disciplina, ListaMateria))
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Essa matéria já existe";
