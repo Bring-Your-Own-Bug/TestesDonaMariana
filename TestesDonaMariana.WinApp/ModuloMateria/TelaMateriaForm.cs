@@ -66,11 +66,16 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             Disciplina? disciplina = txtDisciplina.SelectedItem as Disciplina;
 
             lbErroNome.Visible = false;
+            lbErroDisciplina.Visible = false;
 
             if (txtNome.Text.ValidarCampoVazio())
             {
                 lbErroNome.Visible = true;
                 lbErroNome.Text = "*Campo obrigatório";
+            }
+            else if (txtDisciplina.Text.ValidarCampoVazio())
+            {
+                lbErroDisciplina.Visible = true;
             }
             else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase) && _materia.Serie == serie && _materia.Disciplina.Nome == disciplina.Nome) { }
             else if (ValidadorMateria.ValidarNomeExistente(txtNome.Text, serie, disciplina, ListaMateria))

@@ -72,6 +72,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         {
             lbErroAlternativas.Visible = false;
             lbErroEnunciado.Visible = false;
+            lbErroMateria.Visible = false;
+            lbErroDisciplina.Visible = false;
 
             Materia? materia = txtMateria.SelectedItem as Materia;
 
@@ -93,16 +95,20 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 lbErroEnunciado.Text = "*Campo obrigatório";
                 lbErroEnunciado.Visible = true;
             }
-            else if (_questao != null && string.Equals(_questao.Enunciado, txtEnunciado.Text, StringComparison.OrdinalIgnoreCase) && materia != null && materia.Nome == _questao.Materia.Nome && materia.Serie == _questao.Materia.Serie && disciplina.Nome == _questao.Disciplina.Nome) { }
+            else if (txtDisciplina.Text.ValidarCampoVazio())
+            {
+                lbErroDisciplina.Visible = true;
+            }
+            else if (txtMateria.Text.ValidarCampoVazio())
+            {
+                lbErroMateria.Visible = true;
+            }
+            else if (_questao != null && string.Equals(_questao.Enunciado, txtEnunciado.Text, StringComparison.OrdinalIgnoreCase) && materia.Nome == _questao.Materia.Nome && materia.Serie == _questao.Materia.Serie && disciplina.Nome == _questao.Disciplina.Nome) { }
             else if (ValidadorQuestao.ValidarQuestaoExistente(txtEnunciado.Text, disciplina, materia, ListaQuestao))
             {
                 lbErroEnunciado.Visible = true;
                 lbErroEnunciado.Text = "*Essa questão já existe";
             }
-
-            lbErroMateria.Visible = txtMateria.Text.ValidarCampoVazio();
-
-            lbErroDisciplina.Visible = txtDisciplina.Text.ValidarCampoVazio();
 
             if (lbErroDisciplina.Visible || lbErroMateria.Visible || lbErroEnunciado.Visible || lbErroAlternativas.Visible)
                 _isValid = false;

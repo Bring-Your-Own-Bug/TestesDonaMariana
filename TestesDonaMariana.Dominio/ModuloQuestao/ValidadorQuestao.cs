@@ -13,7 +13,7 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
 
         public static bool ValidarQuestaoExistente(string enunciado, Disciplina disciplina, Materia materia, List<Questao> listaQuestao)
         {
-            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && materia != null && materia.Nome == q.Materia.Nome && materia.Serie == q.Materia.Serie && disciplina.Nome == q.Disciplina.Nome));
+            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && materia.Nome == q.Materia.Nome && materia.Serie == q.Materia.Serie && disciplina.Nome == q.Disciplina.Nome));
         }
 
         public static bool ValidarAlternativaCorreta(int checkCount)
