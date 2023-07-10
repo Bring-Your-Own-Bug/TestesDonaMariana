@@ -10,9 +10,9 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
             return (lista.Any(alternativa => string.Equals(alternativa.Substring(3), alternativaAdd, StringComparison.OrdinalIgnoreCase)));
         }
 
-        public static bool ValidarQuestaoExistente(string enunciado, List<Questao> listaQuestao)
+        public static bool ValidarQuestaoExistente(string enunciado, Materia materia, List<Questao> listaQuestao)
         {
-            return (listaQuestao.Any(m => string.Equals(m.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase)));
+            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && materia.Nome == q.Materia.Nome));
         }
 
         public static bool ValidarAlternativaCorreta(int checkCount)

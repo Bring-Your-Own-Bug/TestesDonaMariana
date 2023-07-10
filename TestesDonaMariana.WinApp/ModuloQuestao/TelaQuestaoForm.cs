@@ -73,6 +73,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             lbErroAlternativas.Visible = false;
             lbErroEnunciado.Visible = false;
 
+            Materia? materia = txtMateria.SelectedItem as Materia;
+
             if (ValidadorQuestao.ValidarQtdMinimaAlternativas(listAlternativas.Items.Count))
             {
                 lbErroAlternativas.Text = "*Deve ter no mínimo 3 alternativas";
@@ -89,8 +91,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 lbErroEnunciado.Text = "*Campo obrigatório";
                 lbErroEnunciado.Visible = true;
             }
-            else if (_questao != null && string.Equals(_questao.Enunciado, txtEnunciado.Text, StringComparison.OrdinalIgnoreCase)) { }
-            else if (ValidadorQuestao.ValidarQuestaoExistente(txtEnunciado.Text, ListaQuestao))
+            else if (_questao != null && string.Equals(_questao.Enunciado, txtEnunciado.Text, StringComparison.OrdinalIgnoreCase) && materia.Nome == _questao.Materia.Nome) { }
+            else if (ValidadorQuestao.ValidarQuestaoExistente(txtEnunciado.Text, materia, ListaQuestao))
             {
                 lbErroEnunciado.Visible = true;
                 lbErroEnunciado.Text = "*Essa questão já existe";

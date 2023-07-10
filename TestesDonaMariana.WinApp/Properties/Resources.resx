@@ -124,6 +124,12 @@
   <data name="addItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\addItem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="detailIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\detailIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="duplicateIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\duplicateIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
