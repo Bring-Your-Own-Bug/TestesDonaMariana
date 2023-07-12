@@ -17,8 +17,6 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             _tabelaDisciplina = _tabela;
             _servicoDisciplina = _servico;
             _repositorioMateria = _repositorio2;
-
-            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
         public ControladorDisciplina()
@@ -26,26 +24,9 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         }
 
-
-        public List<Disciplina> ObterListaDisciplina()
-        {
-            return new RepositorioDisciplina().ObterListaRegistros();
-        }
-
         public override TabelaDisciplinaControl ObterListagem()
         {
             return _tabelaDisciplina;
-        }
-
-        private bool VerificarRelacoesExistentes(Disciplina disciplina)
-        {
-            if (ValidadorDisciplina.ValidarDependencia(disciplina, _repositorioMateria.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
-            {
-                MessageBox.Show($"Existem Matérias ou Testes cadastrados na Disciplina \"{disciplina.Nome}\", Exclua-os para excluir essa Disciplina",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
-            }
-            return false;
         }
     }
 }

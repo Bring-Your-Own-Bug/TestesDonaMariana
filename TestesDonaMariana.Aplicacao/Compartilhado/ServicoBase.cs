@@ -15,10 +15,38 @@ namespace TestesDonaMariana.Aplicacao.Compartilhado
             this._repositorio = _repositorio;
         }
 
-        public abstract Result Adicionar(TEntidade entidade);
+        public virtual Result Adicionar(TEntidade entidade, bool adicionar = false)
+        {
+            Result resultado = new();
 
-        public abstract Result Editar(TEntidade entidade);
+            resultado = ValidarRegistro(entidade);
 
-        public abstract Result Excluir(TEntidade entidade);
+            if (resultado.IsFailed)
+                return resultado;
+
+            if (adicionar)
+                _repositorio.Adicionar(entidade);
+
+            return Result.Ok();
+        }
+
+        public virtual Result Editar(TEntidade entidade, bool editar = false)
+        {
+            Result resultado = new();
+
+            resultado = ValidarRegistro(entidade);
+
+            if (resultado.IsFailed)
+                return resultado;
+
+            if (editar)
+                _repositorio.Editar(entidade);
+
+            return Result.Ok();
+        }
+
+        public virtual Result Excluir(TEntidade entidade) { return Result.Ok(); }
+
+        public abstract Result ValidarRegistro(TEntidade entidade);
     }
 }

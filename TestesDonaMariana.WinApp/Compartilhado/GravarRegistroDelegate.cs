@@ -8,5 +8,5 @@ using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
-    public delegate Result GravarRegistroDelegate<TEntidade>(TEntidade entidade) where TEntidade : Entidade<TEntidade>;
+    public delegate Result GravarRegistroDelegate<TEntidade>(TEntidade entidade, bool adicionar = false) where TEntidade : Entidade<TEntidade>;
 }

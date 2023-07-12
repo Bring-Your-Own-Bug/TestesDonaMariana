@@ -14,17 +14,22 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
             _repositorioMateria = _repositorio;
         }
 
-        public override Result Adicionar(Materia entidade)
+        public override Result Adicionar(Materia entidade, bool adicionar = false)
         {
             throw new NotImplementedException();
         }
 
-        public override Result Editar(Materia entidade)
+        public override Result Editar(Materia entidade, bool adicionar = false)
         {
             throw new NotImplementedException();
         }
 
         public override Result Excluir(Materia entidade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Result ValidarRegistro(Materia entidade)
         {
             throw new NotImplementedException();
         }

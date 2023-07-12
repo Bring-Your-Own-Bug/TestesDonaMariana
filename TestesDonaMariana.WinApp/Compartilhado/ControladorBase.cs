@@ -1,6 +1,8 @@
-﻿using TestesDonaMariana.Aplicacao.Compartilhado;
+﻿using FluentResults;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
@@ -89,16 +91,24 @@ namespace TestesDonaMariana.WinApp.Compartilhado
         public virtual void Excluir()
         {
             TEntidade? entidade = _tabela.ObterRegistroSelecionado();
-            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
 
-            if (onValidarRelacaoExistente?.Invoke(entidade) ?? false)
-                return;
+            TelaPrincipalForm.AtualizarStatus($"Excluindo {typeof(TEntidade).Name}");
 
             if (MessageBox.Show($"Deseja mesmo excluir?", $"Exclusão de {typeof(TEntidade).Name}",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                _repositorio.Excluir(entidade);
+            {
+                Result resultado = _servico.Excluir(entidade);
 
-            CarregarRegistros();
+                if (resultado.IsFailed)
+                {
+                    MessageBox.Show(resultado.Errors[0].Message,
+                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    return;
+                }
+                else
+                    CarregarRegistros();
+            }
         }
 
         public virtual void Filtrar() { }

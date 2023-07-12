@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
@@ -8,17 +7,13 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
     {
         private Disciplina _disciplina;
 
-        private bool _isValid;
+        private Result _resultado = new();
 
         public event GravarRegistroDelegate<Disciplina> onGravarRegistro;
-
-        private List<Disciplina> ListaDisciplinas { get; set; }
 
         public TelaDisciplinaForm()
         {
             InitializeComponent();
-
-            ListaDisciplinas = new ControladorDisciplina().ObterListaDisciplina();
         }
 
         public Disciplina? Entidade
@@ -35,37 +30,13 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            _disciplina = new Disciplina(txtNome.Text);
+            ValidarCampos(sender, e);
 
-            lbErroNome.Visible = false;
-
-            Result resultado = onGravarRegistro(_disciplina);
-
-            if (resultado.IsFailed)
+            if (_resultado.IsFailed)
             {
-                foreach (Error erro in resultado.Errors)
-                {
-                    switch (erro.Reasons[0].Message)
-                    {
-                        case "Nome": lbErroNome.Visible = true; break;
-                    }
-                }
-            }
-
-            if (lbErroNome.Visible)
                 this.DialogResult = DialogResult.None;
-
-            //ValidarCampos(sender, e);
-
-            //if (_isValid == false)
-            //{
-            //    this.DialogResult = DialogResult.None;
-            //    ImplementarMetodos();
-            //    return;
-            //}
-
-            if (_disciplina.Id == 0)
-                _disciplina.Id = int.Parse(txtId.Text);
+                ImplementarMetodos();
+            }
         }
 
         private void ImplementarMetodos()
@@ -75,21 +46,38 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private void ValidarCampos(object sender, EventArgs e)
         {
+            ResetarErros();
+
+            _disciplina = new Disciplina(txtNome.Text);
+
+            if (_disciplina.Id == 0)
+                _disciplina.Id = int.Parse(txtId.Text);
+
+            _resultado = onGravarRegistro(_disciplina, sender == btnAdd);
+
+            if (_resultado.IsFailed)
+            {
+                MostrarErros();
+            }
+        }
+
+        private void MostrarErros()
+        {
+            for (int i = 0; i < _resultado.Reasons.Count; i++)
+            {
+                switch (_resultado.Errors[i].Reasons[i].Message)
+                {
+                    case "Nome": lbErroNome.Text = _resultado.Errors[i].Message; lbErroNome.Visible = true; break;
+                }
+            }
+        }
+
+        private void ResetarErros()
+        {
             lbErroNome.Visible = false;
 
-            if (txtNome.Text.ValidarCampoVazio())
-            {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Campo obrigatório";
-            }
-            else if (_disciplina != null && string.Equals(_disciplina.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase)) { }
-            else if (ValidadorDisciplina.ValidarNomeExistente(txtNome.Text, ListaDisciplinas))
-            {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Essa disciplina já existe";
-            }
-
-            _isValid = lbErroNome.Visible ? false : true;
+            _resultado.Errors.Clear();
+            _resultado.Reasons.Clear();
         }
     }
 }

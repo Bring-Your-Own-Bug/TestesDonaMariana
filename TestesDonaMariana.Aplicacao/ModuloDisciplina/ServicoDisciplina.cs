@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
@@ -14,33 +15,37 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
             _repositorioDisciplina = _repositorio;
         }
 
-        public override Result Adicionar(Disciplina disciplina)
+        public override Result ValidarRegistro(Disciplina disciplina)
         {
             Result resultado = new();
 
-            resultado = ValidarRegistro(disciplina);
+            if (ValidadorDisciplina.ValidarCampoVazio(disciplina.Nome))
+                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
 
-            if (resultado.IsFailed)
-                return resultado;
+            if (ValidadorDisciplina.ValidarNomeExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
+                resultado = Result.Fail(new Error("*Essa Disciplina já existe", new Error("Nome")));
 
-            _repositorioDisciplina.Adicionar(disciplina);
+            return resultado;
+        }
+
+        public override Result Excluir(Disciplina disciplina)
+        {
+            try
+            {
+                _repositorioDisciplina.Excluir(disciplina);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("FK_TBTESTE_TBDISCIPLINA"))
+                    return Result.Fail(new Error("*Essa Disciplina está relacionada à um Teste." +
+                        " Primeiro exclua o Teste relacionado"));
+
+                if (ex.Message.Contains("FK_TBMATERIA_TBDISCIPLINA"))
+                    return Result.Fail(new Error("*Essa Disciplina está relacionada à uma Matéria." +
+                        " Primeiro exclua a Matéria relacionada"));
+            }
 
             return Result.Ok();
-        }
-
-        private Result ValidarRegistro(Disciplina disciplina)
-        {
-            return Result.FailIf(ValidadorDisciplina.ValidarCampoVazio(disciplina.Nome), new Error("*Campo Obrigatório", new Error("Nome")));
-        }
-
-        public override Result Editar(Disciplina entidade)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Result Excluir(Disciplina entidade)
-        {
-            throw new NotImplementedException();
         }
     }
 }

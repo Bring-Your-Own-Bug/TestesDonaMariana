@@ -14,17 +14,22 @@ namespace TestesDonaMariana.Aplicacao.ModuloTeste
             _repositorioTeste = _repositorio;
         }
 
-        public override Result Adicionar(Teste entidade)
+        public override Result Adicionar(Teste entidade, bool adicionar = false)
         {
             throw new NotImplementedException();
         }
 
-        public override Result Editar(Teste entidade)
+        public override Result Editar(Teste entidade, bool adicionar = false)
         {
             throw new NotImplementedException();
         }
 
         public override Result Excluir(Teste entidade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Result ValidarRegistro(Teste entidade)
         {
             throw new NotImplementedException();
         }
