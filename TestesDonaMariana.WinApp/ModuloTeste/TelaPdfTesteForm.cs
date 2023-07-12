@@ -17,6 +17,8 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool _isValid;
 
+        public event GravarRegistroDelegate<Teste> onGravarRegistro;
+
         public TelaPdfTesteForm(Teste teste)
         {
             InitializeComponent();

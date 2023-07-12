@@ -1,3 +1,7 @@
+using TestesDonaMariana.Aplicacao.ModuloDisciplina;
+using TestesDonaMariana.Aplicacao.ModuloMateria;
+using TestesDonaMariana.Aplicacao.ModuloQuestao;
+using TestesDonaMariana.Aplicacao.ModuloTeste;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
@@ -18,15 +22,20 @@ namespace TestesDonaMariana.WinApp
 
         private static TelaPrincipalForm _telaPrincipal;
 
-        private readonly RepositorioDisciplina _repositorioDisciplina = new();
-        private readonly RepositorioMateria _repositorioMateria = new();
-        private readonly RepositorioQuestao _repositorioQuestao = new();
-        private readonly RepositorioTeste _repositorioTeste = new();
+        private static readonly RepositorioDisciplina _repositorioDisciplina = new();
+        private static readonly RepositorioMateria _repositorioMateria = new();
+        private static readonly RepositorioQuestao _repositorioQuestao = new();
+        private static readonly RepositorioTeste _repositorioTeste = new();
 
         private readonly TabelaDisciplinaControl _tabelaDisciplina = new();
         private readonly TabelaMateriaControl _tabelaMateria = new();
         private readonly TabelaQuestaoControl _tabelaQuestao = new();
         private readonly TabelaTesteControl _tabelaTeste = new();
+
+        private readonly ServicoDisciplina _servicoDisciplina = new(_repositorioDisciplina);
+        private readonly ServicoMateria _servicoMateria = new(_repositorioMateria);
+        private readonly ServicoQuestao _servicoQuestao = new(_repositorioQuestao);
+        private readonly ServicoTeste _servicoTeste = new(_repositorioTeste);
 
         public TelaPrincipalForm()
         {
@@ -52,25 +61,25 @@ namespace TestesDonaMariana.WinApp
 
         private void btnDisciplina_Click(object sender, EventArgs e)
         {
-            _controladorBase = new ControladorDisciplina(_repositorioDisciplina, _tabelaDisciplina, _repositorioMateria);
+            _controladorBase = new ControladorDisciplina(_repositorioDisciplina, _servicoDisciplina, _tabelaDisciplina, _repositorioMateria);
             ConfigurarTelaPrincipal();
         }
 
         private void btnMateria_Click(object sender, EventArgs e)
         {
-            _controladorBase = new ControladorMateria(_repositorioMateria, _tabelaMateria, _repositorioDisciplina, _repositorioQuestao);
+            _controladorBase = new ControladorMateria(_repositorioMateria, _servicoMateria, _tabelaMateria, _repositorioDisciplina, _repositorioQuestao);
             ConfigurarTelaPrincipal();
         }
 
         private void btnQuestao_Click(object sender, EventArgs e)
         {
-            _controladorBase = new ControladorQuestao(_repositorioQuestao, _tabelaQuestao, _repositorioMateria, _repositorioDisciplina);
+            _controladorBase = new ControladorQuestao(_repositorioQuestao, _servicoQuestao, _tabelaQuestao, _repositorioMateria, _repositorioDisciplina);
             ConfigurarTelaPrincipal();
         }
 
         private void btnTeste_Click(object sender, EventArgs e)
         {
-            _controladorBase = new ControladorTeste(_repositorioTeste, _tabelaTeste, _repositorioDisciplina, _repositorioQuestao, _repositorioMateria);
+            _controladorBase = new ControladorTeste(_repositorioTeste, _servicoTeste, _tabelaTeste, _repositorioDisciplina, _repositorioQuestao, _repositorioMateria);
             ConfigurarTelaPrincipal();
         }
 

@@ -19,7 +19,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TestesDonaMariana.Dados.Sql
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Aplicacao", "2 - Aplicacao", "{9D6E9A2C-20C8-4AFB-BE06-3885C4B9FF9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestesDonaMariana.Aplicacao", "TestesDonaMariana.Aplicacao\TestesDonaMariana.Aplicacao.csproj", "{86ACEE72-296C-4CA4-B291-9EEB455D40FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestesDonaMariana.Aplicacao", "TestesDonaMariana.Aplicacao\TestesDonaMariana.Aplicacao.csproj", "{86ACEE72-296C-4CA4-B291-9EEB455D40FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

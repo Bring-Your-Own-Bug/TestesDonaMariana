@@ -10,6 +10,8 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         private bool _isValid;
 
+        public event GravarRegistroDelegate<Materia> onGravarRegistro;
+
         private List<Materia> ListaMateria { get; set; }
 
         public TelaMateriaForm()

@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
+﻿using FluentResults;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
@@ -8,6 +9,8 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         private Disciplina _disciplina;
 
         private bool _isValid;
+
+        public event GravarRegistroDelegate<Disciplina> onGravarRegistro;
 
         private List<Disciplina> ListaDisciplinas { get; set; }
 
@@ -32,16 +35,34 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            ValidarCampos(sender, e);
+            _disciplina = new Disciplina(txtNome.Text);
 
-            if (_isValid == false)
+            lbErroNome.Visible = false;
+
+            Result resultado = onGravarRegistro(_disciplina);
+
+            if (resultado.IsFailed)
             {
-                this.DialogResult = DialogResult.None;
-                ImplementarMetodos();
-                return;
+                foreach (Error erro in resultado.Errors)
+                {
+                    switch (erro.Reasons[0].Message)
+                    {
+                        case "Nome": lbErroNome.Visible = true; break;
+                    }
+                }
             }
 
-            _disciplina = new Disciplina(txtNome.Text);
+            if (lbErroNome.Visible)
+                this.DialogResult = DialogResult.None;
+
+            //ValidarCampos(sender, e);
+
+            //if (_isValid == false)
+            //{
+            //    this.DialogResult = DialogResult.None;
+            //    ImplementarMetodos();
+            //    return;
+            //}
 
             if (_disciplina.Id == 0)
                 _disciplina.Id = int.Parse(txtId.Text);

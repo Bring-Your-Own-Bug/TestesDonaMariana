@@ -1,14 +1,17 @@
-﻿using TestesDonaMariana.Dados.Compartilhado;
+﻿using TestesDonaMariana.Aplicacao.Compartilhado;
+using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
-    public abstract class ControladorBase<TEntidade, TRepositorio, TTabela, TTela, TRepositorio2, TRepositorio3> : IControladorBase
+    public abstract class ControladorBase<TEntidade, TRepositorio, TServico, TTabela, TTela, TRepositorio2, TRepositorio3> : IControladorBase
         where TEntidade : Entidade<TEntidade>, new()
+        where TServico : ServicoBase<TEntidade, TRepositorio>
         where TRepositorio : RepositorioBaseSql<TEntidade>
         where TTabela : ITabelaBase<TEntidade>, new()
         where TTela : ITelaBase<TEntidade>, new()
     {
+        protected TServico _servico;
         protected TRepositorio _repositorio;
         protected TRepositorio2 _repositorio2;
         protected TRepositorio3 _repositorio3;
@@ -23,22 +26,25 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
         }
 
-        public ControladorBase(TRepositorio _repositorio, TTabela _tabela)
+        public ControladorBase(TRepositorio _repositorio, TServico _servico, TTabela _tabela)
         {
             this._repositorio = _repositorio;
+            this._servico = _servico;
             this._tabela = _tabela;
         }
 
-        public ControladorBase(TRepositorio _repositorio, TTabela _tabela, TRepositorio2 _repositorio2)
+        public ControladorBase(TRepositorio _repositorio, TServico _servico, TTabela _tabela, TRepositorio2 _repositorio2)
         {
             this._repositorio = _repositorio;
+            this._servico = _servico;
             this._tabela = _tabela;
             this._repositorio2 = _repositorio2;
         }
 
-        public ControladorBase(TRepositorio _repositorio, TTabela _tabela, TRepositorio2 _repositorio2, TRepositorio3 _repositorio3)
+        public ControladorBase(TRepositorio _repositorio, TServico _servico, TTabela _tabela, TRepositorio2 _repositorio2, TRepositorio3 _repositorio3)
         {
             this._repositorio = _repositorio;
+            this._servico = _servico;
             this._tabela = _tabela;
             this._repositorio2 = _repositorio2;
             this._repositorio3 = _repositorio3;
@@ -54,12 +60,12 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             onComandosAdicionaisAddAndEdit?.Invoke(tela, tela.Entidade);
 
+            tela.onGravarRegistro += _servico.Adicionar;
+
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
             if (tela.ShowDialog() == DialogResult.OK)
-                _repositorio.Adicionar(tela.Entidade);
-
-            CarregarRegistros();
+                CarregarRegistros();
         }
 
         public virtual void Editar()
@@ -72,12 +78,12 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             tela.Entidade = entidade;
 
+            tela.onGravarRegistro += _servico.Editar;
+
             TelaPrincipalForm.AtualizarStatus($"Editando {typeof(TEntidade).Name}");
 
             if (tela.ShowDialog() == DialogResult.OK)
-                _repositorio.Editar(tela.Entidade);
-
-            CarregarRegistros();
+                CarregarRegistros();
         }
 
         public virtual void Excluir()

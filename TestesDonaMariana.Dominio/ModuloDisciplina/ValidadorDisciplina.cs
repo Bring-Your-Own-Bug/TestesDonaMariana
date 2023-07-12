@@ -5,6 +5,11 @@ namespace TestesDonaMariana.Dominio.ModuloDisciplina
 {
     public static class ValidadorDisciplina
     {
+        public static bool ValidarCampoVazio(string campo)
+        {
+            return string.IsNullOrWhiteSpace(campo);
+        }
+
         public static bool ValidarNomeExistente(string nome, List<Disciplina> listaDisciplinas)
         {
             return listaDisciplinas.Any(m => string.Equals(m.Nome.RemoverAcento(), nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase));

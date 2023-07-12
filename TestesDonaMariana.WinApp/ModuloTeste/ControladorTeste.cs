@@ -1,4 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
+using TestesDonaMariana.Aplicacao.ModuloQuestao;
+using TestesDonaMariana.Aplicacao.ModuloTeste;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
@@ -10,24 +12,27 @@ using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
-    public class ControladorTeste : ControladorBase<Teste, RepositorioTeste, TabelaTesteControl, TelaTesteForm, RepositorioDisciplina, RepositorioQuestao>
+    public class ControladorTeste : ControladorBase<Teste, RepositorioTeste, ServicoTeste, TabelaTesteControl, TelaTesteForm, RepositorioDisciplina, RepositorioQuestao>
     {
         private readonly RepositorioDisciplina _repositorioDisciplina;
         private readonly RepositorioMateria _repositorioMateria;
+        private readonly ServicoTeste _servicoTeste;
 
         private readonly TabelaTesteControl _tabelaTeste;
 
-        public ControladorTeste()
-        {
-
-        }
-        public ControladorTeste(RepositorioTeste _repositorio, TabelaTesteControl _tabela, RepositorioDisciplina _repositorio2, RepositorioQuestao _repositorio3, RepositorioMateria repositorio4) : base(_repositorio, _tabela, _repositorio2, _repositorio3)
+        public ControladorTeste(RepositorioTeste _repositorio, ServicoTeste _servico, TabelaTesteControl _tabela, RepositorioDisciplina _repositorio2, RepositorioQuestao _repositorio3, RepositorioMateria repositorio4) : base(_repositorio, _servico, _tabela, _repositorio2, _repositorio3)
         {
             _tabelaTeste = _tabela;
+            _servicoTeste = _servico;
             _repositorioDisciplina = _repositorio2;
             _repositorioMateria = repositorio4;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
+        }
+
+        public ControladorTeste()
+        {
+
         }
 
         public override TabelaTesteControl ObterListagem()

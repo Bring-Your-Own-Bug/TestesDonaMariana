@@ -13,6 +13,9 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         private bool _isValid;
 
         private readonly List<Questao> _listaQuestoesSorteadas;
+
+        public event GravarRegistroDelegate<Teste> onGravarRegistro;
+
         private List<Questao> ListaQuestao { get; set; }
         private List<Teste> ListaTeste { get; set; }
         private List<Materia> ListaMateria { get; set; }
