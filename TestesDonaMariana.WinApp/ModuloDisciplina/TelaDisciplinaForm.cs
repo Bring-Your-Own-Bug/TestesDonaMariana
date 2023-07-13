@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
@@ -9,7 +10,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private Result _resultado = new();
 
-        public event GravarRegistroDelegate<Disciplina> onGravarRegistro;
+        public event Func<Disciplina, bool, Result> OnGravarRegistro;
 
         public TelaDisciplinaForm()
         {
@@ -53,21 +54,19 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
             if (_disciplina.Id == 0)
                 _disciplina.Id = int.Parse(txtId.Text);
 
-            _resultado = onGravarRegistro(_disciplina, sender == btnAdd);
+            _resultado = OnGravarRegistro(_disciplina, sender == btnAdd);
 
             if (_resultado.IsFailed)
-            {
                 MostrarErros();
-            }
         }
 
         private void MostrarErros()
         {
-            for (int i = 0; i < _resultado.Reasons.Count; i++)
+            foreach (CustomError item in _resultado.Errors)
             {
-                switch (_resultado.Errors[i].Reasons[0].Message)
+                switch (item.PropertyName)
                 {
-                    case "Nome": lbErroNome.Text = _resultado.Errors[i].Message; lbErroNome.Visible = true; break;
+                    case "Nome": lbErroNome.Text = item.ErrorMessage; lbErroNome.Visible = true; break;
                 }
             }
         }

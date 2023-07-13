@@ -1,10 +1,7 @@
 ﻿using FluentResults;
-using iText.StyledXmlParser.Jsoup.Nodes;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
-using TestesDonaMariana.WinApp.ModuloMateria;
 
 namespace TestesDonaMariana.WinApp.ModuloQuestao
 {
@@ -14,7 +11,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private Result _resultado = new();
 
-        public event GravarRegistroDelegate<Questao> onGravarRegistro;
+        public event Func<Questao, bool, Result> OnGravarRegistro;
 
         private List<Materia> ListaMateria { get; set; } = new();
         private List<Questao> ListaQuestao { get; set; } = new();
@@ -79,7 +76,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             if (_questao.Id == 0)
                 _questao.Id = int.Parse(txtId.Text);
 
-            _resultado = onGravarRegistro(_questao, sender == btnAdd);
+            _resultado = OnGravarRegistro(_questao, sender == btnAdd);
 
             if (_resultado.IsFailed)
             {

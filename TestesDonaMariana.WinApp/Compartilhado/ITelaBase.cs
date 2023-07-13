@@ -1,4 +1,6 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
+﻿using FluentResults;
+using TestesDonaMariana.Dominio.Compartilhado;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
@@ -6,7 +8,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
     {
         TEntidade? Entidade { get; set; }
 
-        event GravarRegistroDelegate<TEntidade> onGravarRegistro;
+        event Func<TEntidade, bool, Result> OnGravarRegistro;
 
         DialogResult ShowDialog();
     }

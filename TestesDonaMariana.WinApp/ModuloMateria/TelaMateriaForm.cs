@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 
@@ -11,7 +10,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         private Result _resultado = new();
 
-        public event GravarRegistroDelegate<Materia> onGravarRegistro;
+        public event Func<Materia, bool, Result> OnGravarRegistro;
 
         private List<Materia> ListaMateria { get; set; }
 
@@ -67,7 +66,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             if (_materia.Id == 0)
                 _materia.Id = int.Parse(txtId.Text);
 
-            _resultado = onGravarRegistro(_materia, sender == btnAdd);
+            _resultado = OnGravarRegistro(_materia, sender == btnAdd);
 
             if (_resultado.IsFailed)
             {

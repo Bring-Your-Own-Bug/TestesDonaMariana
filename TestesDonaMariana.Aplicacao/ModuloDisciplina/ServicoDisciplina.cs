@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using FluentValidation.Results;
 using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.ModuloDisciplina;
@@ -19,15 +20,14 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
         {
             List<IError> erros = new();
 
-            if (ValidadorDisciplina.ValidarCampoVazio(disciplina.Nome))
-                erros.Add(new Error("*Campo Obrigatório", new Error("Nome")));
+            ValidationResult validacao = new ValidadorDisciplina().Validate(disciplina);
+
+            erros.AddRange(validacao.Errors.Select(item => new CustomError(item.ErrorMessage, item.PropertyName)));
 
             if (ValidadorDisciplina.ValidarDisciplinaExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
-                erros.Add(new Error("*Essa Disciplina já existe", new Error("Nome")));
+                erros.Add(new CustomError("Essa Disciplina já existe", "Nome"));
 
-            Result resultado = Result.Fail(erros);
-
-            return resultado;
+            return Result.Fail(erros);
         }
 
         public override Result Excluir(Disciplina disciplina)

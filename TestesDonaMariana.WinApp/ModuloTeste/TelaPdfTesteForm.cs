@@ -1,12 +1,12 @@
-﻿using iText.Kernel.Pdf;
+﻿using FluentResults;
+using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using TestesDonaMariana.Dominio.ModuloTeste;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
-using static System.Net.Mime.MediaTypeNames;
+using TestesDonaMariana.Dominio.ModuloTeste;
 using Text = iText.Layout.Element.Text;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
@@ -17,7 +17,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool _isValid;
 
-        public event GravarRegistroDelegate<Teste> onGravarRegistro;
+        public event Func<Teste, bool, Result> OnGravarRegistro;
 
         public TelaPdfTesteForm(Teste teste)
         {

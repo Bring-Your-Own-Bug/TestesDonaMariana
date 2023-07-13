@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
+﻿using FluentResults;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
@@ -14,7 +15,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private readonly List<Questao> _listaQuestoesSorteadas;
 
-        public event GravarRegistroDelegate<Teste> onGravarRegistro;
+        public event Func<Teste, bool, Result> OnGravarRegistro;
 
         private List<Questao> ListaQuestao { get; set; }
         private List<Teste> ListaTeste { get; set; }

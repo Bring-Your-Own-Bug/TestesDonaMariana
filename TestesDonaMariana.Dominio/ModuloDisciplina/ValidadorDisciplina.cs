@@ -1,10 +1,16 @@
-﻿namespace TestesDonaMariana.Dominio.ModuloDisciplina
+﻿using FluentValidation;
+using System.Runtime.ConstrainedExecution;
+
+namespace TestesDonaMariana.Dominio.ModuloDisciplina
 {
-    public static class ValidadorDisciplina
+    public class ValidadorDisciplina : AbstractValidator<Disciplina>
     {
-        public static bool ValidarCampoVazio(string campo)
+        public ValidadorDisciplina()
         {
-            return string.IsNullOrWhiteSpace(campo);
+            RuleFor(d => d.Nome)
+                .MinimumLength(3).WithMessage(@"'Nome' deve ser maior ou igual a 3 caracteres.")
+                .NotEmpty()
+                .NotNull();
         }
 
         public static bool ValidarDisciplinaExistente(Disciplina disciplina, List<Disciplina> listaDisciplinas)
