@@ -21,25 +21,27 @@ namespace TestesDonaMariana.Aplicacao.ModuloQuestao
 
         public override Result ValidarRegistro(Questao questao)
         {
-            Result resultado = new();
+            List<IError> erros = new();
 
             if (ValidadorQuestao.ValidarCampoVazio(questao.Enunciado))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Enunciado")));
+                erros.Add(new Error("*Campo Obrigatório", new Error("Enunciado")));
 
             else if (ValidadorQuestao.ValidarQuestaoExistente(questao, _resitorioQuestao.ObterListaRegistros()))
-                resultado = Result.Fail(new Error("*Essa Questão já existe", new Error("Enunciado")));
+                erros.Add(new Error("*Essa Questão já existe", new Error("Enunciado")));
 
             if (ValidadorQuestao.ValidarCampoVazio(questao.Disciplina == null ? "" : questao.Disciplina.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Disciplina")));
+                erros.Add(new Error("*Campo Obrigatório", new Error("Disciplina")));
 
             if (ValidadorQuestao.ValidarCampoVazio(questao.Materia == null ? "" : questao.Materia.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Materia")));
+                erros.Add(new Error("*Campo Obrigatório", new Error("Materia")));
 
             if (ValidadorQuestao.ValidarQtdMinimaAlternativas(questao.Alternativas.Count))
-                resultado = Result.Fail(new Error("*Deve ter no mínimo 3 alternativas", new Error("Alternativas")));
+                erros.Add(new Error("*Deve ter no mínimo 3 alternativas", new Error("Alternativas")));
 
             if (ValidadorQuestao.ValidarCampoVazio(questao.AlternativaCorreta))
-                resultado = Result.Fail(new Error("*Precisa ter 1 Resposta Correta", new Error("Alternativas")));
+                erros.Add(new Error("*Precisa ter 1 Resposta Correta", new Error("Alternativas")));
+
+            Result resultado = Result.Fail(erros);
 
             return resultado;
         }

@@ -6,6 +6,11 @@ namespace TestesDonaMariana.Dominio.ModuloMateria
 {
     public static class ValidadorMateria
     {
+        public static bool ValidarCampoVazio(string campo)
+        {
+            return string.IsNullOrWhiteSpace(campo);
+        }
+
         public static bool ValidarMateriaExistente(Materia materia, List<Materia> listaMateria)
         {
             return (listaMateria.Any(m => string.Equals(m.Nome.RemoverAcento(), materia.Nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Serie == materia.Serie && m.Disciplina.Nome == materia.Disciplina.Nome && m.Id != materia.Id));

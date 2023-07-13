@@ -65,7 +65,7 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
         {
             for (int i = 0; i < _resultado.Reasons.Count; i++)
             {
-                switch (_resultado.Errors[i].Reasons[i].Message)
+                switch (_resultado.Errors[i].Reasons[0].Message)
                 {
                     case "Nome": lbErroNome.Text = _resultado.Errors[i].Message; lbErroNome.Visible = true; break;
                 }

@@ -72,7 +72,9 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
             List<string> alternativas = listAlternativas.Items.Cast<string>().ToList();
 
-            _questao = new Questao(materia, txtEnunciado.Text, alternativas, listAlternativas.CheckedItems[0].ToString());
+            string alternativaCorreta = listAlternativas.CheckedItems.Count == 0 ? "" : listAlternativas.CheckedItems[0].ToString();
+
+            _questao = new Questao(materia, txtEnunciado.Text, alternativas, alternativaCorreta);
 
             if (_questao.Id == 0)
                 _questao.Id = int.Parse(txtId.Text);
@@ -160,7 +162,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         {
             for (int i = 0; i < _resultado.Reasons.Count; i++)
             {
-                switch (_resultado.Errors[i].Reasons[i].Message)
+                switch (_resultado.Errors[i].Reasons[0].Message)
                 {
                     case "Enunciado": lbErroEnunciado.Text = _resultado.Errors[i].Message; lbErroEnunciado.Visible = true; break;
                     case "Disciplina": lbErroDisciplina.Text = _resultado.Errors[i].Message; lbErroDisciplina.Visible = true; break;

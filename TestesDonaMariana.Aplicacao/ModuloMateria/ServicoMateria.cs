@@ -19,16 +19,18 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
 
         public override Result ValidarRegistro(Materia materia)
         {
-            Result resultado = new();
+            List<IError> erros = new();
 
-            if (ValidadorDisciplina.ValidarCampoVazio(materia.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
+            if (ValidadorMateria.ValidarCampoVazio(materia.Nome))
+                erros.Add(new Error("*Campo Obrigatório", new Error("Nome")));
 
             if (ValidadorMateria.ValidarMateriaExistente(materia, _repositorioMateria.ObterListaRegistros()))
-                resultado = Result.Fail(new Error("*Essa Materia já existe", new Error("Nome")));
+                erros.Add(new Error("*Essa Materia já existe", new Error("Nome")));
 
-            if (ValidadorDisciplina.ValidarCampoVazio(materia.Disciplina == null ? "" : materia.Disciplina.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Disciplina")));
+            if (ValidadorMateria.ValidarCampoVazio(materia.Disciplina == null ? "" : materia.Disciplina.Nome))
+                erros.Add(new Error("*Campo Obrigatório", new Error("Disciplina")));
+
+            Result resultado = Result.Fail(erros);
 
             return resultado;
         }

@@ -17,13 +17,15 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
 
         public override Result ValidarRegistro(Disciplina disciplina)
         {
-            Result resultado = new();
+            List<IError> erros = new();
 
             if (ValidadorDisciplina.ValidarCampoVazio(disciplina.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
+                erros.Add(new Error("*Campo Obrigatório", new Error("Nome")));
 
             if (ValidadorDisciplina.ValidarDisciplinaExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
-                resultado = Result.Fail(new Error("*Essa Disciplina já existe", new Error("Nome")));
+                erros.Add(new Error("*Essa Disciplina já existe", new Error("Nome")));
+
+            Result resultado = Result.Fail(erros);
 
             return resultado;
         }
