@@ -1,4 +1,6 @@
 ﻿using FluentResults;
+using FluentValidation.Results;
+using System.Collections.Generic;
 using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 
@@ -46,6 +48,11 @@ namespace TestesDonaMariana.Aplicacao.Compartilhado
         }
 
         public virtual Result Excluir(TEntidade entidade) { return Result.Ok(); }
+
+        public virtual List<IError> ConverterParaListaErros(ValidationResult validacao)
+        {
+            return new List<IError>(validacao.Errors.Select(item => new CustomError(item.ErrorMessage, item.PropertyName)));
+        }
 
         public abstract Result ValidarRegistro(TEntidade entidade);
     }

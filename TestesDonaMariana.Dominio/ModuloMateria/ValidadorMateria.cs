@@ -1,14 +1,20 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using FluentValidation;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria
 {
-    public static class ValidadorMateria
+    public class ValidadorMateria : AbstractValidator<Materia>
     {
-        public static bool ValidarCampoVazio(string campo)
+        public ValidadorMateria()
         {
-            return string.IsNullOrWhiteSpace(campo);
+            RuleFor(m => m.Nome)
+                .MinimumLength(3).WithMessage(@"'Nome' deve ser maior ou igual a 3 caracteres.")
+                .NotEmpty()
+                .NotNull();
+
+            RuleFor(m => m.Disciplina)
+                .NotEmpty();
         }
 
         public static bool ValidarMateriaExistente(Materia materia, List<Materia> listaMateria)

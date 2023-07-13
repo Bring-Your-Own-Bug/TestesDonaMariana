@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 
@@ -76,12 +77,12 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         private void MostrarErros()
         {
-            for (int i = 0; i < _resultado.Reasons.Count; i++)
+            foreach (CustomError item in _resultado.Errors)
             {
-                switch (_resultado.Errors[i].Reasons[0].Message)
+                switch (item.PropertyName)
                 {
-                    case "Nome": lbErroNome.Text = _resultado.Errors[i].Message; lbErroNome.Visible = true; break;
-                    case "Disciplina": lbErroDisciplina.Text = _resultado.Errors[i].Message; lbErroDisciplina.Visible = true; break;
+                    case "Nome": lbErroNome.Text = item.ErrorMessage; lbErroNome.Visible = true; break;
+                    case "Disciplina": lbErroDisciplina.Text = item.ErrorMessage; lbErroDisciplina.Visible = true; break;
                 }
             }
         }

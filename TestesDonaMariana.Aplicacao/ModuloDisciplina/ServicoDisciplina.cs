@@ -22,7 +22,7 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
 
             ValidationResult validacao = new ValidadorDisciplina().Validate(disciplina);
 
-            erros.AddRange(validacao.Errors.Select(item => new CustomError(item.ErrorMessage, item.PropertyName)));
+            erros.AddRange(ConverterParaListaErros(validacao));
 
             if (ValidadorDisciplina.ValidarDisciplinaExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
                 erros.Add(new CustomError("Essa Disciplina já existe", "Nome"));

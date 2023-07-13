@@ -1,9 +1,8 @@
 ﻿using FluentResults;
+using FluentValidation.Results;
 using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
-using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 
 namespace TestesDonaMariana.Aplicacao.ModuloMateria
@@ -21,18 +20,14 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
         {
             List<IError> erros = new();
 
-            if (ValidadorMateria.ValidarCampoVazio(materia.Nome))
-                erros.Add(new Error("*Campo Obrigatório", new Error("Nome")));
+            ValidationResult validacao = new ValidadorMateria().Validate(materia);
+
+            erros.AddRange(ConverterParaListaErros(validacao));
 
             if (ValidadorMateria.ValidarMateriaExistente(materia, _repositorioMateria.ObterListaRegistros()))
-                erros.Add(new Error("*Essa Materia já existe", new Error("Nome")));
+                erros.Add(new CustomError("Essa Matéria já existe", "Nome"));
 
-            if (ValidadorMateria.ValidarCampoVazio(materia.Disciplina == null ? "" : materia.Disciplina.Nome))
-                erros.Add(new Error("*Campo Obrigatório", new Error("Disciplina")));
-
-            Result resultado = Result.Fail(erros);
-
-            return resultado;
+            return Result.Fail(erros);
         }
 
         public override Result Excluir(Materia materia)
