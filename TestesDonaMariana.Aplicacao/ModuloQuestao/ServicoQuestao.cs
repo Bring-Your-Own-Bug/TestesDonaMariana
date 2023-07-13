@@ -1,4 +1,6 @@
 ﻿using FluentResults;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.ModuloDisciplina;
@@ -23,27 +25,14 @@ namespace TestesDonaMariana.Aplicacao.ModuloQuestao
         {
             List<IError> erros = new();
 
-            if (ValidadorQuestao.ValidarCampoVazio(questao.Enunciado))
-                erros.Add(new Error("*Campo Obrigatório", new Error("Enunciado")));
+            ValidationResult validacao = new ValidadorQuestao().Validate(questao);
 
-            else if (ValidadorQuestao.ValidarQuestaoExistente(questao, _resitorioQuestao.ObterListaRegistros()))
-                erros.Add(new Error("*Essa Questão já existe", new Error("Enunciado")));
+            erros.AddRange(ConverterParaListaErros(validacao));
 
-            if (ValidadorQuestao.ValidarCampoVazio(questao.Disciplina == null ? "" : questao.Disciplina.Nome))
-                erros.Add(new Error("*Campo Obrigatório", new Error("Disciplina")));
+            if (ValidadorQuestao.ValidarQuestaoExistente(questao, _resitorioQuestao.ObterListaRegistros()))
+                erros.Add(new CustomError("Essa Questão já existe", "Enunciado"));
 
-            if (ValidadorQuestao.ValidarCampoVazio(questao.Materia == null ? "" : questao.Materia.Nome))
-                erros.Add(new Error("*Campo Obrigatório", new Error("Materia")));
-
-            if (ValidadorQuestao.ValidarQtdMinimaAlternativas(questao.Alternativas.Count))
-                erros.Add(new Error("*Deve ter no mínimo 3 alternativas", new Error("Alternativas")));
-
-            if (ValidadorQuestao.ValidarCampoVazio(questao.AlternativaCorreta))
-                erros.Add(new Error("*Precisa ter 1 Resposta Correta", new Error("Alternativas")));
-
-            Result resultado = Result.Fail(erros);
-
-            return resultado;
+            return Result.Fail(erros);
         }
 
         public override Result Excluir(Questao questao)

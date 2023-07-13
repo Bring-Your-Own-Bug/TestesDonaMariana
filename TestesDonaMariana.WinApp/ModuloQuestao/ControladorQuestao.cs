@@ -24,23 +24,11 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             _repositorioDisciplina = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
-            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
         public override TabelaQuestaoControl ObterListagem()
         {
             return _tabelaQuestao;
-        }
-
-        private bool VerificarRelacoesExistentes(Questao questao)
-        {
-            if (ValidadorQuestao.ValidarDependencia(questao, new RepositorioTeste().ObterListaRegistros()))
-            {
-                MessageBox.Show($"Existem Testes cadastrados com a questão selecionada, Exclua-os para excluir essa Questão",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
-            }
-            return false;
         }
 
         private void CarregarComboBox(TelaQuestaoForm telaQuestao, Questao questao)
@@ -52,11 +40,6 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             telaQuestao.txtDisciplina.DisplayMember = "Nome";
             telaQuestao.txtDisciplina.ValueMember = "Nome";
             telaQuestao.txtDisciplina.DataSource = _repositorioDisciplina.ObterListaRegistros();
-        }
-
-        public static List<Questao>? ObterListaQuestao()
-        {
-            return new RepositorioQuestao().ObterListaRegistros();
         }
     }
 }

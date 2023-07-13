@@ -22,7 +22,6 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             _repositorioQuestao = _repositorio3;
 
             onComandosAdicionaisAddAndEdit += CarregarComboBox;
-            onValidarRelacaoExistente += VerificarRelacoesExistentes;
         }
 
         public ControladorMateria()
@@ -30,26 +29,11 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             
         }
 
-        public static List<Materia> ObterListaMateria()
-        {
-            return new RepositorioMateria().ObterListaRegistros();
-        }
-
         public override TabelaMateriaControl ObterListagem()
         {
             return _tabelaMateria;
         }
 
-        private bool VerificarRelacoesExistentes(Materia materia)
-        {
-            if (ValidadorMateria.ValidarDependencia(materia, _repositorioQuestao.ObterListaRegistros(), new RepositorioTeste().ObterListaRegistros()))
-            {
-                MessageBox.Show($"Existem Questões ou Testes cadastrados na Matéria \"{materia.Nome}\", Exclua-os para excluir essa Matéria",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
-            }
-            return false;
-        }
         private void CarregarComboBox(TelaMateriaForm telaMateria, Materia materia)
         {
             telaMateria.txtDisciplina.DisplayMember = "Nome";

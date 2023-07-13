@@ -13,12 +13,9 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         public event Func<Materia, bool, Result> OnGravarRegistro;
 
-        private List<Materia> ListaMateria { get; set; }
-
         public TelaMateriaForm()
         {
             InitializeComponent();
-            ListaMateria = ControladorMateria.ObterListaMateria();
         }
 
         public Materia? Entidade
@@ -70,9 +67,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
             _resultado = OnGravarRegistro(_materia, sender == btnAdd);
 
             if (_resultado.IsFailed)
-            {
                 MostrarErros();
-            }
         }
 
         private void MostrarErros()

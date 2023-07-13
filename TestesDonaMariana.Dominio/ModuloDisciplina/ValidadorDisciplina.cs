@@ -9,8 +9,7 @@ namespace TestesDonaMariana.Dominio.ModuloDisciplina
         {
             RuleFor(d => d.Nome)
                 .MinimumLength(3).WithMessage(@"'Nome' deve ser maior ou igual a 3 caracteres.")
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty();
         }
 
         public static bool ValidarDisciplinaExistente(Disciplina disciplina, List<Disciplina> listaDisciplinas)

@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
@@ -14,12 +15,10 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         public event Func<Questao, bool, Result> OnGravarRegistro;
 
         private List<Materia> ListaMateria { get; set; } = new();
-        private List<Questao> ListaQuestao { get; set; } = new();
 
         public TelaQuestaoForm()
         {
             InitializeComponent();
-            ListaQuestao = ControladorQuestao.ObterListaQuestao();
         }
 
         public Questao? Entidade
@@ -79,9 +78,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             _resultado = OnGravarRegistro(_questao, sender == btnAdd);
 
             if (_resultado.IsFailed)
-            {
                 MostrarErros();
-            }
         }
 
         private void AdicionarAlternativa(object sender, EventArgs e)
@@ -92,12 +89,12 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
             {
                 if (ValidadorQuestao.ValidarAlternativaExistente(txtResposta.Text, listAlternativas.Items.Cast<string>().ToList()))
                 {
-                    lbErroAlternativas.Text = "*Alternativa já existente";
+                    lbErroAlternativas.Text = "Alternativa já existente";
                     lbErroAlternativas.Visible = true;
                 }
                 else if (ValidadorQuestao.ValidarQtdMaximaAlternativas(listAlternativas.Items.Count))
                 {
-                    lbErroAlternativas.Text = "*Máximo de 4 alternativas";
+                    lbErroAlternativas.Text = "Máximo de 4 alternativas";
                     lbErroAlternativas.Visible = true;
                 }
                 else
@@ -157,14 +154,14 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private void MostrarErros()
         {
-            for (int i = 0; i < _resultado.Reasons.Count; i++)
+            foreach (CustomError item in _resultado.Errors)
             {
-                switch (_resultado.Errors[i].Reasons[0].Message)
+                switch (item.PropertyName)
                 {
-                    case "Enunciado": lbErroEnunciado.Text = _resultado.Errors[i].Message; lbErroEnunciado.Visible = true; break;
-                    case "Disciplina": lbErroDisciplina.Text = _resultado.Errors[i].Message; lbErroDisciplina.Visible = true; break;
-                    case "Materia": lbErroMateria.Text = _resultado.Errors[i].Message; lbErroMateria.Visible = true; break;
-                    case "Alternativas": lbErroAlternativas.Text = _resultado.Errors[i].Message; lbErroAlternativas.Visible = true; break;
+                    case "Enunciado": lbErroEnunciado.Text = item.ErrorMessage; lbErroEnunciado.Visible = true; break;
+                    case "Disciplina": lbErroDisciplina.Text = item.ErrorMessage; lbErroDisciplina.Visible = true; break;
+                    case "Materia": lbErroMateria.Text = item.ErrorMessage; lbErroMateria.Visible = true; break;
+                    case "Alternativas": lbErroAlternativas.Text = item.ErrorMessage; lbErroAlternativas.Visible = true; break;
                 }
             }
         }

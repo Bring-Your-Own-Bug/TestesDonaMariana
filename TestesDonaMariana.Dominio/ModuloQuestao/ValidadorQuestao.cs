@@ -1,11 +1,32 @@
-﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+﻿using FluentValidation;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloQuestao
 {
-    public static class ValidadorQuestao
+    public class ValidadorQuestao : AbstractValidator<Questao>
     {
+        public ValidadorQuestao()
+        {
+            RuleFor(q => q.Enunciado)
+                .MinimumLength(6).WithMessage(@"'Enunciado' deve ser maior ou igual a 6 caracteres.")
+                .NotEmpty();
+
+            RuleFor(q => q.Disciplina)
+                .NotNull()
+                .NotEmpty();
+
+            RuleFor(q => q.Materia)
+                .NotEmpty();
+
+            RuleFor(q => q.AlternativaCorreta)
+                .NotEmpty().WithMessage("Precisa ter 1 Resposta Correta").OverridePropertyName("Alternativas");
+
+            RuleFor(q => q.Alternativas.Count)
+                .LessThanOrEqualTo(0).WithMessage("Deve ter no mínimo 3 alternativas").OverridePropertyName("Alternativas");
+        }
+
         public static bool ValidarCampoVazio(string campo)
         {
             return string.IsNullOrWhiteSpace(campo);

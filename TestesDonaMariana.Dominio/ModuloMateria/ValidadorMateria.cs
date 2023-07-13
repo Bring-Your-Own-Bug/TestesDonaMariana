@@ -10,8 +10,7 @@ namespace TestesDonaMariana.Dominio.ModuloMateria
         {
             RuleFor(m => m.Nome)
                 .MinimumLength(3).WithMessage(@"'Nome' deve ser maior ou igual a 3 caracteres.")
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(m => m.Disciplina)
                 .NotEmpty();
