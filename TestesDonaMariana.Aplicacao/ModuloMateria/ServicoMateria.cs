@@ -1,6 +1,9 @@
 ﻿using FluentResults;
+using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
+using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 
 namespace TestesDonaMariana.Aplicacao.ModuloMateria
@@ -14,24 +17,36 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
             _repositorioMateria = _repositorio;
         }
 
-        public override Result Adicionar(Materia entidade, bool adicionar = false)
+        public override Result ValidarRegistro(Materia materia)
         {
-            throw new NotImplementedException();
+            Result resultado = new();
+
+            if (ValidadorDisciplina.ValidarCampoVazio(materia.Nome))
+                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
+
+            if (ValidadorMateria.ValidarMateriaExistente(materia, _repositorioMateria.ObterListaRegistros()))
+                resultado = Result.Fail(new Error("*Essa Materia já existe", new Error("Nome")));
+
+            if (ValidadorDisciplina.ValidarCampoVazio(materia.Disciplina == null ? "" : materia.Disciplina.Nome))
+                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Disciplina")));
+
+            return resultado;
         }
 
-        public override Result Editar(Materia entidade, bool adicionar = false)
+        public override Result Excluir(Materia materia)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                _repositorioMateria.Excluir(materia);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("FK_TBQUESTAO_TBMATERIA"))
+                    return Result.Fail(new Error("*Essa Matéria está relacionada à uma Questão." +
+                        " Primeiro exclua a Questão relacionada"));
+            }
 
-        public override Result Excluir(Materia entidade)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Result ValidarRegistro(Materia entidade)
-        {
-            throw new NotImplementedException();
+            return Result.Ok();
         }
     }
 }

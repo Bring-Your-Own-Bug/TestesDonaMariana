@@ -22,7 +22,7 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
             if (ValidadorDisciplina.ValidarCampoVazio(disciplina.Nome))
                 resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
 
-            if (ValidadorDisciplina.ValidarNomeExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
+            if (ValidadorDisciplina.ValidarDisciplinaExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
                 resultado = Result.Fail(new Error("*Essa Disciplina já existe", new Error("Nome")));
 
             return resultado;

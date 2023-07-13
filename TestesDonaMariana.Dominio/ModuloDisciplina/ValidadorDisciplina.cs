@@ -7,7 +7,7 @@
             return string.IsNullOrWhiteSpace(campo);
         }
 
-        public static bool ValidarNomeExistente(Disciplina disciplina, List<Disciplina> listaDisciplinas)
+        public static bool ValidarDisciplinaExistente(Disciplina disciplina, List<Disciplina> listaDisciplinas)
         {
             return listaDisciplinas.Any(m => string.Equals(m.Nome.RemoverAcento(), disciplina.Nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Id != disciplina.Id);
         }

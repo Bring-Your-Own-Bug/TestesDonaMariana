@@ -6,19 +6,22 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
 {
     public static class ValidadorQuestao
     {
+        public static bool ValidarCampoVazio(string campo)
+        {
+            return string.IsNullOrWhiteSpace(campo);
+        }
+
+        public static bool ValidarQuestaoExistente(Questao questao, List<Questao> listaQuestao)
+        {
+            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), questao.Enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase)
+            && questao.Materia.Nome == q.Materia.Nome
+            && questao.Materia.Serie == q.Materia.Serie
+            && questao.Disciplina.Nome == q.Disciplina.Nome));
+        }
+
         public static bool ValidarAlternativaExistente(string alternativaAdd, List<string> lista)
         {
             return (lista.Any(alternativa => string.Equals(alternativa.Substring(3), alternativaAdd, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        public static bool ValidarQuestaoExistente(string enunciado, Disciplina disciplina, Materia materia, List<Questao> listaQuestao)
-        {
-            return (listaQuestao.Any(q => string.Equals(q.Enunciado.RemoverAcento(), enunciado.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && materia.Nome == q.Materia.Nome && materia.Serie == q.Materia.Serie && disciplina.Nome == q.Disciplina.Nome));
-        }
-
-        public static bool ValidarAlternativaCorreta(int checkCount)
-        {
-            return checkCount == 0;
         }
 
         public static bool ValidarQtdMinimaAlternativas(int qtdAlternativas)

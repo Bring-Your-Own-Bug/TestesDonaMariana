@@ -1,13 +1,14 @@
-﻿using TestesDonaMariana.Dominio.ModuloQuestao;
+﻿using TestesDonaMariana.Dominio.ModuloDisciplina;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Dominio.ModuloMateria
 {
     public static class ValidadorMateria
     {
-        public static bool ValidarNomeExistente(string nome, Serie serie, ModuloDisciplina.Disciplina? disciplina, List<Materia> listaMateria)
+        public static bool ValidarMateriaExistente(Materia materia, List<Materia> listaMateria)
         {
-            return (listaMateria.Any(m => string.Equals(m.Nome.RemoverAcento(), nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Serie == serie && m.Disciplina.Nome == disciplina.Nome));
+            return (listaMateria.Any(m => string.Equals(m.Nome.RemoverAcento(), materia.Nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Serie == materia.Serie && m.Disciplina.Nome == materia.Disciplina.Nome && m.Id != materia.Id));
         }
 
         public static bool ValidarDependencia(Materia materia, List<Questao> questoes, List<Teste> testes)

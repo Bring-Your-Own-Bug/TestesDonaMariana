@@ -6,7 +6,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
     {
         TEntidade? Entidade { get; set; }
 
-        public event GravarRegistroDelegate<TEntidade> onGravarRegistro;
+        event GravarRegistroDelegate<TEntidade> onGravarRegistro;
 
         DialogResult ShowDialog();
     }
