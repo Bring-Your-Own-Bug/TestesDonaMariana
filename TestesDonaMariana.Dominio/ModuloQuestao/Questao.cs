@@ -5,7 +5,7 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
 {
     public class Questao : Entidade<Questao>
     {
-        public Disciplina? Disciplina => Materia == null ? null : Materia.Disciplina;
+        public Disciplina? Disciplina => Materia.Disciplina;
         public Materia Materia { get; set; }
         public string Enunciado { get; set; }
         public List<string> Alternativas { get; set; }

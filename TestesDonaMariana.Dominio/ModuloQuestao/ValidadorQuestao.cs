@@ -14,8 +14,7 @@ namespace TestesDonaMariana.Dominio.ModuloQuestao
                 .NotEmpty();
 
             RuleFor(q => q.Disciplina)
-                .NotNull()
-                .NotEmpty();
+                .NotEmpty().When(q => q.Materia != null).NotEmpty();
 
             RuleFor(q => q.Materia)
                 .NotEmpty();
