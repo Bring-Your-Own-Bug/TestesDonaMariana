@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using FluentValidation.Results;
 using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.ModuloDisciplina;
@@ -8,7 +9,7 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
 {
     public class ServicoDisciplina : ServicoBase<Disciplina, RepositorioDisciplina>
     {
-        private RepositorioDisciplina _repositorioDisciplina;
+        private readonly RepositorioDisciplina _repositorioDisciplina;
 
         public ServicoDisciplina(RepositorioDisciplina _repositorio) : base(_repositorio)
         {
@@ -17,13 +18,18 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
 
         public override Result ValidarRegistro(Disciplina disciplina)
         {
-            Result resultado = new();
+            ValidadorDisciplina validador = new();
 
-            if (ValidadorDisciplina.ValidarCampoVazio(disciplina.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
+            ValidationResult resultadoValidacao = validador.Validate(disciplina);
+
+            List<IError> erros = new();
+
+            erros.AddRange(resultadoValidacao.Errors.Select(item => new CustomError(item.ErrorMessage, item.PropertyName)));
 
             if (ValidadorDisciplina.ValidarDisciplinaExistente(disciplina, _repositorioDisciplina.ObterListaRegistros()))
-                resultado = Result.Fail(new Error("*Essa Disciplina já existe", new Error("Nome")));
+                erros.Add(new CustomError("*Essa disciplina já existe", "Nome"));
+
+            Result resultado = Result.Fail(erros);
 
             return resultado;
         }

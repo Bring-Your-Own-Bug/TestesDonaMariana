@@ -17,9 +17,7 @@ namespace TestesDonaMariana.Aplicacao.Compartilhado
 
         public virtual Result Adicionar(TEntidade entidade, bool adicionar = false)
         {
-            Result resultado = new();
-
-            resultado = ValidarRegistro(entidade);
+            Result resultado = ValidarRegistro(entidade);
 
             if (resultado.IsFailed)
                 return resultado;
@@ -32,9 +30,7 @@ namespace TestesDonaMariana.Aplicacao.Compartilhado
 
         public virtual Result Editar(TEntidade entidade, bool editar = false)
         {
-            Result resultado = new();
-
-            resultado = ValidarRegistro(entidade);
+            Result resultado = ValidarRegistro(entidade);
 
             if (resultado.IsFailed)
                 return resultado;

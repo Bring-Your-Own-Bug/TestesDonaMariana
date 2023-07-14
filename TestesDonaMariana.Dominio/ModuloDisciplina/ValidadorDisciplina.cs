@@ -1,15 +1,30 @@
-﻿namespace TestesDonaMariana.Dominio.ModuloDisciplina
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
+
+namespace TestesDonaMariana.Dominio.ModuloDisciplina
 {
-    public static class ValidadorDisciplina
+    public class ValidadorDisciplina : AbstractValidator<Disciplina>
     {
-        public static bool ValidarCampoVazio(string campo)
+        public ValidadorDisciplina()
         {
-            return string.IsNullOrWhiteSpace(campo);
+            RuleFor(x => x.Nome)
+                .NotEmpty()
+                .NotNull()
+                .Custom(ValidarCaractereInvalido);
         }
 
-        public static bool ValidarDisciplinaExistente(Disciplina disciplina, List<Disciplina> listaDisciplinas)
+        private void ValidarCaractereInvalido(string nome, ValidationContext<Disciplina> contexto)
         {
-            return listaDisciplinas.Any(m => string.Equals(m.Nome.RemoverAcento(), disciplina.Nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && m.Id != disciplina.Id);
+            if (string.IsNullOrWhiteSpace(nome))
+                return;
+
+            if (!Regex.IsMatch(nome, @"^[\p{L}\p{M}'\s-\d]+$"))
+                contexto.AddFailure("Caractere Inválido");
+        }
+
+        public static bool ValidarDisciplinaExistente(Disciplina disciplina, List<Disciplina> disciplinas)
+        {
+            return disciplinas.Any(d => string.Equals(d.Nome.RemoverAcento(), disciplina.Nome.RemoverAcento(), StringComparison.OrdinalIgnoreCase) && d.Id != disciplina.Id);
         }
     }
 }

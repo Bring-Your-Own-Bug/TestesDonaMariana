@@ -87,7 +87,6 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private void AdicionarAlternativa(object sender, EventArgs e)
         {
-            ValidarCampos(sender, e);
 
             if (!string.IsNullOrWhiteSpace(txtResposta.Text))
             {

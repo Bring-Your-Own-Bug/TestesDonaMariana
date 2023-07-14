@@ -1,4 +1,6 @@
 ﻿using FluentResults;
+using iText.StyledXmlParser.Node;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.ModuloDisciplina
@@ -63,11 +65,11 @@ namespace TestesDonaMariana.WinApp.ModuloDisciplina
 
         private void MostrarErros()
         {
-            for (int i = 0; i < _resultado.Reasons.Count; i++)
+            foreach (CustomError item in _resultado.Errors.Cast<CustomError>())
             {
-                switch (_resultado.Errors[i].Reasons[i].Message)
+                switch (item.PropertyName)
                 {
-                    case "Nome": lbErroNome.Text = _resultado.Errors[i].Message; lbErroNome.Visible = true; break;
+                    case "Nome": lbErroNome.Text = item.ErrorMessage; lbErroNome.Visible = true; break;
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using FluentValidation;
 using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.ModuloDisciplina;
@@ -19,16 +20,18 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
 
         public override Result ValidarRegistro(Materia materia)
         {
-            Result resultado = new();
+            ValidadorMateria validador = new();
 
-            if (ValidadorDisciplina.ValidarCampoVazio(materia.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Nome")));
+            var resultadoValidacao = validador.Validate(materia);
+
+            List<IError> erros = new();
+
+            erros.AddRange(resultadoValidacao.Errors.Select(item => new CustomError(item.ErrorMessage, item.PropertyName)));
 
             if (ValidadorMateria.ValidarMateriaExistente(materia, _repositorioMateria.ObterListaRegistros()))
-                resultado = Result.Fail(new Error("*Essa Materia já existe", new Error("Nome")));
+                erros.Add(new CustomError("*Essa materia já existe", "Nome"));
 
-            if (ValidadorDisciplina.ValidarCampoVazio(materia.Disciplina == null ? "" : materia.Disciplina.Nome))
-                resultado = Result.Fail(new Error("*Campo Obrigatório", new Error("Disciplina")));
+            Result resultado = Result.Fail(erros);
 
             return resultado;
         }
@@ -44,6 +47,10 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
                 if (ex.Message.Contains("FK_TBQUESTAO_TBMATERIA"))
                     return Result.Fail(new Error("*Essa Matéria está relacionada à uma Questão." +
                         " Primeiro exclua a Questão relacionada"));
+
+                if (ex.Message.Contains("FK_TBTESTE_TBMATERIA"))
+                    return Result.Fail(new Error("*Essa Matéria está relacionada à um Teste." +
+                        " Primeiro exclua o Teste relacionado"));
             }
 
             return Result.Ok();
