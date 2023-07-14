@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
@@ -9,7 +10,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
     {
         private Materia _materia;
 
-        private bool _isValid;
+        private Result _resultado = new();
 
         public event Func<Materia, bool, Result> OnGravarRegistro;
 
@@ -40,21 +41,11 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
         {
             ValidarCampos(sender, e);
 
-            if (_isValid == false)
+            if (_resultado.IsFailed)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
-                return;
             }
-
-            Serie serie = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
-
-            Disciplina? disciplina = txtDisciplina.SelectedItem as Disciplina;
-
-            _materia = new Materia(txtNome.Text, disciplina, serie);
-
-            if (_materia.Id == 0)
-                _materia.Id = int.Parse(txtId.Text);
         }
 
         private void ImplementarMetodos()
@@ -66,32 +57,42 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         private void ValidarCampos(object sender, EventArgs e)
         {
+            ResetarErros();
+
             Serie serie = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
 
             Disciplina? disciplina = txtDisciplina.SelectedItem as Disciplina;
 
+            _materia = new Materia(txtNome.Text, disciplina, serie);
+
+            if (_materia.Id == 0)
+                _materia.Id = int.Parse(txtId.Text);
+
+            _resultado = OnGravarRegistro(_materia, sender == btnAdd);
+
+            if (_resultado.IsFailed)
+                MostrarErros();
+        }
+
+        private void MostrarErros()
+        {
+            foreach (CustomError item in _resultado.Errors)
+            {
+                switch (item.PropertyName)
+                {
+                    case "Nome": lbErroNome.Text = item.ErrorMessage; lbErroNome.Visible = true; break;
+                    case "Disciplina": lbErroDisciplina.Text = item.ErrorMessage; lbErroDisciplina.Visible = true; break;
+                }
+            }
+        }
+
+        private void ResetarErros()
+        {
             lbErroNome.Visible = false;
             lbErroDisciplina.Visible = false;
 
-            if (txtNome.Text.ValidarCampoVazio())
-            {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Campo obrigatório";
-            }
-            else if (txtDisciplina.Text.ValidarCampoVazio())
-            {
-                lbErroDisciplina.Visible = true;
-            }
-            else if (_materia != null && string.Equals(_materia.Nome, txtNome.Text, StringComparison.OrdinalIgnoreCase) && _materia.Serie == serie && _materia.Disciplina.Nome == disciplina.Nome) { }
-            else if (ValidadorMateria.ValidarNomeExistente(txtNome.Text, serie, disciplina, ListaMateria))
-            {
-                lbErroNome.Visible = true;
-                lbErroNome.Text = "*Essa matéria já existe";
-            }
-
-            lbErroDisciplina.Visible = txtDisciplina.Text.ValidarCampoVazio();
-
-            _isValid = !(lbErroNome.Visible || lbErroDisciplina.Visible);
+            _resultado.Errors.Clear();
+            _resultado.Reasons.Clear();
         }
     }
 }

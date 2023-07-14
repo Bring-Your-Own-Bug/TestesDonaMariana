@@ -1,6 +1,10 @@
 ﻿using FluentResults;
+using FluentValidation.Results;
+using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
+using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
+using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 
 namespace TestesDonaMariana.Aplicacao.ModuloMateria
@@ -14,24 +18,38 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
             _repositorioMateria = _repositorio;
         }
 
-        public override Result Adicionar(Materia entidade, bool adicionar = false)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Result Editar(Materia entidade, bool adicionar = false)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Result Excluir(Materia entidade)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _repositorioMateria.Excluir(entidade);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("FK_TBTESTE_TBMATERIA"))
+                    return Result.Fail(new Error("*Essa Matéria está relacionada à um Teste." +
+                        " Primeiro exclua o Teste relacionado"));
+
+                if (ex.Message.Contains("FK_TBDISCIPLINA_TBMATERIA"))
+                    return Result.Fail(new Error("*Essa Matéria está relacionada à uma Disciplina." +
+                        " Primeiro exclua a Disciplina relacionada"));
+            }
+
+            return Result.Ok();
         }
 
-        public override Result ValidarRegistro(Materia entidade)
+        public override Result ValidarRegistro(Materia materia)
         {
-            throw new NotImplementedException();
+            List<IError> erros = new();
+
+            ValidationResult validacao = new ValidadorMateria().Validate(materia);
+            
+            erros.AddRange(ConverterParaListaErros(validacao));
+
+            if (ValidadorMateria.ValidarMateriaExistente(materia, _repositorioMateria.ObterListaRegistros()))
+                erros.Add(new CustomError("Essa Matéria já existe", "Nome"));
+
+            return Result.Fail(erros);
         }
     }
 }
