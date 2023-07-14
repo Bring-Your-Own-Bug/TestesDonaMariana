@@ -1,4 +1,5 @@
-﻿using iText.StyledXmlParser.Jsoup.Nodes;
+﻿using FluentResults;
+using iText.StyledXmlParser.Jsoup.Nodes;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
@@ -12,7 +13,7 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private bool _isValid;
 
-        public event GravarRegistroDelegate<Questao> onGravarRegistro;
+        public event Func<Questao, bool, Result> OnGravarRegistro;
 
         private List<Materia> ListaMateria { get; set; } = new();
         private List<Questao> ListaQuestao { get; set; } = new();

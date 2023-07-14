@@ -2,7 +2,6 @@
 using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dados.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
 
 namespace TestesDonaMariana.WinApp.Compartilhado
 {
@@ -62,7 +61,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             onComandosAdicionaisAddAndEdit?.Invoke(tela, tela.Entidade);
 
-            tela.onGravarRegistro += _servico.Adicionar;
+            tela.OnGravarRegistro += _servico.Adicionar;
 
             TelaPrincipalForm.AtualizarStatus($"Cadastrando {typeof(TEntidade).Name}");
 
@@ -80,7 +79,7 @@ namespace TestesDonaMariana.WinApp.Compartilhado
 
             tela.Entidade = entidade;
 
-            tela.onGravarRegistro += _servico.Editar;
+            tela.OnGravarRegistro += _servico.Editar;
 
             TelaPrincipalForm.AtualizarStatus($"Editando {typeof(TEntidade).Name}");
 

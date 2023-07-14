@@ -8,6 +8,7 @@ using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 using static System.Net.Mime.MediaTypeNames;
 using Text = iText.Layout.Element.Text;
+using FluentResults;
 
 namespace TestesDonaMariana.WinApp.ModuloTeste
 {
@@ -17,7 +18,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private bool _isValid;
 
-        public event GravarRegistroDelegate<Teste> onGravarRegistro;
+        public event Func<Teste, bool, Result> OnGravarRegistro;
 
         public TelaPdfTesteForm(Teste teste)
         {

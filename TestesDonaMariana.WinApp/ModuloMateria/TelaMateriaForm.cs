@@ -1,4 +1,5 @@
-﻿using TestesDonaMariana.Dominio.Compartilhado;
+﻿using FluentResults;
+using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 
@@ -10,7 +11,7 @@ namespace TestesDonaMariana.WinApp.ModuloMateria
 
         private bool _isValid;
 
-        public event GravarRegistroDelegate<Materia> onGravarRegistro;
+        public event Func<Materia, bool, Result> OnGravarRegistro;
 
         private List<Materia> ListaMateria { get; set; }
 
