@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using iText.StyledXmlParser.Jsoup.Nodes;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
@@ -10,6 +11,8 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
     public partial class TelaQuestaoForm : Form, ITelaBase<Questao>
     {
         private Questao _questao;
+
+        private Result _resultado = new();
 
         private bool _isValid;
 
@@ -47,21 +50,11 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
         {
             ValidarCampos(sender, e);
 
-            if (_isValid == false)
+            if (_resultado.IsFailed)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
-                return;
             }
-
-            Materia? materia = txtMateria.SelectedItem as Materia;
-
-            List<string> alternativas = listAlternativas.Items.Cast<string>().ToList();
-
-            _questao = new Questao(materia, txtEnunciado.Text, alternativas, listAlternativas.CheckedItems[0].ToString());
-
-            if (_questao.Id == 0)
-                _questao.Id = int.Parse(txtId.Text);
         }
 
         private void ImplementarMetodos()
@@ -73,14 +66,13 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
         private void ValidarCampos(object sender, EventArgs e)
         {
-            lbErroAlternativas.Visible = false;
-            lbErroEnunciado.Visible = false;
-            lbErroMateria.Visible = false;
-            lbErroDisciplina.Visible = false;
-
-            Materia? materia = txtMateria.SelectedItem as Materia;
+            ResetarErros();
 
             Disciplina? disciplina = txtDisciplina.SelectedItem as Disciplina;
+            Materia? materia = txtMateria.SelectedItem as Materia;
+            Questao? questao = txtEnunciado.Tag as Questao;
+
+            _questao = new Questao(materia,txtEnunciado.Text, questao.Alternativas, questao.AlternativaCorreta);
 
             if (ValidadorQuestao.ValidarQtdMinimaAlternativas(listAlternativas.Items.Count))
             {
@@ -93,30 +85,13 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
                 lbErroAlternativas.Visible = true;
             }
 
-            if (txtEnunciado.Text.ValidarCampoVazio())
-            {
-                lbErroEnunciado.Text = "*Campo obrigatório";
-                lbErroEnunciado.Visible = true;
-            }
-            else if (txtDisciplina.Text.ValidarCampoVazio())
-            {
-                lbErroDisciplina.Visible = true;
-            }
-            else if (txtMateria.Text.ValidarCampoVazio())
-            {
-                lbErroMateria.Visible = true;
-            }
-            else if (_questao != null && string.Equals(_questao.Enunciado, txtEnunciado.Text, StringComparison.OrdinalIgnoreCase) && materia.Nome == _questao.Materia.Nome && materia.Serie == _questao.Materia.Serie && disciplina.Nome == _questao.Disciplina.Nome) { }
-            else if (ValidadorQuestao.ValidarQuestaoExistente(txtEnunciado.Text, disciplina, materia, ListaQuestao))
-            {
-                lbErroEnunciado.Visible = true;
-                lbErroEnunciado.Text = "*Essa questão já existe";
-            }
+            if (_questao.Id == 0)
+                _questao.Id = int.Parse(txtId.Text);
 
-            if (lbErroDisciplina.Visible || lbErroMateria.Visible || lbErroEnunciado.Visible || lbErroAlternativas.Visible)
-                _isValid = false;
-            else
-                _isValid = true;
+            _resultado = OnGravarRegistro(_questao, sender == btnAdd);
+
+            if (_resultado.IsFailed)
+                MostrarErros();
         }
 
         private void AdicionarAlternativa(object sender, EventArgs e)
@@ -188,6 +163,31 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
                 txtMateria.DataSource = ListaMateria.FindAll(m => m.Disciplina.Id == disciplina.Id);
             }
+        }
+
+        private void MostrarErros()
+        {
+            foreach (CustomError item in _resultado.Errors)
+            {
+                switch (item.PropertyName)
+                {
+                    case "Enunciado":  lbErroEnunciado.Text = item.ErrorMessage; lbErroEnunciado.Visible = true; break;
+                    case "Materia": lbErroMateria.Text = item.ErrorMessage; lbErroMateria.Visible = true; break;
+                    case "Disciplina": lbErroDisciplina.Text = item.ErrorMessage; lbErroDisciplina.Visible = true; break;
+                    case "Alternativas": lbErroAlternativas.Text = item.ErrorMessage; lbErroAlternativas.Visible = true; break;
+                }
+            }
+        }
+
+        private void ResetarErros()
+        {
+            lbErroAlternativas.Visible = false;
+            lbErroEnunciado.Visible = false;
+            lbErroMateria.Visible = false;
+            lbErroDisciplina.Visible = false;
+
+            _resultado.Errors.Clear();
+            _resultado.Reasons.Clear();
         }
     }
 }
