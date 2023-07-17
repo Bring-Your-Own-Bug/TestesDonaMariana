@@ -29,10 +29,6 @@ namespace TestesDonaMariana.Aplicacao.ModuloMateria
                 if (ex.Message.Contains("FK_TBTESTE_TBMATERIA"))
                     return Result.Fail(new Error("*Essa Matéria está relacionada à um Teste." +
                         " Primeiro exclua o Teste relacionado"));
-
-                if (ex.Message.Contains("FK_TBDISCIPLINA_TBMATERIA"))
-                    return Result.Fail(new Error("*Essa Matéria está relacionada à uma Disciplina." +
-                        " Primeiro exclua a Disciplina relacionada"));
             }
 
             return Result.Ok();

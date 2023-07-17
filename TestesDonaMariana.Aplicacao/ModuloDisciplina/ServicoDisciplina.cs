@@ -42,7 +42,7 @@ namespace TestesDonaMariana.Aplicacao.ModuloDisciplina
                     return Result.Fail(new Error("*Essa Disciplina está relacionada à um Teste." +
                         " Primeiro exclua o Teste relacionado"));
 
-                if (ex.Message.Contains("FK_TBMATERIA_TBDISCIPLINA"))
+                if (ex.Message.Contains("FK_TBDISCIPLINA_TBMATERIATBDISCIPLINA"))
                     return Result.Fail(new Error("*Essa Disciplina está relacionada à uma Matéria." +
                         " Primeiro exclua a Matéria relacionada"));
             }

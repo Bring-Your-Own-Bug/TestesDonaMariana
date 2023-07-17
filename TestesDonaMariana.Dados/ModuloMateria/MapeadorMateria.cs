@@ -22,12 +22,10 @@ namespace TestesDonaMariana.Dados.ModuloMateria
 
             int id = Convert.ToInt32(leitorRegistros["MATERIA_ID"]);
             string nome = Convert.ToString(leitorRegistros["MATERIA_NOME"])!;
-            Disciplina disciplina = new MapeadorDisciplina().ConverterRegistro(leitorRegistros);
             Serie serie = (Serie)Convert.ToInt32(leitorRegistros["MATERIA_SERIE"]);
 
             materia.Id = id;
             materia.Nome = nome;
-            materia.Disciplina = disciplina;
             materia.Serie = serie;
 
             return materia;
