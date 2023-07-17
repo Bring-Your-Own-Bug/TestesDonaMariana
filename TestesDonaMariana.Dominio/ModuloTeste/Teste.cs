@@ -31,5 +31,27 @@ namespace TestesDonaMariana.Dominio.ModuloTeste
             DataGeracao = dataGeracao;
             Recuperacao = recuperacao;
         }
+
+        public List<Questao> SortearQuestoes(List<Questao> listaQuestoesPorMateria, int quatidadeQuestoes)
+        {
+            List<Questao> listaQuestoesSorteadas = listaQuestoesPorMateria.OrderBy(q => Guid.NewGuid()).Take(quatidadeQuestoes).ToList();
+
+            //if (listaQuestoesPorMateria.Count >= quatidadeQuestoes)
+            //{
+            //    Random random = new();
+
+            //    for (int i = 0; i < quatidadeQuestoes; i++)
+            //    {
+            //        int indexRandom = random.Next(quatidadeQuestoes);
+
+            //        if (listaQuestoesSorteadas.Contains(listaQuestoesPorMateria[indexRandom]))
+            //            i--;
+            //        else
+            //            listaQuestoesSorteadas.Add(listaQuestoesPorMateria[indexRandom]);
+            //    }
+            //}
+
+            return listaQuestoesSorteadas;
+        }
     }
 }

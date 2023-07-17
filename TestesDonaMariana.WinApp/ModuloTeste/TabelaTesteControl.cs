@@ -9,7 +9,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         public TabelaTesteControl()
         {
             InitializeComponent();
-            gridTeste.ConfigurarTabelaGrid("Número", "Título", "Disciplina", "Matéria", "N° Questões", "Série", "Recuperação");
+            gridTeste.ConfigurarTabelaGrid("Número", "Título", "Disciplina", "Matéria", "N° Questões", "Série", "Recuperação", "Data Geração");
         }
 
         public DataGridView DataGridView => gridTeste;
@@ -21,7 +21,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             foreach (Teste item in testes)
             {
                 DataGridViewRow row = new();
-                row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, item.ListaQuestoes.Count, item.Serie.ObterDescricao(), item.Recuperacao.ObterDescricao());
+                row.CreateCells(gridTeste, item.Id, item.Titulo, item.Disciplina.Nome, item.Materia == null ? "Geral" : item.Materia.Nome, item.ListaQuestoes.Count, item.Serie.ObterDescricao(), item.Recuperacao.ObterDescricao(), item.DataGeracao.ToString("d"));
                 row.Cells[0].Tag = item;
                 gridTeste.Rows.Add(row);
             }

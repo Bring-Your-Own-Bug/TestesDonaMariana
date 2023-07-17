@@ -1,11 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using TestesDonaMariana.Aplicacao.ModuloQuestao;
-using TestesDonaMariana.Aplicacao.ModuloTeste;
+﻿using TestesDonaMariana.Aplicacao.ModuloTeste;
 using TestesDonaMariana.Dados.ModuloDisciplina;
 using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
@@ -90,18 +87,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
             CarregarRegistros();
         }
 
-        public static List<Teste>? ObterListaTeste()
-        {
-            return new RepositorioTeste().ObterListaRegistros();
-        }
         public static List<Materia>? ObterListaMateria()
         {
             return new RepositorioMateria().ObterListaRegistros();
         }
-        public static List<Disciplina>? ObterListaDisciplina()
-        {
-            return new RepositorioDisciplina().ObterListaRegistros();
-        }
+
         public static List<Questao>? ObterListaQuestao()
         {
             return new RepositorioQuestao().ObterListaRegistros();

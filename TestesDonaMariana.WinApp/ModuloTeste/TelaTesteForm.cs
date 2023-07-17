@@ -1,4 +1,6 @@
 ﻿using FluentResults;
+using System.Linq;
+using TestesDonaMariana.Aplicacao.Compartilhado;
 using TestesDonaMariana.Dominio.Compartilhado;
 using TestesDonaMariana.Dominio.ModuloDisciplina;
 using TestesDonaMariana.Dominio.ModuloMateria;
@@ -11,24 +13,20 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
     {
         private Teste _teste;
 
-        private bool _isValid;
-
-        private readonly List<Questao> _listaQuestoesSorteadas;
+        private Result _resultado = new();
 
         public event Func<Teste, bool, Result> OnGravarRegistro;
 
         private List<Questao> ListaQuestao { get; set; }
-        private List<Teste> ListaTeste { get; set; }
         private List<Materia> ListaMateria { get; set; }
 
         public TelaTesteForm()
         {
             InitializeComponent();
 
-            _listaQuestoesSorteadas = new List<Questao>();
             ListaQuestao = ControladorTeste.ObterListaQuestao();
-            ListaTeste = ControladorTeste.ObterListaTeste();
             ListaMateria = ControladorTeste.ObterListaMateria();
+            _teste = new Teste();
         }
 
         public Teste? Entidade
@@ -46,7 +44,6 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 rdSegundaSerie.Checked = ckbRecuperacao.Checked && value.Serie == Serie.Segunda;
                 numQuestao.Value = value.NumeroDeQuestoes;
                 listQuestoes.Items.AddRange(value.ListaQuestoes.ToArray());
-                _listaQuestoesSorteadas.AddRange(value.ListaQuestoes);
                 _teste = value;
             }
         }
@@ -75,30 +72,11 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
         {
             ValidarCampos(sender, e);
 
-            if (_isValid == false)
+            if (_resultado.IsFailed)
             {
                 this.DialogResult = DialogResult.None;
                 ImplementarMetodos();
-                return;
             }
-
-            Disciplina? disciplina = cmbDisciplina.SelectedItem as Disciplina;
-            Materia? materia = cmbMateria.SelectedItem as Materia;
-
-            int numeroQuestoes = Convert.ToInt32(numQuestao.Value);
-
-            Serie serieSelecao = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
-
-            Serie serie = ckbRecuperacao.Checked ? serieSelecao : materia.Serie;
-
-            Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
-
-            List<Questao> questoes = _listaQuestoesSorteadas;
-
-            _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, serie, questoes, DateTime.Now, recuperacao);
-
-            if (_teste.Id == 0)
-                _teste.Id = Convert.ToInt32(txtId.Text);
         }
 
         private void ImplementarMetodos()
@@ -112,53 +90,67 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void ValidarCampos(object sender, EventArgs e)
         {
+            ResetarErros();
+
+            Disciplina? disciplina = cmbDisciplina.SelectedItem as Disciplina;
+
+            Materia? materia = cmbMateria.SelectedItem as Materia;
+
+            int numeroQuestoes = Convert.ToInt32(numQuestao.Value);
+
+            Serie serieSelecao = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
+
+            Serie serie = ckbRecuperacao.Checked ? serieSelecao : materia == null ? serieSelecao : materia.Serie;
+
+            Recuperacao recuperacao = ckbRecuperacao.Checked ? Recuperacao.Sim : Recuperacao.Nao;
+
+            List<Questao> questoes = listQuestoes.Items.Cast<Questao>().ToList();
+
+            _teste = new Teste(txtTitulo.Text, numeroQuestoes, disciplina, materia, serie, questoes, DateTime.Now, recuperacao);
+
+            if (_teste.Id == 0)
+                _teste.Id = Convert.ToInt32(txtId.Text);
+
+            _resultado = OnGravarRegistro(_teste, sender == btnAdd);
+
+            if (_resultado.IsFailed)
+                MostrarErros();
+        }
+
+        private void MostrarErros()
+        {
+            foreach (CustomError item in _resultado.Errors)
+            {
+                switch (item.PropertyName)
+                {
+                    case "Titulo": lbErroTitulo.Text = item.ErrorMessage; lbErroTitulo.Visible = true; break;
+                    case "Disciplina": lbErroDisciplina.Text = item.ErrorMessage; lbErroDisciplina.Visible = true; break;
+                    case "Materia": lbErroMateria.Text = item.ErrorMessage; lbErroMateria.Visible = true; break;
+                    case "Questoes": lbErroQuestoes.Text = item.ErrorMessage; lbErroQuestoes.Visible = true; break;
+                }
+            }
+        }
+
+        private void ResetarErros()
+        {
             lbErroDisciplina.Visible = false;
             lbErroMateria.Visible = false;
             lbErroTitulo.Visible = false;
             lbErroQuestoes.Visible = false;
 
-            if (txtTitulo.Text.ValidarCampoVazio())
-            {
-                lbErroTitulo.Visible = true;
-                lbErroTitulo.Text = "*Campo obrigatório";
-            }
-            else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase) && _teste.ListaQuestoes.Count != 0) { }
-            else if (ValidadorTeste.ValidarTesteExistente(txtTitulo.Text, ListaTeste))
-            {
-                lbErroTitulo.Visible = true;
-                lbErroTitulo.Text = "*Esse teste já existe";
-            }
-
-            lbErroDisciplina.Visible = ValidadorTeste.ValidarDisciplinaExistente(cmbDisciplina.SelectedIndex);
-
-            lbErroMateria.Visible = ValidadorTeste.ValidarMateriaExistente(cmbMateria.SelectedIndex, ckbRecuperacao.Checked);
-
-            if (ValidadorTeste.ValidarListaQuestoes(listQuestoes.Items.Count))
-            {
-                lbErroQuestoes.Text = "*Deve ser gerado ao menos 1 questão";
-                lbErroQuestoes.Visible = true;
-            }
-
-            if (lbErroDisciplina.Visible || lbErroTitulo.Visible || lbErroMateria.Visible || lbErroQtdQuestoes.Visible || lbErroQuestoes.Visible)
-                _isValid = false;
-            else
-                _isValid = true;
+            _resultado.Errors.Clear();
+            _resultado.Reasons.Clear();
         }
 
         private void GerarQuestoes(object sender, EventArgs e)
         {
-            ValidarCampos(sender, e);
-
             ImplementarMetodos();
 
             LimparListas();
 
-            lbErroQtdQuestoes.Visible = false;
-            lbErroNoQuestoes.Visible = false;
-
             Disciplina? disciplinaSelecionada = cmbDisciplina.SelectedItem as Disciplina;
 
-            List<Questao> listaPorMateria;
+            List<Questao> listaQuestoesPorMateria;
 
             if (!lbErroMateria.Visible)
             {
@@ -166,49 +158,21 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 {
                     Serie serie = rdPrimeiraSerie.Checked ? Serie.Primeira : Serie.Segunda;
 
-                    listaPorMateria = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id && q.Materia.Serie == serie);
+                    listaQuestoesPorMateria = ListaQuestao.FindAll(q => q.Disciplina.Id == disciplinaSelecionada.Id && q.Materia.Serie == serie);
 
-                    if (ValidarSeExisteQuestaoParaGerar(listaPorMateria.Count))
-                    {
-                        lbErroNoQuestoes.Text = "*Não há questões nas Matérias dessa Disciplina para gerar";
-                        lbErroNoQuestoes.Visible = true;
-                    }
+                    listQuestoes.Items.AddRange(_teste.SortearQuestoes(listaQuestoesPorMateria, (int)numQuestao.Value).ToArray());
                 }
                 else
                 {
-                    listaPorMateria = ListaQuestao.FindAll(a => a.Materia.Id == materiaSelecionada.Id);
+                    listaQuestoesPorMateria = ListaQuestao.FindAll(a => a.Materia.Id == materiaSelecionada.Id);
 
-                    if (ValidarSeExisteQuestaoParaGerar(listaPorMateria.Count))
-                    {
-                        lbErroNoQuestoes.Text = "*Não há questões na Matéria para gerar";
-                        lbErroNoQuestoes.Visible = true;
-                    }
+                    listQuestoes.Items.AddRange(_teste.SortearQuestoes(listaQuestoesPorMateria, (int)numQuestao.Value).ToArray());
                 }
-
-                if (ValidarQtdQuestoes(listaPorMateria.Count))
-                {
-                    lbErroQtdQuestoes.Visible = true;
-                    return;
-                }
-
-                Random random = new();
-
-                for (int i = 0; i < numQuestao.Value; i++)
-                {
-                    int indexRandom = random.Next((int)numQuestao.Value);
-
-                    if (!listQuestoes.Items.Contains(listaPorMateria[indexRandom].Enunciado))
-                    {
-                        _listaQuestoesSorteadas.Add(listaPorMateria[indexRandom]);
-                        listQuestoes.Items.Add(listaPorMateria[indexRandom].Enunciado);
-                    }
-                    else
-                        i--;
-                }
-
-                if (listQuestoes.Items.Count > 0)
-                    lbErroQuestoes.Visible = false;
             }
+
+            ResetarErros();
+
+            ValidarCampos(sender, e);
         }
 
         private void HabilitarEDesabilitarMateria(object sender, EventArgs e)
@@ -255,18 +219,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
 
         private void LimparListas()
         {
-            _listaQuestoesSorteadas.Clear();
             listQuestoes.Items.Clear();
-        }
-
-        private static bool ValidarSeExisteQuestaoParaGerar(int qtdQuestoesLista)
-        {
-            return qtdQuestoesLista == 0;
-        }
-
-        private bool ValidarQtdQuestoes(int count)
-        {
-            return numQuestao.Value > count;
         }
 
         private void TelaTesteForm_Shown(object sender, EventArgs e)
