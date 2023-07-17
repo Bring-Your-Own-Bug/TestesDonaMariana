@@ -123,7 +123,7 @@ namespace TestesDonaMariana.WinApp.ModuloTeste
                 lbErroTitulo.Text = "*Campo obrigatório";
             }
             else if (_teste != null && string.Equals(_teste.Titulo, txtTitulo.Text, StringComparison.OrdinalIgnoreCase) && _teste.ListaQuestoes.Count != 0) { }
-            else if (ValidadorTeste.ValidarNomeExistente(txtTitulo.Text, ListaTeste))
+            else if (ValidadorTeste.ValidarTesteExistente(txtTitulo.Text, ListaTeste))
             {
                 lbErroTitulo.Visible = true;
                 lbErroTitulo.Text = "*Esse teste já existe";

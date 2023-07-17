@@ -1,8 +1,26 @@
-﻿namespace TestesDonaMariana.Dominio.ModuloTeste
+﻿using FluentValidation;
+
+namespace TestesDonaMariana.Dominio.ModuloTeste
 {
-    public static class ValidadorTeste
+    public class ValidadorTeste : AbstractValidator<Teste>
     {
-        public static bool ValidarNomeExistente(string titulo, List<Teste> listaTeste)
+        public ValidadorTeste()
+        {
+            RuleFor(t => t.Titulo)
+                .MinimumLength(4).WithMessage(@"'Titulo' deve ser maior ou igual a 4 caracteres.")
+                .NotEmpty();
+
+            RuleFor(t => t.Disciplina)
+                .NotEmpty();
+
+            RuleFor(t => t.Materia)
+                .NotEmpty().When(t => t.Materia != null);
+
+            RuleFor(q => q.ListaQuestoes.Count)
+                .LessThanOrEqualTo(0).WithMessage("Deve ter no mínimo 1 questão").OverridePropertyName("Questoes");
+        }
+
+        public static bool ValidarTesteExistente(string titulo, List<Teste> listaTeste)
         {
             return (listaTeste.Any(t => string.Equals(t.Titulo, titulo, StringComparison.OrdinalIgnoreCase)));
         }

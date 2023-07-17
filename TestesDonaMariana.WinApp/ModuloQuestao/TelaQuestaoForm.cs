@@ -87,25 +87,25 @@ namespace TestesDonaMariana.WinApp.ModuloQuestao
 
             if (!string.IsNullOrWhiteSpace(txtResposta.Text))
             {
-                if (ValidadorQuestao.ValidarAlternativaExistente(txtResposta.Text, listAlternativas.Items.Cast<string>().ToList()))
-                {
-                    lbErroAlternativas.Text = "Alternativa já existente";
-                    lbErroAlternativas.Visible = true;
-                }
-                else if (ValidadorQuestao.ValidarQtdMaximaAlternativas(listAlternativas.Items.Count))
-                {
-                    lbErroAlternativas.Text = "Máximo de 4 alternativas";
-                    lbErroAlternativas.Visible = true;
-                }
-                else
-                {
+                //if (ValidadorQuestao.ValidarAlternativaExistente(txtResposta.Text, listAlternativas.Items.Cast<string>().ToList()))
+                //{
+                //    lbErroAlternativas.Text = "Alternativa já existente";
+                //    lbErroAlternativas.Visible = true;
+                //}
+                //else if (ValidadorQuestao.ValidarQtdMaximaAlternativas(listAlternativas.Items.Count))
+                //{
+                //    lbErroAlternativas.Text = "Máximo de 4 alternativas";
+                //    lbErroAlternativas.Visible = true;
+                //}
+                //else
+                //{
                     char letra = 'A';
 
                     letra = (char)(letra + listAlternativas.Items.Count);
 
                     listAlternativas.Items.Add($"{letra}) {txtResposta.Text}");
-                    lbErroAlternativas.Visible = false;
-                }
+                    //lbErroAlternativas.Visible = false;
+                //}
             }
 
             txtResposta.ResetText();

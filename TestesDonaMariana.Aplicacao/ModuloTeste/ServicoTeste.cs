@@ -1,6 +1,10 @@
 ﻿using FluentResults;
+using FluentValidation.Results;
+using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
+using TestesDonaMariana.Dados.ModuloQuestao;
 using TestesDonaMariana.Dados.ModuloTeste;
+using TestesDonaMariana.Dominio.ModuloQuestao;
 using TestesDonaMariana.Dominio.ModuloTeste;
 
 namespace TestesDonaMariana.Aplicacao.ModuloTeste
@@ -14,24 +18,23 @@ namespace TestesDonaMariana.Aplicacao.ModuloTeste
             _repositorioTeste = _repositorio;
         }
 
-        public override Result Adicionar(Teste entidade, bool adicionar = false)
+        public override Result ValidarRegistro(Teste teste)
         {
-            throw new NotImplementedException();
-        }
+            List<IError> erros = new();
 
-        public override Result Editar(Teste entidade, bool adicionar = false)
-        {
-            throw new NotImplementedException();
-        }
+            ValidationResult validacao = new ValidadorTeste().Validate(teste);
 
-        public override Result Excluir(Teste entidade)
-        {
-            throw new NotImplementedException();
-        }
+            erros.AddRange(ConverterParaListaErros(validacao));
 
-        public override Result ValidarRegistro(Teste entidade)
-        {
-            throw new NotImplementedException();
+            if (ValidadorTeste.ValidarTesteExistente(teste.Titulo, _repositorioTeste.ObterListaRegistros()))
+                erros.Add(new CustomError("Esse Teste já existe", "Titulo"));
+
+            //public static bool ValidarDiretorioExistente(string text)
+            //{
+            //    return !Directory.Exists(text);
+            //}
+
+            return Result.Fail(erros);
         }
     }
 }

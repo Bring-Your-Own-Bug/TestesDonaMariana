@@ -1,24 +1,19 @@
 ﻿using FluentResults;
-using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Data.SqlClient;
 using TestesDonaMariana.Aplicacao.Compartilhado;
-using TestesDonaMariana.Dados.ModuloDisciplina;
-using TestesDonaMariana.Dados.ModuloMateria;
 using TestesDonaMariana.Dados.ModuloQuestao;
-using TestesDonaMariana.Dominio.ModuloDisciplina;
-using TestesDonaMariana.Dominio.ModuloMateria;
 using TestesDonaMariana.Dominio.ModuloQuestao;
 
 namespace TestesDonaMariana.Aplicacao.ModuloQuestao
 {
     public class ServicoQuestao : ServicoBase<Questao, RepositorioQuestao>
     {
-        private RepositorioQuestao _resitorioQuestao;
+        private RepositorioQuestao _repositorioQuestao;
 
         public ServicoQuestao(RepositorioQuestao _repositorio) : base(_repositorio)
         {
-            _resitorioQuestao = _repositorio;
+            _repositorioQuestao = _repositorio;
         }
 
         public override Result ValidarRegistro(Questao questao)
@@ -29,7 +24,7 @@ namespace TestesDonaMariana.Aplicacao.ModuloQuestao
 
             erros.AddRange(ConverterParaListaErros(validacao));
 
-            if (ValidadorQuestao.ValidarQuestaoExistente(questao, _resitorioQuestao.ObterListaRegistros()))
+            if (ValidadorQuestao.ValidarQuestaoExistente(questao, _repositorioQuestao.ObterListaRegistros()))
                 erros.Add(new CustomError("Essa Questão já existe", "Enunciado"));
 
             return Result.Fail(erros);
@@ -39,7 +34,7 @@ namespace TestesDonaMariana.Aplicacao.ModuloQuestao
         {
             try
             {
-                _resitorioQuestao.Excluir(questao);
+                _repositorioQuestao.Excluir(questao);
             }
             catch (SqlException ex)
             {
